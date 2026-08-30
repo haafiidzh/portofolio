@@ -1,106 +1,213 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Palette — one hue (Noble Purple #4B0082), varied by lightness/opacity only.
+   No purple→blue gradients anywhere.
+   ========================================================================== */
 :root {
-  --background: #1c1815;
-  --foreground: #f4efe9;
-  --accent: #7a5c8e;
-  --accent-foreground: #f4efe9;
-  --muted: #2a241f;
-  --muted-foreground: #b4a99c;
+  --background: #08060c;
+  --surface: #0f0b16;
+  --surface-2: #150f1f;
+  --foreground: #f4f1f8;
+  --muted-foreground: #9b93a8;
+  --hairline: rgba(244, 241, 248, 0.08);
+
+  --accent: #4b0082; /* base */
+  --accent-deep: #2e004f; /* shade — backgrounds */
+  --accent-mid: #6a1cb0; /* hover / fills */
+  --accent-bright: #a97bea; /* tint — text, links, strokes on dark */
+  --accent-foreground: #ffffff;
+
+  --nav-h: 4.5rem;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-foreground: var(--foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --font-display: var(--font-display);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-mid: var(--accent-mid);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-foreground: var(--accent-foreground);
   --font-sans: var(--font-sans);
+  --font-display: var(--font-sans);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-h);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
 }
 
-@keyframes hero-blob-drift {
-  0%,
-  100% {
-    transform: translate(-4%, -2%) scale(1);
-    opacity: 0.85;
-  }
-  50% {
-    transform: translate(4%, 3%) scale(1.08);
-    opacity: 1;
-  }
+::selection {
+  background: var(--accent-mid);
+  color: #fff;
 }
 
-.hero-fallback-blob {
-  animation: hero-blob-drift 10s ease-in-out infinite;
+/* ---------- Typography scale (big, bold, generous line-height) ---------- */
+.display-xl {
+  font-size: clamp(3rem, 11vw, 9rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-fallback-blob {
-    animation: none;
-  }
+.display-lg {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
 }
 
+.display-md {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.lede {
+  font-size: clamp(1.05rem, 1.6vw, 1.375rem);
+  line-height: 1.65;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+
+/* ---------- Reveal: hidden until anime.js plays it (JS sets this) ---------- */
+[data-reveal] {
+  will-change: opacity, transform;
+}
+
+/* ---------- Scroll progress bar (width bound to scroll via anime.js) ---------- */
+.scroll-progress {
+  transform-origin: 0 50%;
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    var(--accent-bright) 100%
+  );
+}
+
+/* ---------- Ambient background ---------- */
 .ambient-bg {
-  background: var(--background);
+  background:
+    radial-gradient(
+      120% 80% at 50% -10%,
+      color-mix(in srgb, var(--accent) 30%, transparent) 0%,
+      transparent 60%
+    ),
+    var(--background);
 }
 
 .ambient-bg__grid {
-  background-image: radial-gradient(
-    color-mix(in srgb, var(--foreground) 14%, transparent) 1px,
-    transparent 1px
-  );
-  background-size: 28px 28px;
+  background-image:
+    linear-gradient(var(--hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
+  background-size: 88px 88px;
   mask-image: radial-gradient(
-    ellipse 80% 60% at 50% 0%,
-    black 40%,
-    transparent 100%
+    ellipse 70% 60% at 50% 30%,
+    black 20%,
+    transparent 85%
   );
 }
 
 .ambient-bg__glow {
+  position: absolute;
   border-radius: 9999px;
-  filter: blur(120px);
-  opacity: 0.35;
-  animation: ambient-glow-drift 24s ease-in-out infinite;
+  filter: blur(140px);
+  background: var(--accent);
+  animation: ambient-glow-drift 28s ease-in-out infinite;
 }
 
 .ambient-bg__glow--a {
-  top: -10%;
-  left: 10%;
-  height: 40vh;
-  width: 40vh;
-  background: var(--accent);
+  top: -18%;
+  left: 4%;
+  height: 46vh;
+  width: 46vh;
+  opacity: 0.4;
 }
 
 .ambient-bg__glow--b {
-  bottom: -15%;
-  right: 5%;
-  height: 45vh;
-  width: 45vh;
-  background: var(--accent);
-  animation-delay: -12s;
+  bottom: -20%;
+  right: 0%;
+  height: 52vh;
+  width: 52vh;
+  opacity: 0.28;
+  animation-delay: -14s;
   animation-direction: reverse;
 }
 
 @keyframes ambient-glow-drift {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    transform: translate(6%, 8%) scale(1.15);
+    transform: translate3d(5%, 7%, 0) scale(1.18);
   }
 }
 
+.morph-fallback-blob {
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--accent) 45%, transparent),
+    transparent 70%
+  );
+  filter: blur(70px);
+  animation: ambient-glow-drift 22s ease-in-out infinite;
+}
+
+/* ---------- Hairline rules / cards (flat, never card-in-card) ---------- */
+.hairline-t {
+  border-top: 1px solid var(--hairline);
+}
+
+.card {
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  border: 1px solid var(--hairline);
+  transition:
+    border-color 0.35s ease,
+    background-color 0.35s ease,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--accent-bright) 40%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 90%, transparent);
+}
+
+/* ---------- Focus ring ---------- */
+:where(a, button, input, textarea):focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .ambient-bg__glow {
+  html {
+    scroll-behavior: auto;
+  }
+  .ambient-bg__glow,
+  .morph-fallback-blob {
     animation: none;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
