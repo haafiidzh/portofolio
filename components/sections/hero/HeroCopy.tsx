@@ -1,43 +1,93 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { animate, stagger } from "animejs";
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export default function HeroCopy() {
-  const reduceMotion = useReducedMotion();
+  const root = useRef<HTMLDivElement>(null);
 
-  const initial = reduceMotion ? false : { opacity: 0, y: 16 };
-  const animate = { opacity: 1, y: 0 };
+  // Hero is above the fold, so this entrance is time-based (plays on mount);
+  // everything below the fold uses the scroll-bound <Reveal /> instead.
+  useIsomorphicLayoutEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const targets = Array.from(el.querySelectorAll<HTMLElement>("[data-hero]"));
+    for (const t of targets) {
+      t.style.opacity = "0";
+      t.style.transform = "translateY(28px)";
+    }
+
+    const animation = animate(targets, {
+      opacity: [0, 1],
+      translateY: [28, 0],
+      duration: 1100,
+      ease: "outExpo",
+      delay: stagger(110, { start: 120 }),
+    });
+
+    return () => {
+      animation.revert();
+      for (const t of targets) {
+        t.style.opacity = "";
+        t.style.transform = "";
+      }
+    };
+  }, []);
 
   return (
-    <motion.div
-      initial={initial}
-      animate={animate}
-      transition={{ duration: 0.7, ease: "easeOut" }}
-      className="flex flex-col items-start gap-6 max-w-2xl"
-    >
-      <h1 className="font-display text-5xl md:text-7xl font-semibold leading-[1.05] text-foreground">
-        Calm engineering,
-        <br />
-        <span className="italic text-accent">sharp execution.</span>
-      </h1>
-      <p className="text-lg md:text-xl text-muted-foreground max-w-xl">
-        Fractional CTO and full-stack engineer helping founders ship
-        production-grade products without the burnout.
+    <div ref={root} className="flex max-w-3xl flex-col items-start">
+      <p data-hero className="eyebrow">
+        Fractional CTO · Full-Stack Engineer
       </p>
-      <div className="flex flex-wrap gap-4 pt-2">
+
+      <h1 data-hero className="display-xl mt-6 text-foreground">
+        Calm systems,
+        <br />
+        <span className="text-accent-bright">sharp execution.</span>
+      </h1>
+
+      <p data-hero className="lede mt-8 max-w-xl">
+        I help founders ship production-grade products — architecture,
+        delivery, and the engineering discipline that keeps them running.
+      </p>
+
+      <div data-hero className="mt-10 flex flex-wrap items-center gap-4">
         <a
-          href="#portfolio"
-          className="rounded-full bg-accent text-accent-foreground px-6 py-3 font-medium hover:opacity-90 transition-opacity"
+          href="#projects"
+          className="rounded-full bg-accent px-7 py-3.5 text-sm font-medium text-accent-foreground transition-colors duration-300 hover:bg-accent-mid"
         >
-          View My Work
+          View my work
         </a>
         <a
           href="#contact"
-          className="rounded-full border border-muted-foreground/30 px-6 py-3 font-medium text-foreground hover:border-accent hover:text-accent transition-colors"
+          className="rounded-full border border-[var(--hairline)] px-7 py-3.5 text-sm font-medium text-foreground transition-colors duration-300 hover:border-accent-bright/50 hover:text-accent-bright"
         >
-          Contact
+          Start a conversation
         </a>
       </div>
-    </motion.div>
+
+      <dl
+        data-hero
+        className="mt-16 flex flex-wrap gap-x-12 gap-y-6 text-sm"
+      >
+        {[
+          ["8+", "Years shipping"],
+          ["30+", "Products delivered"],
+          ["3", "Teams led concurrently"],
+        ].map(([value, label]) => (
+          <div key={label}>
+            <dt className="text-2xl font-semibold tracking-tight text-foreground">
+              {value}
+            </dt>
+            <dd className="mt-1 text-muted-foreground">{label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
   );
 }
