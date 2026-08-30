@@ -1,17 +1,15 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import type { PointerEvent } from "react";
-
 export type PortfolioProject = {
   slug: string;
   title: string;
+  year: string;
+  category: string;
   stack: string[];
   impact: string;
   problem: string;
   solution: string;
   result: string;
-  accentGlyph: string;
 };
 
 export default function PortfolioCard({
@@ -21,54 +19,36 @@ export default function PortfolioCard({
   project: PortfolioProject;
   onOpen: (project: PortfolioProject) => void;
 }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), {
-    stiffness: 200,
-    damping: 20,
-  });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), {
-    stiffness: 200,
-    damping: 20,
-  });
-
-  function handlePointerMove(e: PointerEvent<HTMLButtonElement>) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  }
-
-  function handlePointerLeave() {
-    x.set(0);
-    y.set(0);
-  }
-
   return (
-    <motion.button
+    <button
       type="button"
+      data-reveal
       onClick={() => onOpen(project)}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-      style={{ rotateX, rotateY, perspective: 800 }}
-      className="group flex flex-col gap-4 rounded-3xl border border-muted-foreground/10 bg-muted/40 p-6 text-left"
+      className="card group flex h-full flex-col rounded-2xl p-7 text-left hover:-translate-y-1.5"
     >
-      <div className="flex h-36 items-center justify-center rounded-2xl bg-accent/15 text-4xl text-accent">
-        {project.accentGlyph}
+      <div className="flex items-baseline justify-between gap-4">
+        <span className="eyebrow">{project.category}</span>
+        <span className="text-xs text-muted-foreground">{project.year}</span>
       </div>
-      <h3 className="font-display text-xl font-semibold text-foreground">
-        {project.title}
-      </h3>
-      <p className="text-sm text-muted-foreground">{project.impact}</p>
-      <ul className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+
+      <h3 className="display-md mt-8 text-foreground">{project.title}</h3>
+
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+        {project.impact}
+      </p>
+
+      <ul className="mt-8 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
         {project.stack.map((tech) => (
-          <li
-            key={tech}
-            className="rounded-full border border-muted-foreground/20 px-2 py-1"
-          >
-            {tech}
-          </li>
+          <li key={tech}>{tech}</li>
         ))}
       </ul>
-    </motion.button>
+
+      <span className="mt-6 flex items-center gap-2 text-sm text-accent-bright">
+        Read case study
+        <span className="transition-transform duration-300 group-hover:translate-x-1">
+          →
+        </span>
+      </span>
+    </button>
   );
 }

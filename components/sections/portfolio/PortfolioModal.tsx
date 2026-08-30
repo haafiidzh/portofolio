@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { PortfolioProject } from "./PortfolioCard";
 
@@ -10,56 +11,73 @@ export default function PortfolioModal({
   project: PortfolioProject | null;
   onClose: () => void;
 }) {
+  useEffect(() => {
+    if (!project) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [project, onClose]);
+
   return (
     <AnimatePresence>
       {project && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-6 backdrop-blur-sm"
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-background/85 p-6 backdrop-blur-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
           onClick={onClose}
+          role="dialog"
+          aria-modal
+          aria-label={`${project.title} case study`}
         >
           <motion.div
-            className="w-full max-w-lg rounded-3xl border border-muted-foreground/10 bg-muted p-8"
-            initial={{ opacity: 0, y: 20, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.97 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="w-full max-w-xl rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-8 md:p-10"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 16 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-start justify-between gap-4">
-              <h3 className="font-display text-2xl font-semibold text-foreground">
-                {project.title}
-              </h3>
+            <div className="flex items-start justify-between gap-6">
+              <div>
+                <span className="eyebrow">
+                  {project.category} · {project.year}
+                </span>
+                <h3 className="display-md mt-3 text-foreground">
+                  {project.title}
+                </h3>
+              </div>
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="Close"
-                className="text-muted-foreground hover:text-accent"
+                className="rounded-full border border-[var(--hairline)] px-3 py-1 text-sm text-muted-foreground transition-colors hover:border-accent-bright/50 hover:text-foreground"
               >
-                ✕
+                Esc
               </button>
             </div>
-            <dl className="mt-6 flex flex-col gap-4 text-sm">
-              <div>
-                <dt className="text-accent">Problem</dt>
-                <dd className="mt-1 text-muted-foreground">{project.problem}</dd>
-              </div>
-              <div>
-                <dt className="text-accent">Solution</dt>
-                <dd className="mt-1 text-muted-foreground">{project.solution}</dd>
-              </div>
-              <div>
-                <dt className="text-accent">Stack</dt>
-                <dd className="mt-1 text-muted-foreground">
-                  {project.stack.join(" · ")}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-accent">Result</dt>
-                <dd className="mt-1 text-muted-foreground">{project.result}</dd>
-              </div>
+
+            <dl className="mt-8 flex flex-col">
+              {[
+                ["Problem", project.problem],
+                ["Solution", project.solution],
+                ["Stack", project.stack.join(" · ")],
+                ["Result", project.result],
+              ].map(([label, value]) => (
+                <div
+                  key={label}
+                  className="hairline-t grid grid-cols-1 gap-1 py-4 sm:grid-cols-[110px_1fr] sm:gap-6"
+                >
+                  <dt className="eyebrow">{label}</dt>
+                  <dd className="text-sm leading-relaxed text-muted-foreground">
+                    {value}
+                  </dd>
+                </div>
+              ))}
             </dl>
           </motion.div>
         </motion.div>

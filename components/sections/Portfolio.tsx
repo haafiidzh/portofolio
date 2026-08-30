@@ -1,13 +1,15 @@
 import PortfolioGrid from "./portfolio/PortfolioGrid";
 import type { PortfolioProject } from "./portfolio/PortfolioCard";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 const PROJECTS: PortfolioProject[] = [
   {
     slug: "orderflow",
     title: "OrderFlow",
-    accentGlyph: "◎",
+    year: "2025",
+    category: "Logistics SaaS",
     stack: ["Next.js", "Postgres", "Stripe"],
-    impact: "Cut order processing time by 60% for a logistics SaaS.",
+    impact: "Cut order processing time by 60%.",
     problem:
       "Manual order reconciliation across 3 disconnected spreadsheets caused daily fulfillment delays.",
     solution:
@@ -17,9 +19,10 @@ const PROJECTS: PortfolioProject[] = [
   {
     slug: "healthping",
     title: "HealthPing",
-    accentGlyph: "◐",
+    year: "2024",
+    category: "Health platform",
     stack: ["React Native", "Node.js", "Redis"],
-    impact: "Grew daily active patients from 200 to 12,000 in 6 months.",
+    impact: "200 → 12,000 daily active patients in 6 months.",
     problem:
       "Clinic no-show rate was above 30% with no automated reminder system.",
     solution:
@@ -29,9 +32,10 @@ const PROJECTS: PortfolioProject[] = [
   {
     slug: "ledgerly",
     title: "Ledgerly",
-    accentGlyph: "◫",
+    year: "2023",
+    category: "Fintech",
     stack: ["Next.js", "tRPC", "AWS"],
-    impact: "Migrated legacy accounting system with zero downtime.",
+    impact: "Legacy accounting migration with zero downtime.",
     problem:
       "A decade-old monolith blocked the finance team from shipping new reporting features.",
     solution:
@@ -42,17 +46,14 @@ const PROJECTS: PortfolioProject[] = [
 
 export default function Portfolio() {
   return (
-    <section id="portfolio" className="px-6 py-24 md:px-16 md:py-32">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-16 flex flex-col gap-4">
-          <h2 className="font-display text-3xl font-semibold text-foreground md:text-5xl">
-            Selected work
-          </h2>
-          <p className="max-w-xl text-muted-foreground">
-            A few case studies — click any card for the full problem →
-            solution → result breakdown.
-          </p>
-        </div>
+    <section id="projects" className="px-6 py-28 md:px-10 md:py-40">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeader
+          index="03"
+          eyebrow="Projects"
+          title="Selected work."
+          lede="Open any case study for the full problem → solution → result breakdown."
+        />
         <PortfolioGrid projects={PROJECTS} />
       </div>
     </section>

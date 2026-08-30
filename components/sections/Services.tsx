@@ -1,62 +1,75 @@
-import ServiceCard from "./services/ServiceCard";
+import Reveal from "@/components/ui/Reveal";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 const SERVICES = [
   {
-    glyph: "▲",
+    no: "01",
     title: "Fractional CTO",
-    bullets: [
-      "Technical strategy & roadmap ownership",
-      "Hiring, mentoring, and team structure",
-      "Architecture reviews and risk triage",
-    ],
+    description:
+      "Technical ownership without a full-time hire — strategy, hiring, and the calls nobody else on the team can make yet.",
+    bullets: ["Roadmap & architecture ownership", "Hiring and team structure", "Risk triage and audits"],
   },
   {
-    glyph: "◆",
+    no: "02",
     title: "Full-Stack Delivery",
-    bullets: [
-      "Next.js / React product builds",
-      "API design and backend systems",
-      "Ship-ready code, not prototypes",
-    ],
+    description:
+      "Product built end-to-end by the person who designed the system. Ship-ready code, not prototypes.",
+    bullets: ["Next.js / React product builds", "API and backend systems", "Typed end-to-end"],
   },
   {
-    glyph: "●",
+    no: "03",
     title: "Infrastructure & DevOps",
-    bullets: [
-      "CI/CD pipelines and deploy automation",
-      "Cloud cost and reliability audits",
-      "Monitoring and incident readiness",
-    ],
+    description:
+      "Boring, observable infrastructure that a two-person team can actually operate at 3am.",
+    bullets: ["CI/CD and deploy automation", "Cloud cost & reliability audits", "Monitoring and incident readiness"],
   },
   {
-    glyph: "◈",
+    no: "04",
     title: "Product Discovery",
-    bullets: [
-      "Technical feasibility scoping",
-      "MVP definition and scope cuts",
-      "Stakeholder-ready technical docs",
-    ],
+    description:
+      "Scope cut down to what is genuinely buildable this quarter, with the trade-offs written down.",
+    bullets: ["Technical feasibility scoping", "MVP definition and scope cuts", "Stakeholder-ready docs"],
   },
 ];
 
 export default function Services() {
   return (
-    <section id="services" className="px-6 py-24 md:px-16 md:py-32">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-16 flex flex-col gap-4">
-          <h2 className="font-display text-3xl font-semibold text-foreground md:text-5xl">
-            What I bring to the table
-          </h2>
-          <p className="max-w-xl text-muted-foreground">
-            Same structural rigor as a full engineering org, delivered
-            fractionally — calm process, sharp output.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <section id="services" className="px-6 py-28 md:px-10 md:py-40">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeader
+          index="02"
+          eyebrow="Services"
+          title="What I take off your plate."
+          lede="Four ways to work together. Each one is scoped, priced, and time-boxed before anything starts."
+        />
+
+        <Reveal staggerMs={110} className="hairline-t">
           {SERVICES.map((service) => (
-            <ServiceCard key={service.title} {...service} />
+            <div
+              key={service.no}
+              data-reveal
+              className="group grid grid-cols-1 gap-6 border-b border-[var(--hairline)] py-10 transition-colors duration-500 hover:bg-[var(--surface)]/60 md:grid-cols-[80px_1fr_1fr] md:gap-10 md:px-4"
+            >
+              <span className="text-sm text-accent-bright">{service.no}</span>
+              <h3 className="display-md text-foreground">{service.title}</h3>
+              <div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {service.description}
+                </p>
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {service.bullets.map((bullet) => (
+                    <li
+                      key={bullet}
+                      className="rounded-full border border-[var(--hairline)] px-3 py-1.5 text-xs text-muted-foreground transition-colors duration-300 group-hover:border-accent-bright/30 group-hover:text-foreground"
+                    >
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

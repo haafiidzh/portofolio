@@ -3,20 +3,27 @@
 import { useEffect, useRef } from "react";
 import { animate, onScroll, svg } from "animejs";
 
+/**
+ * Timeline spine drawn by scroll position.
+ *
+ * `svg.createDrawable()` turns the path into an animatable `draw: "start end"`
+ * value. Binding it with `onScroll({ sync: true })` maps the draw progress 1:1
+ * to how far the timeline container has travelled between `enter` and `leave` —
+ * scroll up and the line un-draws. Use `sync: 0.2` instead of `true` if you
+ * want the line to lag slightly behind the cursor of the scroll.
+ */
 export default function ExperienceLine() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
 
   useEffect(() => {
-    if (!pathRef.current || !containerRef.current) return;
+    const container = containerRef.current;
+    const path = pathRef.current;
+    if (!container || !path) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const [drawable] = svg.createDrawable(path);
 
-    const [drawable] = svg.createDrawable(pathRef.current);
-
-    if (prefersReducedMotion) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       animate(drawable, { draw: "0 1", duration: 0 });
       return;
     }
@@ -25,9 +32,9 @@ export default function ExperienceLine() {
       draw: ["0 0", "0 1"],
       ease: "linear",
       autoplay: onScroll({
-        container: containerRef.current,
-        enter: "top bottom",
-        leave: "bottom top",
+        target: container,
+        enter: "top bottom-=120",
+        leave: "bottom top+=200",
         sync: true,
       }),
     });
@@ -47,16 +54,16 @@ export default function ExperienceLine() {
       >
         <path
           d="M1,0 L1,100"
-          stroke="var(--muted-foreground)"
-          strokeOpacity={0.2}
-          strokeWidth={2}
+          stroke="var(--foreground)"
+          strokeOpacity={0.08}
+          strokeWidth={1}
           vectorEffect="non-scaling-stroke"
         />
         <path
           ref={pathRef}
           d="M1,0 L1,100"
-          stroke="var(--accent)"
-          strokeWidth={2}
+          stroke="var(--accent-bright)"
+          strokeWidth={1.5}
           vectorEffect="non-scaling-stroke"
         />
       </svg>

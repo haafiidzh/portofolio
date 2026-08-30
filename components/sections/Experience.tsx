@@ -1,5 +1,6 @@
 import ExperienceLine from "./experience/ExperienceLine";
 import ExperienceItem from "./experience/ExperienceItem";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 const EXPERIENCE = [
   {
@@ -27,21 +28,23 @@ const EXPERIENCE = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="px-6 py-24 md:px-16 md:py-32">
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-16 flex flex-col gap-4">
-          <h2 className="font-display text-3xl font-semibold text-foreground md:text-5xl">
-            Where I&apos;ve been
-          </h2>
-          <p className="max-w-xl text-muted-foreground">
-            A decade of shipping — from scrappy client work to owning
-            technical strategy end-to-end.
-          </p>
-        </div>
-        <div className="relative flex flex-col gap-16">
+    <section id="experience" className="px-6 py-28 md:px-10 md:py-40">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeader
+          index="04"
+          eyebrow="Experience"
+          title="A decade of shipping."
+          lede="The line to the left draws itself as you scroll — its progress is bound to scroll position, not to a timer."
+        />
+
+        <div className="relative flex flex-col gap-20 pl-8 md:pl-14">
           <ExperienceLine />
-          {EXPERIENCE.map((item) => (
-            <ExperienceItem key={item.role + item.period} {...item} />
+          {EXPERIENCE.map((item, index) => (
+            <ExperienceItem
+              key={item.role + item.period}
+              index={index}
+              {...item}
+            />
           ))}
         </div>
       </div>
