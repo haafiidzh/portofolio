@@ -37,17 +37,21 @@ const PROJECTS: PortfolioProject[] = [
     images: ["/images/Image Porto - Invoice.jpeg"],
   },
   {
-    slug: "ledgerly",
-    title: "Ledgerly",
-    year: "2023",
-    category: "Fintech",
-    stack: ["Next.js", "tRPC", "AWS"],
-    impact: "Legacy accounting migration with zero downtime.",
+    slug: "rag-chatbot",
+    title: "RAG Chatbot",
+    year: "2026",
+    category: "Chatbot",
+    stack: ["Next.js", "FastAPI", "LLM", "Vector DB", "RAG"],
+    impact: "Chat with a podcast/lecture library, every answer comes with a clickable timestamp you can jump straight to.",
     problem:
-      "A decade-old monolith blocked the finance team from shipping new reporting features.",
+      "Student researching neural networks. Needs specific explanation from 100+ hours of lectures. Manual searching takes hours.",
     solution:
-      "Led an incremental strangler-fig migration to a modern typed stack.",
-    result: "New reports now ship in days instead of quarters.",
+      "Type question. System finds matching segments across library. Tap timestamp, video plays from exact moment.",
+    result: "Find answer in 2 minutes instead of 2 hours. No scrubbing through videos.",
+    images: [
+      "/images/web-portfolio-mockup_11.png",
+      "/images/web-portfolio-mockup_10.png",
+    ],
   },
 ];
 
