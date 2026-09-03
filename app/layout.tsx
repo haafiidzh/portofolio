@@ -15,9 +15,9 @@ const fontSans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Hafidz — Fractional CTO & Full-Stack Engineer",
+  title: "Hafidz — AI Full-Stack Engineer",
   description:
-    "Fractional CTO and full-stack engineer. Architecture, delivery, and the engineering discipline that keeps products running.",
+    "AI full-stack engineer. Building calm, durable software from Semarang.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

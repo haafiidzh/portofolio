@@ -11,16 +11,16 @@ const COLUMNS = [
   {
     title: "Elsewhere",
     links: [
-      { label: "GitHub", href: "https://github.com" },
+      { label: "GitHub", href: "https://github.com/haafiidzh" },
       { label: "LinkedIn", href: "https://linkedin.com" },
       { label: "Threads", href: "https://threads.net" },
-      { label: "Email", href: "mailto:wishuwerecoder@gmail.com" },
+      { label: "Email", href: "mailto:kusumahaafiidzh@gmail.com" },
     ],
   },
   {
     title: "Availability",
     links: [
-      { label: "Fractional CTO retainer", href: "#contact" },
+      { label: "AI Full-Stack Engineer retainer", href: "#contact" },
       { label: "Project-based build", href: "#contact" },
       { label: "Architecture audit", href: "#contact" },
     ],
@@ -37,8 +37,8 @@ export default function Footer() {
               Hafidz<span className="text-accent-bright">.</span>
             </p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              Fractional CTO and full-stack engineer. Building calm, durable
-              software from Jakarta.
+              AI full-stack engineer. Building calm, durable
+              software from Semarang.
             </p>
           </div>
 
@@ -63,7 +63,7 @@ export default function Footer() {
 
         <div className="hairline-t mt-14 flex flex-col gap-2 pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Hafidz. All rights reserved.</p>
-          <p>Built with Next.js, Tailwind, and anime.js.</p>
+          {/* <p>Built with Next.js, Tailwind, and anime.js.</p> */}
         </div>
       </div>
     </footer>

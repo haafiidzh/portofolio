@@ -4,19 +4,19 @@ import SkillTags from "./skills/SkillTags";
 const GROUPS = [
   {
     label: "Frontend",
-    items: ["TypeScript", "React", "Next.js", "Tailwind CSS", "anime.js", "Framer Motion", "Three.js"],
+    items: ["TypeScript", "React", "Next.js", "Vue", "Nuxt", "Tailwind CSS", "anime.js", "Framer Motion", "Three.js"],
   },
   {
     label: "Backend",
-    items: ["Node.js", "tRPC", "PostgreSQL", "Redis", "Prisma", "GraphQL", "REST"],
+    items: ["Laravel","Python","Node.js", "PostgreSQL", "Redis", "Prisma", "GraphQL", "REST"],
   },
   {
     label: "Infrastructure",
-    items: ["AWS", "Vercel", "Docker", "GitHub Actions", "Terraform", "Grafana"],
+    items: ["AWS", "Vercel", "Docker", "GitHub Actions", "Azure"],
   },
   {
     label: "Practice",
-    items: ["System design", "Technical hiring", "Code review", "Incident response", "Roadmapping"],
+    items: ["System design", "Code review", "Consultation"],
   },
 ];
 

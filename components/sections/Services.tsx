@@ -4,24 +4,24 @@ import SectionHeader from "@/components/ui/SectionHeader";
 const SERVICES = [
   {
     no: "01",
-    title: "Fractional CTO",
+    title: "Audit and Code Review",
     description:
-      "Technical ownership without a full-time hire — strategy, hiring, and the calls nobody else on the team can make yet.",
-    bullets: ["Roadmap & architecture ownership", "Hiring and team structure", "Risk triage and audits"],
+      "Audit and code review for your AI powered SaaS, RAG systems, chatbots, and automations.",
+    bullets: ["Architecture audit", "Code review", "Performance tuning", "Security audit"],
   },
   {
     no: "02",
     title: "Full-Stack Delivery",
     description:
       "Product built end-to-end by the person who designed the system. Ship-ready code, not prototypes.",
-    bullets: ["Next.js / React product builds", "API and backend systems", "Typed end-to-end"],
+    bullets: ["Next.js / React product builds", "API and backend systems", "Typed end-to-end", "SaaS", "Chatbots", "E-commerce", "Automations"],
   },
   {
     no: "03",
-    title: "Infrastructure & DevOps",
+    title: "Bugfixing and Maintenance",
     description:
-      "Boring, observable infrastructure that a two-person team can actually operate at 3am.",
-    bullets: ["CI/CD and deploy automation", "Cloud cost & reliability audits", "Monitoring and incident readiness"],
+      "Bugfixing and maintenance for your production-grade AI powered SaaS, RAG systems, chatbots, and automations.",
+    bullets: ["Bugfix", "Maintenance", "Optimization", "Performance tuning"],
   },
   {
     no: "04",

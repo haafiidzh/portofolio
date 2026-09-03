@@ -1,7 +1,7 @@
 const LINKS = [
-  { label: "Email", value: "wishuwerecoder@gmail.com", href: "mailto:wishuwerecoder@gmail.com" },
+  { label: "Email", value: "kusumahaafiidzh@gmail.com", href: "mailto:kusumahaafiidzh@gmail.com" },
   { label: "LinkedIn", value: "/in/yourname", href: "https://linkedin.com" },
-  { label: "GitHub", value: "@haafiidzh", href: "https://github.com" },
+  { label: "GitHub", value: "@haafiidzh", href: "https://github.com/haafiidzh" },
   { label: "Threads", value: "@yourname", href: "https://threads.net" },
 ];
 
@@ -33,7 +33,7 @@ export default function ContactInfo() {
       </ul>
 
       <p data-reveal className="hairline-t mt-8 pt-6 text-xs text-muted-foreground">
-        Based in Jakarta, Indonesia · GMT+7
+        Based in Semarang, Indonesia · GMT+7
       </p>
     </div>
   );

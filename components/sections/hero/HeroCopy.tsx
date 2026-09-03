@@ -42,7 +42,7 @@ export default function HeroCopy() {
   return (
     <div ref={root} className="flex max-w-3xl flex-col items-start">
       <p data-hero className="eyebrow">
-        Fractional CTO · Full-Stack Engineer
+        Freelance · AI Full-Stack Engineer
       </p>
 
       <h1 data-hero className="display-xl mt-6 text-foreground">
@@ -52,8 +52,9 @@ export default function HeroCopy() {
       </h1>
 
       <p data-hero className="lede mt-8 max-w-xl">
-        I help founders ship production-grade products — architecture,
-        delivery, and the engineering discipline that keeps them running.
+        i help founders ship production-grade products. architecture, delivery, discipline.
+        {/* I help founders ship production-grade products — architecture,
+        delivery, and the engineering discipline that keeps them running. */}
       </p>
 
       <div data-hero className="mt-10 flex flex-wrap items-center gap-4">
@@ -76,9 +77,9 @@ export default function HeroCopy() {
         className="mt-16 flex flex-wrap gap-x-12 gap-y-6 text-sm"
       >
         {[
-          ["8+", "Years shipping"],
+          ["3+", "Years shipping"],
           ["30+", "Products delivered"],
-          ["3", "Teams led concurrently"],
+          // ["5 Stars", "Client rat"],
         ].map(([value, label]) => (
           <div key={label}>
             <dt className="text-2xl font-semibold tracking-tight text-foreground">

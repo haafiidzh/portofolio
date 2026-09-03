@@ -4,30 +4,30 @@ import SectionHeader from "@/components/ui/SectionHeader";
 
 const PROJECTS: PortfolioProject[] = [
   {
-    slug: "orderflow",
-    title: "OrderFlow",
-    year: "2025",
-    category: "Logistics SaaS",
-    stack: ["Next.js", "Postgres", "Stripe"],
-    impact: "Cut order processing time by 60%.",
+    slug: "notion-property-automation",
+    title: "Notion Property Automation",
+    year: "2026",
+    category: "Automation Workflow",
+    stack: ["N8N", "Notion API Integration"],
+    impact: "Automated property data updates and reduced manual effort.",
     problem:
-      "Manual order reconciliation across 3 disconnected spreadsheets caused daily fulfillment delays.",
+      "Manual property data updates were time-consuming and prone to errors.",
     solution:
-      "Built a unified order pipeline with real-time sync and automated exception handling.",
-    result: "Fulfillment delays dropped from days to under an hour.",
+      "An automation designed to monitor Notion tickets. This workflow is triggered by a webhook integrated with a Notion API token, executing a pre-configured flow to update property data as needed.",
+    result: "Property data is updated automatically, reducing manual effort and improving efficiency.",
   },
   {
-    slug: "healthping",
-    title: "HealthPing",
-    year: "2024",
+    slug: "invoice-automation",
+    title: "Invoice Automation",
+    year: "2026",
     category: "Health platform",
-    stack: ["React Native", "Node.js", "Redis"],
-    impact: "200 → 12,000 daily active patients in 6 months.",
+    stack: ["N8N", "Telegram API Integration", "Spreadsheet API Integration"],
+    impact: "Automated invoice data recording and reduced manual effort.",
     problem:
-      "Clinic no-show rate was above 30% with no automated reminder system.",
+      "Manual invoice data recording was time-consuming and prone to errors.",
     solution:
-      "Shipped a cross-platform reminder app with push notifications and smart scheduling.",
-    result: "No-show rate fell to 9%, freeing up clinician capacity.",
+      "An automation system designed to record invoice data from photo inputs. The workflow integrates with Telegram, which serves as the channel for submitting invoices. It utilizes a free AI model from Gemini (Gemini-Flash-3) for analysis, and the recorded data is subsequently saved to a spreadsheet.",
+    result: "Invoice data is recorded automatically, reducing manual effort and improving efficiency. Free AI model from Gemini (Gemini-Flash-3) for analysis.",
   },
   {
     slug: "ledgerly",

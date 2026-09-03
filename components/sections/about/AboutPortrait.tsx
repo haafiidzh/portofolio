@@ -51,7 +51,7 @@ export default function AboutPortrait() {
       </svg>
       <div className="absolute inset-x-0 bottom-0 flex items-center justify-between border-t border-[var(--hairline)] bg-background/60 px-5 py-4 backdrop-blur-md">
         <span className="text-sm font-medium text-foreground">Hafidz</span>
-        <span className="text-xs text-muted-foreground">Jakarta, ID</span>
+        <span className="text-xs text-muted-foreground">Semarang, ID</span>
       </div>
     </div>
   );

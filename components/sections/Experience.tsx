@@ -5,7 +5,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 const EXPERIENCE = [
   {
     period: "2023 — Present",
-    role: "Fractional CTO",
+    role: "AI Full-Stack Engineer",
     company: "Various early-stage startups",
     description:
       "Own technical strategy across 3 concurrent teams, from architecture decisions to hands-on shipping.",
@@ -33,8 +33,8 @@ export default function Experience() {
         <SectionHeader
           index="04"
           eyebrow="Experience"
-          title="A decade of shipping."
-          lede="The line to the left draws itself as you scroll — its progress is bound to scroll position, not to a timer."
+          title="The shipping journey."
+          lede="Where I've worked, what I've built."
         />
 
         <div className="relative flex flex-col gap-20 pl-8 md:pl-14">
