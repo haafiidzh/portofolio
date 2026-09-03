@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { PortfolioProject } from "./PortfolioCard";
 
@@ -11,14 +11,32 @@ export default function PortfolioModal({
   project: PortfolioProject | null;
   onClose: () => void;
 }) {
+  const [imageIndex, setImageIndex] = useState(0);
+
+  useEffect(() => {
+    setImageIndex(0);
+  }, [project]);
+
   useEffect(() => {
     if (!project) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") handlePrevImage();
+      if (e.key === "ArrowRight") handleNextImage();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [project, onClose]);
+  }, [project, onClose, imageIndex]);
+
+  const handlePrevImage = () => {
+    if (!project?.images || project.images.length === 0) return;
+    setImageIndex((prev) => (prev === 0 ? project.images!.length - 1 : prev - 1));
+  };
+
+  const handleNextImage = () => {
+    if (!project?.images || project.images.length === 0) return;
+    setImageIndex((prev) => (prev === project.images!.length - 1 ? 0 : prev + 1));
+  };
 
   return (
     <AnimatePresence>
@@ -35,7 +53,7 @@ export default function PortfolioModal({
           aria-label={`${project.title} case study`}
         >
           <motion.div
-            className="w-full max-w-xl rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-8 md:p-10"
+            className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-6 md:p-8"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
@@ -60,6 +78,41 @@ export default function PortfolioModal({
                 Esc
               </button>
             </div>
+
+            {project.images && project.images.length > 0 && (
+              <div className="relative mt-6 flex flex-col gap-3">
+                <div className="relative overflow-hidden rounded-lg max-h-64 flex items-center justify-center bg-muted">
+                  <img
+                    src={project.images[imageIndex]}
+                    alt={`${project.title} - image ${imageIndex + 1}`}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                {project.images.length > 1 && (
+                  <div className="flex items-center justify-between gap-4">
+                    <button
+                      type="button"
+                      onClick={handlePrevImage}
+                      aria-label="Previous image"
+                      className="rounded-full border border-[var(--hairline)] px-3 py-1 text-sm text-muted-foreground transition-colors hover:border-accent-bright/50 hover:text-foreground"
+                    >
+                      ← Prev
+                    </button>
+                    <span className="text-xs text-muted-foreground">
+                      {imageIndex + 1} / {project.images.length}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleNextImage}
+                      aria-label="Next image"
+                      className="rounded-full border border-[var(--hairline)] px-3 py-1 text-sm text-muted-foreground transition-colors hover:border-accent-bright/50 hover:text-foreground"
+                    >
+                      Next →
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
 
             <dl className="mt-8 flex flex-col">
               {[
