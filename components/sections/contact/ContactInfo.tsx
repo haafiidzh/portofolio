@@ -2,7 +2,7 @@ const LINKS = [
   { label: "Email", value: "kusumahaafiidzh@gmail.com", href: "mailto:kusumahaafiidzh@gmail.com" },
   { label: "LinkedIn", value: "/in/yourname", href: "https://linkedin.com" },
   { label: "GitHub", value: "@haafiidzh", href: "https://github.com/haafiidzh" },
-  { label: "Threads", value: "@yourname", href: "https://threads.net" },
+  // { label: "Threads", value: "@yourname", href: "https://threads.net" },
 ];
 
 export default function ContactInfo() {
