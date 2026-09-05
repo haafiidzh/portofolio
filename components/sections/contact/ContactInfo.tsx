@@ -1,6 +1,6 @@
 const LINKS = [
   { label: "Email", value: "kusumahaafiidzh@gmail.com", href: "mailto:kusumahaafiidzh@gmail.com" },
-  { label: "LinkedIn", value: "/in/yourname", href: "https://www.linkedin.com/in/hafid-kusuma/" },
+  { label: "LinkedIn", value: "/in/hafid-kusuma", href: "https://www.linkedin.com/in/hafid-kusuma/" },
   { label: "GitHub", value: "@haafiidzh", href: "https://github.com/haafiidzh" },
   // { label: "Threads", value: "@yourname", href: "https://threads.net" },
 ];
