@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "Hafidz — AI Full-Stack Engineer",
   description:
     "AI full-stack engineer. Building calm, durable software from Semarang.",
+  icons: {
+    icon: "/images/IMG_9418.JPEG",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
