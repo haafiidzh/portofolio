@@ -12,7 +12,7 @@ const COLUMNS = [
     title: "Elsewhere",
     links: [
       { label: "GitHub", href: "https://github.com/haafiidzh" },
-      { label: "LinkedIn", href: "https://linkedin.com" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/hafid-kusuma/" },
       // { label: "Threads", href: "https://threads.net" },
       { label: "Email", href: "mailto:kusumahaafiidzh@gmail.com" },
     ],
