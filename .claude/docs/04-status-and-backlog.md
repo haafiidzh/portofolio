@@ -15,7 +15,7 @@ Analyzed 2026-10-12. Living document: the **PM agent owns it** (`.claude/agents/
 | Portfolio hover tilt | Hover `-translate-y`, no tilt | Partial |
 | **Testimonials** | None | **Missing** |
 | Working contact form | Form sends nothing | **Functionally broken** |
-| Lighthouse per section | No evidence it was run | Not done |
+| Lighthouse per section | Perf-only mobile baseline 2026-10-12 (`snapshots/lighthouse-baseline.json`, median 90); no a11y/SEO run, no per-section runs | Partial |
 | Assets: 3–5 testimonials, 3–4 case studies | 3 case studies, 0 testimonials | Short |
 
 ## Technical findings (verified)
@@ -60,7 +60,7 @@ Scale: **P0** blocks the site's purpose (getting clients) · **P1** required bef
 
 ### P0 — do now
 1. **Working contact form** (P1) — *implemented 2026-10-12 (Resend API route, honeypot, error state); pending: owner sets `RESEND_API_KEY`, real end-to-end test, rate limiting, WhatsApp fallback (P7).* Original scope: API route / Formspree / Resend + validation + error state + honeypot anti-spam. Add direct WhatsApp/email buttons as fallback (P7).
-2. **Clean lint** (T1–T4, T6): `npm run lint` = 0 errors. Otherwise a Vercel build may fail if lint is enforced.
+2. **Clean lint** (T1–T4, T6): `npm run lint` = 0 errors. Otherwise a Vercel build may fail if lint is enforced. — *PM check 2026-10-12: working tree = 0 errors / 4 warnings (T1–T3 fixed; T6 + 2× `<img>` + 1 unused disable remain as warnings), but **HEAD still has 8 errors** — the fixes are uncommitted and mixed into the scroll-animation working tree. Not done until committed separately.*
 3. **Owner decision on positioning & visual direction** — blocks all design/copy work. Ask: AI Full-Stack Freelancer (actual) or Fractional CTO (brief)? Stay purple or return to warm?
 
 ### P1 — before promoting the site
@@ -69,7 +69,7 @@ Scale: **P0** blocks the site's purpose (getting clients) · **P1** required bef
 6. Fix case studies (P4, P5): category, concrete metrics, demo/GitHub links, real screenshots.
 7. Metadata & SEO (P6): OG image, `sitemap.ts`, `robots.ts`, canonical, JSON-LD `Person`.
 8. Verify claims (P3): change/remove numbers that can't be proven.
-9. Run Lighthouse mobile + a11y (muted-text contrast); record scores in this doc.
+9. Run Lighthouse mobile + a11y (muted-text contrast); record scores in this doc. — *Partial 2026-10-12: performance baseline recorded (`snapshots/lighthouse-baseline.json`: perf 90 median, LCP 3564 ms, CLS 0, TBT 91 ms, localhost). LCP 3.5 s is above the 2.5 s "good" line → supports item 4. Still to do: accessibility/SEO/best-practices categories, re-run after 4 and 7.*
 
 ### P2 — improvements
 10. Copy & voice consistency (P8); separate display typeface if the visual direction is approved.
@@ -77,6 +77,7 @@ Scale: **P0** blocks the site's purpose (getting clients) · **P1** required bef
 12. Remove or enable dead code (T11) — decide: show Experience or delete it; mount the 3D blob or drop the dependencies.
 13. Testimonials section (once assets exist).
 14. Move `scroll-test.mjs` to `scripts/`, expose as npm script `test:reveal`.
+14a. **Scroll-driven animation (content-freeze)** — owner request 2026-10-12. DRAFT PRD v0.3: [07](07-prd-scroll-driven-animation.md); UI/UX input received (§13, incl. §13.6 Stacking Cards spec). Owner requirement **Services Stacking Cards** (§4.1, Phase 3b; overrides UI/UX F1). **O1 resolved (v0.3)**: one "Let's talk" → `#contact` CTA in the Services left column = content-freeze exception E2 (own commit + `content-baseline-v2`, Phase 3b step 0). PM-vs-UI/UX Stacking Cards disagreements reconciled in §4.2 (D1–D5) — *proposed, pending owner approval* (O2). Phase 0 requires the Lighthouse baseline (#9). Do not start before P0 is closed. — *PM check 2026-10-12: Phase 0 **done** (commit `00b398c`, tag `content-baseline-v1`, `scripts/content-snapshot.mjs`, perf baseline). Uncommitted working tree on `feature/sda` already contains Phase 1 (`useScrollScrub`), Phase 2 (hint fade, Nav indicator), Skills hairline, Portfolio thumbnail parallax (option B, not gate-approved), and 3b step 0 + 3b-i (E2 CTA, stacking cards with steps 96/80 px + equal card height — deviates from §4.2 D2/D3). Needs splitting into separate commits per PRD §9 and a PRD v0.4 reconciliation.*
 
 ### P3 — can be deferred
 15. 3D icons in Services, hover tilt in Portfolio (per animation budget).
