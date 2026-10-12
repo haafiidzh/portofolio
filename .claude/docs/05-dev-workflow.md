@@ -41,17 +41,18 @@ The script runs several scroll scenarios (slow scroll, jump to bottom, etc.), co
     04-status-and-backlog.md        gaps + priorities (owned by PM)
     05-dev-workflow.md              this file (ex-README.md + conventions)
   agents/
-    pm.md   ui-ux.md   developer.md
+    pm.md   ui-ux.md   developer.md   qa.md
 ```
 
 Root `CLAUDE.md` stays (Claude Code reads that file from the root) and imports `01-vision-and-design-brief.md`.
 
-## Three-agent workflow
+## Four-agent workflow
 
 1. **PM** reads `04-status-and-backlog.md`, picks the next item, writes the brief.
 2. **UI/UX** takes the PM's visual brief → design spec (tokens, layout, states, motion).
 3. **Developer** takes the PM brief (+ UI/UX spec) → for any creative idea outside the brief, **asks the PM first**; implements only after approval.
-4. PM accepts the result and updates `04-status-and-backlog.md`.
+4. **QA** reviews the result (visual + function) against the brief's acceptance criteria → PASS / PASS with conditions / FAIL + findings by severity (S0–S3). FAIL goes back to the developer via the PM.
+5. PM accepts the result (after QA PASS) and updates `04-status-and-backlog.md`.
 
 ## Deploy
 
