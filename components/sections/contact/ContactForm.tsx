@@ -7,11 +7,33 @@ const FIELD_CLASS =
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // Wire this to an API route / form service before going live.
-    setSubmitted(true);
+    if (sending) return;
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        const json = await res.json().catch(() => null);
+        throw new Error(json?.error ?? "Something went wrong.");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Something went wrong.",
+      );
+    } finally {
+      setSending(false);
+    }
   }
 
   if (submitted) {
@@ -74,12 +96,29 @@ export default function ContactForm() {
         />
       </div>
 
+      {/* Honeypot — hidden from users and assistive tech, bots fill it. */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden
+        className="absolute -left-[9999px] h-0 w-0 opacity-0"
+      />
+
+      {error && (
+        <p role="alert" className="text-sm text-red-400">
+          {error}
+        </p>
+      )}
+
       <button
         data-reveal
         type="submit"
-        className="mt-2 self-start rounded-full bg-accent px-7 py-3.5 text-sm font-medium text-accent-foreground transition-colors duration-300 hover:bg-accent-mid active:scale-[0.98]"
+        disabled={sending}
+        className="mt-2 self-start rounded-full bg-accent px-7 py-3.5 text-sm font-medium text-accent-foreground transition-colors duration-300 hover:bg-accent-mid active:scale-[0.98] disabled:opacity-60"
       >
-        Send message
+        {sending ? "Sending…" : "Send message"}
       </button>
     </form>
   );
