@@ -32,7 +32,7 @@ Analyzed 2026-10-12. Living document: the **PM agent owns it** (`.claude/agents/
 | T6 | Unused `Experience` import | `app/page.tsx:5` |
 | T7 | `Profile.JPEG` 2.5 MB, `scale-200` inside `next/image` | `AboutPortrait.tsx` |
 | T8 | Mockup PNGs ~870 KB ×2, unoptimized | `public/images` |
-| T9 | Favicon is a 12 KB JPEG (`IMG_9418.JPEG`), not ico/png | `layout.tsx` |
+| T9 | ~~Favicon was a JPEG~~ **Resolved 2026-10-12**: square-cropped from `public/images/logo.jpg` → `app/icon.png` (512), `app/apple-icon.png` (180), `app/favicon.ico` (16/32/48); `metadata.icons` removed so Next auto-detects the files. `IMG_9418.JPEG` is now unused. | `app/` |
 | T10 | Modal class `bg-muted` does not exist in theme | `PortfolioModal.tsx` |
 | T11 | Dead code (see 02-architecture) + unused three/R3F/drei deps | — |
 | T12 | `scroll-test.mjs` at root; `SECTIONS` includes `experience` which isn't rendered; `SHOT_DIR` defaults to `/tmp` | root |
@@ -59,7 +59,7 @@ Analyzed 2026-10-12. Living document: the **PM agent owns it** (`.claude/agents/
 Scale: **P0** blocks the site's purpose (getting clients) · **P1** required before public promotion · **P2** real improvement · **P3** nice-to-have / safe to defer.
 
 ### P0 — do now
-1. **Working contact form** (P1): API route / Formspree / Resend + validation + error state + honeypot anti-spam. Add direct WhatsApp/email buttons as fallback (P7).
+1. **Working contact form** (P1) — *implemented 2026-10-12 (Resend API route, honeypot, error state); pending: owner sets `RESEND_API_KEY`, real end-to-end test, rate limiting, WhatsApp fallback (P7).* Original scope: API route / Formspree / Resend + validation + error state + honeypot anti-spam. Add direct WhatsApp/email buttons as fallback (P7).
 2. **Clean lint** (T1–T4, T6): `npm run lint` = 0 errors. Otherwise a Vercel build may fail if lint is enforced.
 3. **Owner decision on positioning & visual direction** — blocks all design/copy work. Ask: AI Full-Stack Freelancer (actual) or Fractional CTO (brief)? Stay purple or return to warm?
 

@@ -60,7 +60,7 @@ All content is **hardcoded** as constants inside section components (`PROJECTS` 
 
 ## Contact form
 
-`ContactForm.tsx`: client component, `onSubmit` → `preventDefault()` → `setSubmitted(true)`. **Sends nothing** (comment: `Wire this to an API route / form service before going live`). The success message always shows.
+`ContactForm.tsx` (client) POSTs JSON to `app/api/contact/route.ts`, which validates (required, length caps, email regex, honeypot field `website`) and sends mail through the Resend REST API (plain `fetch`, no dependency) to `kusumahaafiidzh@gmail.com`, with `reply_to` set to the visitor. States: sending / error (`role="alert"`) / success. Env: `RESEND_API_KEY` (required), `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` (optional) — see `.env.example`. Without a verified domain, Resend only delivers to the email the Resend account was registered with.
 
 ## Portfolio modal
 
