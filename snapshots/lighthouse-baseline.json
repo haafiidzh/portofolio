@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-12",
+  "url": "production build, next start, localhost",
+  "tool": "lighthouse 13.5.0",
+  "preset": "mobile (default throttling)",
+  "runs": [
+    {
+      "perf": 85,
+      "lcpMs": 3771,
+      "cls": 0,
+      "tbtMs": 201,
+      "fcpMs": 809,
+      "jsTransferKB": 204.8,
+      "jsResourceKB": 649.8,
+      "totalKB": 1350.9,
+      "env": "mobile/simulate"
+    },
+    {
+      "perf": 91,
+      "lcpMs": 3491,
+      "cls": 0,
+      "tbtMs": 64,
+      "fcpMs": 765,
+      "jsTransferKB": 204.8,
+      "jsResourceKB": 649.8,
+      "totalKB": 1350.9,
+      "env": "mobile/simulate"
+    },
+    {
+      "perf": 90,
+      "lcpMs": 3564,
+      "cls": 0,
+      "tbtMs": 91,
+      "fcpMs": 762,
+      "jsTransferKB": 204.8,
+      "jsResourceKB": 649.8,
+      "totalKB": 1350.9,
+      "env": "mobile/simulate"
+    }
+  ],
+  "median": {
+    "performance": 90,
+    "lcpMs": 3564,
+    "cls": 0,
+    "tbtMs": 91,
+    "fcpMs": 765,
+    "jsTransferKB": 204.8,
+    "totalKB": 1350.9
+  }
+}

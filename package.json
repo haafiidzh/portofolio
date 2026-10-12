@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "snapshot": "node scripts/content-snapshot.mjs",
+    "snapshot:check": "node scripts/content-snapshot.mjs --check"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

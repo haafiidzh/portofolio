@@ -1,0 +1,1363 @@
+{
+  "c7": {
+    "COLUMNS": "0030931ee0790e48",
+    "FACTS": "bb19c7f5b9a37185",
+    "GROUPS": "5690c982392e47cd",
+    "LINKS_CONTACT": "6af27da7bd03eb8f",
+    "LINKS_NAV": "888047f8ba23644b",
+    "PROJECTS": "142c348512bf3c2b",
+    "SERVICES": "dc0b6c7152b89349"
+  },
+  "viewports": {
+    "375": {
+      "c1": {
+        "#about": "01 ABOUT Fullstack AI Developer building RAG, chatbots, and automations. Hafidz Semarang, ID Hey! I'm a fullstack AI dev who loves shipping end-to-end solutions smart chatbots, RAG systems, web scrapers, and automations that handle the boring stuff so you don't have to. Clean code, practical vibes, no fluff. Whether it's training LLMs, integrating APIs, or building something that actually works in production, I'm all in. Got a project or a wild AI idea? Let's cook something cool. EXPERTISE AI Powered SaaS, RAG systems, LLMs, chatbots, automations, web scraping. BUILT WITH Laravel, Node.js, Python, React, Next.js, TypeScript, N8N. CURRENTLY Freelancing, building AI solutions and automations.",
+        "#contact": "06 CONTACT Tell me what you're building. A short note is enough. I reply within a day or two with next steps or an honest no. NAME EMAIL MESSAGE Send message Prefer a faster path? Reach out directly — anything from a one-line question to a full brief is fine. EMAIL kusumahaafiidzh@gmail.com ↗ LINKEDIN /in/hafid-kusuma ↗ GITHUB @haafiidzh ↗ Based in Semarang, Indonesia · GMT+7",
+        "#hero": "FREELANCE · AI FULL-STACK ENGINEER Calm systems, sharp execution. i help founders ship production-grade products. architecture, delivery, discipline. View my work Start a conversation 3+ Years shipping 30+ Products delivered SCROLL",
+        "#projects": "03 PROJECTS Selected work. Open any case study for the full problem → solution → result breakdown. AUTOMATION WORKFLOW 2026 Chat Based Notion Property Automation Automated property data updates and reduced manual effort. NextJS N8N Notion API Integration Read case study → HEALTH PLATFORM 2026 Invoice Automation Automated invoice data recording and reduced manual effort. N8N Telegram API Integration Spreadsheet API Integration Read case study → CHATBOT 2026 RAG Chatbot Chat with a podcast/lecture library, every answer comes with a clickable timestamp you can jump straight to. Next.js FastAPI LLM Vector DB RAG Read case study →",
+        "#services": "02 SERVICES What I take off your plate. Four ways to work together. Each one is scoped, priced, and time-boxed before anything starts. 01 Audit and Code Review Audit and code review for your AI powered SaaS, RAG systems, chatbots, and automations. Architecture audit Code review Performance tuning Security audit 02 Full-Stack Delivery Product built end-to-end by the person who designed the system. Ship-ready code, not prototypes. Next.js / React product builds API and backend systems Typed end-to-end SaaS Chatbots E-commerce Automations 03 Bugfixing and Maintenance Bugfixing and maintenance for your production-grade AI powered SaaS, RAG systems, chatbots, and automations. Bugfix Maintenance Optimization Performance tuning 04 Product Discovery Scope cut down to what is genuinely buildable this quarter, with the trade-offs written down. Technical feasibility scoping MVP definition and scope cuts Stakeholder-ready docs",
+        "#skills": "05 SKILLS The stack I reach for. Deliberately narrow. I'd rather go deep on tools that stay boring under load than collect logos. FRONTEND TypeScript React Next.js Vue Nuxt Tailwind CSS anime.js Framer Motion Three.js BACKEND Laravel Python Node.js PostgreSQL Redis Prisma GraphQL REST INFRASTRUCTURE AWS Vercel Docker GitHub Actions Azure PRACTICE System design Code review Consultation",
+        "footer": "Hafidz. AI full-stack engineer. Building calm, durable software from Semarang. NAVIGATE About Services Projects Skills ELSEWHERE GitHub LinkedIn Email AVAILABILITY AI Full-Stack Engineer retainer Project-based build Architecture audit © 2026 Hafidz. All rights reserved.",
+        "header": "Hafidz."
+      },
+      "c2": {
+        "#about": [
+          {
+            "level": 2,
+            "text": "Fullstack AI Developer building RAG, chatbots, and automations."
+          }
+        ],
+        "#contact": [
+          {
+            "level": 2,
+            "text": "Tell me what you're building."
+          }
+        ],
+        "#hero": [
+          {
+            "level": 1,
+            "text": "Calm systems,sharp execution."
+          }
+        ],
+        "#projects": [
+          {
+            "level": 2,
+            "text": "Selected work."
+          },
+          {
+            "level": 3,
+            "text": "Chat Based Notion Property Automation"
+          },
+          {
+            "level": 3,
+            "text": "Invoice Automation"
+          },
+          {
+            "level": 3,
+            "text": "RAG Chatbot"
+          }
+        ],
+        "#services": [
+          {
+            "level": 2,
+            "text": "What I take off your plate."
+          },
+          {
+            "level": 3,
+            "text": "Audit and Code Review"
+          },
+          {
+            "level": 3,
+            "text": "Full-Stack Delivery"
+          },
+          {
+            "level": 3,
+            "text": "Bugfixing and Maintenance"
+          },
+          {
+            "level": 3,
+            "text": "Product Discovery"
+          }
+        ],
+        "#skills": [
+          {
+            "level": 2,
+            "text": "The stack I reach for."
+          }
+        ],
+        "footer": [],
+        "header": []
+      },
+      "c3": {
+        "#about": [
+          {
+            "alt": "Portrait",
+            "src": "/_next/image?url=%2Fimages%2FProfile.JPEG&w=3840&q=75"
+          }
+        ],
+        "#contact": [],
+        "#hero": [],
+        "#projects": [
+          {
+            "alt": "Chat Based Notion Property Automation",
+            "src": "/images/Image Porto - 4.jpeg"
+          },
+          {
+            "alt": "Invoice Automation",
+            "src": "/images/Image Porto - Invoice.jpeg"
+          },
+          {
+            "alt": "RAG Chatbot",
+            "src": "/images/web-portfolio-mockup_11.png"
+          }
+        ],
+        "#services": [],
+        "#skills": [],
+        "footer": [],
+        "header": [
+          {
+            "alt": "",
+            "src": "/_next/image?url=%2Fimages%2Flogo-mark.png&w=64&q=75"
+          }
+        ]
+      },
+      "c4": {
+        "#about": [],
+        "#contact": [
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": "Name",
+            "name": "name",
+            "placeholder": "Your name",
+            "required": true,
+            "tag": "input",
+            "text": "",
+            "type": "text"
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": "Email",
+            "name": "email",
+            "placeholder": "you@company.com",
+            "required": true,
+            "tag": "input",
+            "text": "",
+            "type": "email"
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": "Message",
+            "name": "message",
+            "placeholder": "What are you building, and where are you stuck?",
+            "required": true,
+            "tag": "textarea",
+            "text": "",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": null,
+            "name": "website",
+            "placeholder": null,
+            "required": false,
+            "tag": "input",
+            "text": "",
+            "type": "text"
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "button",
+            "text": "Send message",
+            "type": "submit"
+          },
+          {
+            "ariaLabel": null,
+            "href": "mailto:kusumahaafiidzh@gmail.com",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Emailkusumahaafiidzh@gmail.com↗",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "https://www.linkedin.com/in/hafid-kusuma/",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "LinkedIn/in/hafid-kusuma↗",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "https://github.com/haafiidzh",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "GitHub@haafiidzh↗",
+            "type": null
+          }
+        ],
+        "#hero": [
+          {
+            "ariaLabel": null,
+            "href": "#projects",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "View my work",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Start a conversation",
+            "type": null
+          }
+        ],
+        "#projects": [
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "button",
+            "text": "Automation Workflow2026Chat Based Notion Property AutomationAutomated property data updates and reduced manual effort.NextJSN8NNotion API IntegrationRead case study→",
+            "type": "button"
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "button",
+            "text": "Health platform2026Invoice AutomationAutomated invoice data recording and reduced manual effort.N8NTelegram API IntegrationSpreadsheet API IntegrationRead case study→",
+            "type": "button"
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "button",
+            "text": "Chatbot2026RAG ChatbotChat with a podcast/lecture library, every answer comes with a clickable timestamp you can jump straight to.Next.jsFastAPILLMVector DBRAGRead case study→",
+            "type": "button"
+          }
+        ],
+        "#services": [],
+        "#skills": [],
+        "footer": [
+          {
+            "ariaLabel": null,
+            "href": "#about",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "About",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#services",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Services",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#projects",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Projects",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#skills",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Skills",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "https://github.com/haafiidzh",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "GitHub",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "https://www.linkedin.com/in/hafid-kusuma/",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "LinkedIn",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "mailto:kusumahaafiidzh@gmail.com",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Email",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "AI Full-Stack Engineer retainer",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Project-based build",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Architecture audit",
+            "type": null
+          }
+        ],
+        "header": [
+          {
+            "ariaLabel": null,
+            "href": "#hero",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Hafidz.",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#about",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "About",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#services",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Services",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#projects",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Projects",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#skills",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Skills",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Contact",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Let's talk",
+            "type": null
+          },
+          {
+            "ariaLabel": "Toggle menu",
+            "href": null,
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "button",
+            "text": "",
+            "type": "button"
+          }
+        ]
+      },
+      "c5": [
+        "hero",
+        "about",
+        "services",
+        "projects",
+        "skills",
+        "contact"
+      ],
+      "c6": {
+        "#about": "- text: 01 About\n- heading \"Fullstack AI Developer building RAG, chatbots, and automations.\" [level=2]\n- img \"Portrait\"\n- text: Hafidz Semarang, ID\n- paragraph: Hey! I'm a fullstack AI dev who loves shipping end-to-end solutions smart chatbots, RAG systems, web scrapers, and automations that handle the boring stuff so you don't have to. Clean code, practical vibes, no fluff. Whether it's training LLMs, integrating APIs, or building something that actually works in production, I'm all in. Got a project or a wild AI idea? Let's cook something cool.\n- term: Expertise\n- definition: AI Powered SaaS, RAG systems, LLMs, chatbots, automations, web scraping.\n- term: Built with\n- definition: Laravel, Node.js, Python, React, Next.js, TypeScript, N8N.\n- term: Currently\n- definition: Freelancing, building AI solutions and automations.",
+        "#contact": "- text: 06 Contact\n- heading \"Tell me what you're building.\" [level=2]\n- paragraph: A short note is enough. I reply within a day or two with next steps or an honest no.\n- text: Name\n- textbox \"Name\":\n  - /placeholder: Your name\n- text: Email\n- textbox \"Email\":\n  - /placeholder: you@company.com\n- text: Message\n- textbox \"Message\":\n  - /placeholder: What are you building, and where are you stuck?\n- button \"Send message\"\n- paragraph: Prefer a faster path? Reach out directly — anything from a one-line question to a full brief is fine.\n- list:\n  - listitem:\n    - link \"Email kusumahaafiidzh@gmail.com ↗\":\n      - /url: mailto:kusumahaafiidzh@gmail.com\n  - listitem:\n    - link \"LinkedIn /in/hafid-kusuma ↗\":\n      - /url: https://www.linkedin.com/in/hafid-kusuma/\n  - listitem:\n    - link \"GitHub @haafiidzh ↗\":\n      - /url: https://github.com/haafiidzh\n- paragraph: Based in Semarang, Indonesia · GMT+7",
+        "#hero": "- paragraph: Freelance · AI Full-Stack Engineer\n- heading \"Calm systems, sharp execution.\" [level=1]\n- paragraph: i help founders ship production-grade products. architecture, delivery, discipline.\n- link \"View my work\":\n  - /url: \"#projects\"\n- link \"Start a conversation\":\n  - /url: \"#contact\"\n- term: 3+\n- definition: Years shipping\n- term: 30+\n- definition: Products delivered\n- text: Scroll",
+        "#projects": "- text: 03 Projects\n- heading \"Selected work.\" [level=2]\n- paragraph: Open any case study for the full problem → solution → result breakdown.\n- button \"Chat Based Notion Property Automation Automation Workflow 2026 Chat Based Notion Property Automation Automated property data updates and reduced manual effort. NextJS N8N Notion API Integration Read case study →\":\n  - img \"Chat Based Notion Property Automation\"\n  - text: Automation Workflow 2026\n  - heading \"Chat Based Notion Property Automation\" [level=3]\n  - paragraph: Automated property data updates and reduced manual effort.\n  - list:\n    - listitem: NextJS\n    - listitem: N8N\n    - listitem: Notion API Integration\n  - text: Read case study →\n- button \"Invoice Automation Health platform 2026 Invoice Automation Automated invoice data recording and reduced manual effort. N8N Telegram API Integration Spreadsheet API Integration Read case study →\":\n  - img \"Invoice Automation\"\n  - text: Health platform 2026\n  - heading \"Invoice Automation\" [level=3]\n  - paragraph: Automated invoice data recording and reduced manual effort.\n  - list:\n    - listitem: N8N\n    - listitem: Telegram API Integration\n    - listitem: Spreadsheet API Integration\n  - text: Read case study →\n- button \"RAG Chatbot Chatbot 2026 RAG Chatbot Chat with a podcast/lecture library, every answer comes with a clickable timestamp you can jump straight to. Next.js FastAPI LLM Vector DB RAG Read case study →\":\n  - img \"RAG Chatbot\"\n  - text: Chatbot 2026\n  - heading \"RAG Chatbot\" [level=3]\n  - paragraph: Chat with a podcast/lecture library, every answer comes with a clickable timestamp you can jump straight to.\n  - list:\n    - listitem: Next.js\n    - listitem: FastAPI\n    - listitem: LLM\n    - listitem: Vector DB\n    - listitem: RAG\n  - text: Read case study →",
+        "#services": "- text: 02 Services\n- heading \"What I take off your plate.\" [level=2]\n- paragraph: Four ways to work together. Each one is scoped, priced, and time-boxed before anything starts.\n- text: \"01\"\n- heading \"Audit and Code Review\" [level=3]\n- paragraph: Audit and code review for your AI powered SaaS, RAG systems, chatbots, and automations.\n- list:\n  - listitem: Architecture audit\n  - listitem: Code review\n  - listitem: Performance tuning\n  - listitem: Security audit\n- text: \"02\"\n- heading \"Full-Stack Delivery\" [level=3]\n- paragraph: Product built end-to-end by the person who designed the system. Ship-ready code, not prototypes.\n- list:\n  - listitem: Next.js / React product builds\n  - listitem: API and backend systems\n  - listitem: Typed end-to-end\n  - listitem: SaaS\n  - listitem: Chatbots\n  - listitem: E-commerce\n  - listitem: Automations\n- text: \"03\"\n- heading \"Bugfixing and Maintenance\" [level=3]\n- paragraph: Bugfixing and maintenance for your production-grade AI powered SaaS, RAG systems, chatbots, and automations.\n- list:\n  - listitem: Bugfix\n  - listitem: Maintenance\n  - listitem: Optimization\n  - listitem: Performance tuning\n- text: \"04\"\n- heading \"Product Discovery\" [level=3]\n- paragraph: Scope cut down to what is genuinely buildable this quarter, with the trade-offs written down.\n- list:\n  - listitem: Technical feasibility scoping\n  - listitem: MVP definition and scope cuts\n  - listitem: Stakeholder-ready docs",
+        "#skills": "- text: 05 Skills\n- heading \"The stack I reach for.\" [level=2]\n- paragraph: Deliberately narrow. I'd rather go deep on tools that stay boring under load than collect logos.\n- paragraph: Frontend\n- list:\n  - listitem: TypeScript\n  - listitem: React\n  - listitem: Next.js\n  - listitem: Vue\n  - listitem: Nuxt\n  - listitem: Tailwind CSS\n  - listitem: anime.js\n  - listitem: Framer Motion\n  - listitem: Three.js\n- paragraph: Backend\n- list:\n  - listitem: Laravel\n  - listitem: Python\n  - listitem: Node.js\n  - listitem: PostgreSQL\n  - listitem: Redis\n  - listitem: Prisma\n  - listitem: GraphQL\n  - listitem: REST\n- paragraph: Infrastructure\n- list:\n  - listitem: AWS\n  - listitem: Vercel\n  - listitem: Docker\n  - listitem: GitHub Actions\n  - listitem: Azure\n- paragraph: Practice\n- list:\n  - listitem: System design\n  - listitem: Code review\n  - listitem: Consultation",
+        "footer": "- contentinfo:\n  - paragraph: Hafidz.\n  - paragraph: AI full-stack engineer. Building calm, durable software from Semarang.\n  - paragraph: Navigate\n  - list:\n    - listitem:\n      - link \"About\":\n        - /url: \"#about\"\n    - listitem:\n      - link \"Services\":\n        - /url: \"#services\"\n    - listitem:\n      - link \"Projects\":\n        - /url: \"#projects\"\n    - listitem:\n      - link \"Skills\":\n        - /url: \"#skills\"\n  - paragraph: Elsewhere\n  - list:\n    - listitem:\n      - link \"GitHub\":\n        - /url: https://github.com/haafiidzh\n    - listitem:\n      - link \"LinkedIn\":\n        - /url: https://www.linkedin.com/in/hafid-kusuma/\n    - listitem:\n      - link \"Email\":\n        - /url: mailto:kusumahaafiidzh@gmail.com\n  - paragraph: Availability\n  - list:\n    - listitem:\n      - link \"AI Full-Stack Engineer retainer\":\n        - /url: \"#contact\"\n    - listitem:\n      - link \"Project-based build\":\n        - /url: \"#contact\"\n    - listitem:\n      - link \"Architecture audit\":\n        - /url: \"#contact\"\n  - paragraph: © 2026 Hafidz. All rights reserved.",
+        "header": "- banner:\n  - navigation:\n    - link \"Hafidz.\":\n      - /url: \"#hero\"\n    - button \"Toggle menu\""
+      },
+      "c8": {
+        "#about": [
+          "01",
+          "About",
+          "Fullstack AI Developer building RAG, chatbots, and automations.",
+          "Hafidz",
+          "Semarang, ID",
+          "Hey! I'm a fullstack AI dev who loves shipping end-to-end solutions smart chatbots, RAG systems, web scrapers, and automations that handle the boring stuff so you don't have to.",
+          "Clean code, practical vibes, no fluff. Whether it's training LLMs, integrating APIs, or building something that actually works in production, I'm all in. Got a project or a wild AI idea? Let's cook something cool.",
+          "Expertise",
+          "AI Powered SaaS, RAG systems, LLMs, chatbots, automations, web scraping.",
+          "Built with",
+          "Laravel, Node.js, Python, React, Next.js, TypeScript, N8N.",
+          "Currently",
+          "Freelancing, building AI solutions and automations."
+        ],
+        "#contact": [
+          "06",
+          "Contact",
+          "Tell me what you're building.",
+          "A short note is enough. I reply within a day or two with next steps or an honest no.",
+          "Name",
+          "Email",
+          "Message",
+          "Send message",
+          "Prefer a faster path? Reach out directly — anything from a one-line question to a full brief is fine.",
+          "Email",
+          "kusumahaafiidzh@gmail.com",
+          "↗",
+          "LinkedIn",
+          "/in/hafid-kusuma",
+          "↗",
+          "GitHub",
+          "@haafiidzh",
+          "↗",
+          "Based in Semarang, Indonesia · GMT+7"
+        ],
+        "#hero": [
+          "Freelance · AI Full-Stack Engineer",
+          "Calm systems,",
+          "sharp execution.",
+          "i help founders ship production-grade products. architecture, delivery, discipline.",
+          "View my work",
+          "Start a conversation",
+          "3+",
+          "Years shipping",
+          "30+",
+          "Products delivered",
+          "Scroll"
+        ],
+        "#projects": [
+          "03",
+          "Projects",
+          "Selected work.",
+          "Open any case study for the full problem → solution → result breakdown.",
+          "Automation Workflow",
+          "2026",
+          "Chat Based Notion Property Automation",
+          "Automated property data updates and reduced manual effort.",
+          "NextJS",
+          "N8N",
+          "Notion API Integration",
+          "Read case study",
+          "→",
+          "Health platform",
+          "2026",
+          "Invoice Automation",
+          "Automated invoice data recording and reduced manual effort.",
+          "N8N",
+          "Telegram API Integration",
+          "Spreadsheet API Integration",
+          "Read case study",
+          "→",
+          "Chatbot",
+          "2026",
+          "RAG Chatbot",
+          "Chat with a podcast/lecture library, every answer comes with a clickable timestamp you can jump straight to.",
+          "Next.js",
+          "FastAPI",
+          "LLM",
+          "Vector DB",
+          "RAG",
+          "Read case study",
+          "→"
+        ],
+        "#services": [
+          "02",
+          "Services",
+          "What I take off your plate.",
+          "Four ways to work together. Each one is scoped, priced, and time-boxed before anything starts.",
+          "01",
+          "Audit and Code Review",
+          "Audit and code review for your AI powered SaaS, RAG systems, chatbots, and automations.",
+          "Architecture audit",
+          "Code review",
+          "Performance tuning",
+          "Security audit",
+          "02",
+          "Full-Stack Delivery",
+          "Product built end-to-end by the person who designed the system. Ship-ready code, not prototypes.",
+          "Next.js / React product builds",
+          "API and backend systems",
+          "Typed end-to-end",
+          "SaaS",
+          "Chatbots",
+          "E-commerce",
+          "Automations",
+          "03",
+          "Bugfixing and Maintenance",
+          "Bugfixing and maintenance for your production-grade AI powered SaaS, RAG systems, chatbots, and automations.",
+          "Bugfix",
+          "Maintenance",
+          "Optimization",
+          "Performance tuning",
+          "04",
+          "Product Discovery",
+          "Scope cut down to what is genuinely buildable this quarter, with the trade-offs written down.",
+          "Technical feasibility scoping",
+          "MVP definition and scope cuts",
+          "Stakeholder-ready docs"
+        ],
+        "#skills": [
+          "05",
+          "Skills",
+          "The stack I reach for.",
+          "Deliberately narrow. I'd rather go deep on tools that stay boring under load than collect logos.",
+          "Frontend",
+          "TypeScript",
+          "React",
+          "Next.js",
+          "Vue",
+          "Nuxt",
+          "Tailwind CSS",
+          "anime.js",
+          "Framer Motion",
+          "Three.js",
+          "Backend",
+          "Laravel",
+          "Python",
+          "Node.js",
+          "PostgreSQL",
+          "Redis",
+          "Prisma",
+          "GraphQL",
+          "REST",
+          "Infrastructure",
+          "AWS",
+          "Vercel",
+          "Docker",
+          "GitHub Actions",
+          "Azure",
+          "Practice",
+          "System design",
+          "Code review",
+          "Consultation"
+        ],
+        "footer": [
+          "Hafidz",
+          ".",
+          "AI full-stack engineer. Building calm, durable software from Semarang.",
+          "Navigate",
+          "About",
+          "Services",
+          "Projects",
+          "Skills",
+          "Elsewhere",
+          "GitHub",
+          "LinkedIn",
+          "Email",
+          "Availability",
+          "AI Full-Stack Engineer retainer",
+          "Project-based build",
+          "Architecture audit",
+          "©",
+          "2026",
+          "Hafidz. All rights reserved."
+        ],
+        "header": [
+          "Hafidz",
+          ".",
+          "About",
+          "Services",
+          "Projects",
+          "Skills",
+          "Contact",
+          "Let's talk"
+        ]
+      }
+    },
+    "1280": {
+      "c1": {
+        "#about": "01 ABOUT Fullstack AI Developer building RAG, chatbots, and automations. Hafidz Semarang, ID Hey! I'm a fullstack AI dev who loves shipping end-to-end solutions smart chatbots, RAG systems, web scrapers, and automations that handle the boring stuff so you don't have to. Clean code, practical vibes, no fluff. Whether it's training LLMs, integrating APIs, or building something that actually works in production, I'm all in. Got a project or a wild AI idea? Let's cook something cool. EXPERTISE AI Powered SaaS, RAG systems, LLMs, chatbots, automations, web scraping. BUILT WITH Laravel, Node.js, Python, React, Next.js, TypeScript, N8N. CURRENTLY Freelancing, building AI solutions and automations.",
+        "#contact": "06 CONTACT Tell me what you're building. A short note is enough. I reply within a day or two with next steps or an honest no. NAME EMAIL MESSAGE Send message Prefer a faster path? Reach out directly — anything from a one-line question to a full brief is fine. EMAIL kusumahaafiidzh@gmail.com ↗ LINKEDIN /in/hafid-kusuma ↗ GITHUB @haafiidzh ↗ Based in Semarang, Indonesia · GMT+7",
+        "#hero": "FREELANCE · AI FULL-STACK ENGINEER Calm systems, sharp execution. i help founders ship production-grade products. architecture, delivery, discipline. View my work Start a conversation 3+ Years shipping 30+ Products delivered SCROLL",
+        "#projects": "03 PROJECTS Selected work. Open any case study for the full problem → solution → result breakdown. AUTOMATION WORKFLOW 2026 Chat Based Notion Property Automation Automated property data updates and reduced manual effort. NextJS N8N Notion API Integration Read case study → HEALTH PLATFORM 2026 Invoice Automation Automated invoice data recording and reduced manual effort. N8N Telegram API Integration Spreadsheet API Integration Read case study → CHATBOT 2026 RAG Chatbot Chat with a podcast/lecture library, every answer comes with a clickable timestamp you can jump straight to. Next.js FastAPI LLM Vector DB RAG Read case study →",
+        "#services": "02 SERVICES What I take off your plate. Four ways to work together. Each one is scoped, priced, and time-boxed before anything starts. 01 Audit and Code Review Audit and code review for your AI powered SaaS, RAG systems, chatbots, and automations. Architecture audit Code review Performance tuning Security audit 02 Full-Stack Delivery Product built end-to-end by the person who designed the system. Ship-ready code, not prototypes. Next.js / React product builds API and backend systems Typed end-to-end SaaS Chatbots E-commerce Automations 03 Bugfixing and Maintenance Bugfixing and maintenance for your production-grade AI powered SaaS, RAG systems, chatbots, and automations. Bugfix Maintenance Optimization Performance tuning 04 Product Discovery Scope cut down to what is genuinely buildable this quarter, with the trade-offs written down. Technical feasibility scoping MVP definition and scope cuts Stakeholder-ready docs",
+        "#skills": "05 SKILLS The stack I reach for. Deliberately narrow. I'd rather go deep on tools that stay boring under load than collect logos. FRONTEND TypeScript React Next.js Vue Nuxt Tailwind CSS anime.js Framer Motion Three.js BACKEND Laravel Python Node.js PostgreSQL Redis Prisma GraphQL REST INFRASTRUCTURE AWS Vercel Docker GitHub Actions Azure PRACTICE System design Code review Consultation",
+        "footer": "Hafidz. AI full-stack engineer. Building calm, durable software from Semarang. NAVIGATE About Services Projects Skills ELSEWHERE GitHub LinkedIn Email AVAILABILITY AI Full-Stack Engineer retainer Project-based build Architecture audit © 2026 Hafidz. All rights reserved.",
+        "header": "Hafidz. About Services Projects Skills Contact Let's talk"
+      },
+      "c2": {
+        "#about": [
+          {
+            "level": 2,
+            "text": "Fullstack AI Developer building RAG, chatbots, and automations."
+          }
+        ],
+        "#contact": [
+          {
+            "level": 2,
+            "text": "Tell me what you're building."
+          }
+        ],
+        "#hero": [
+          {
+            "level": 1,
+            "text": "Calm systems,sharp execution."
+          }
+        ],
+        "#projects": [
+          {
+            "level": 2,
+            "text": "Selected work."
+          },
+          {
+            "level": 3,
+            "text": "Chat Based Notion Property Automation"
+          },
+          {
+            "level": 3,
+            "text": "Invoice Automation"
+          },
+          {
+            "level": 3,
+            "text": "RAG Chatbot"
+          }
+        ],
+        "#services": [
+          {
+            "level": 2,
+            "text": "What I take off your plate."
+          },
+          {
+            "level": 3,
+            "text": "Audit and Code Review"
+          },
+          {
+            "level": 3,
+            "text": "Full-Stack Delivery"
+          },
+          {
+            "level": 3,
+            "text": "Bugfixing and Maintenance"
+          },
+          {
+            "level": 3,
+            "text": "Product Discovery"
+          }
+        ],
+        "#skills": [
+          {
+            "level": 2,
+            "text": "The stack I reach for."
+          }
+        ],
+        "footer": [],
+        "header": []
+      },
+      "c3": {
+        "#about": [
+          {
+            "alt": "Portrait",
+            "src": "/_next/image?url=%2Fimages%2FProfile.JPEG&w=3840&q=75"
+          }
+        ],
+        "#contact": [],
+        "#hero": [],
+        "#projects": [
+          {
+            "alt": "Chat Based Notion Property Automation",
+            "src": "/images/Image Porto - 4.jpeg"
+          },
+          {
+            "alt": "Invoice Automation",
+            "src": "/images/Image Porto - Invoice.jpeg"
+          },
+          {
+            "alt": "RAG Chatbot",
+            "src": "/images/web-portfolio-mockup_11.png"
+          }
+        ],
+        "#services": [],
+        "#skills": [],
+        "footer": [],
+        "header": [
+          {
+            "alt": "",
+            "src": "/_next/image?url=%2Fimages%2Flogo-mark.png&w=64&q=75"
+          }
+        ]
+      },
+      "c4": {
+        "#about": [],
+        "#contact": [
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": "Name",
+            "name": "name",
+            "placeholder": "Your name",
+            "required": true,
+            "tag": "input",
+            "text": "",
+            "type": "text"
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": "Email",
+            "name": "email",
+            "placeholder": "you@company.com",
+            "required": true,
+            "tag": "input",
+            "text": "",
+            "type": "email"
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": "Message",
+            "name": "message",
+            "placeholder": "What are you building, and where are you stuck?",
+            "required": true,
+            "tag": "textarea",
+            "text": "",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": null,
+            "name": "website",
+            "placeholder": null,
+            "required": false,
+            "tag": "input",
+            "text": "",
+            "type": "text"
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "button",
+            "text": "Send message",
+            "type": "submit"
+          },
+          {
+            "ariaLabel": null,
+            "href": "mailto:kusumahaafiidzh@gmail.com",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Emailkusumahaafiidzh@gmail.com↗",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "https://www.linkedin.com/in/hafid-kusuma/",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "LinkedIn/in/hafid-kusuma↗",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "https://github.com/haafiidzh",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "GitHub@haafiidzh↗",
+            "type": null
+          }
+        ],
+        "#hero": [
+          {
+            "ariaLabel": null,
+            "href": "#projects",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "View my work",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Start a conversation",
+            "type": null
+          }
+        ],
+        "#projects": [
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "button",
+            "text": "Automation Workflow2026Chat Based Notion Property AutomationAutomated property data updates and reduced manual effort.NextJSN8NNotion API IntegrationRead case study→",
+            "type": "button"
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "button",
+            "text": "Health platform2026Invoice AutomationAutomated invoice data recording and reduced manual effort.N8NTelegram API IntegrationSpreadsheet API IntegrationRead case study→",
+            "type": "button"
+          },
+          {
+            "ariaLabel": null,
+            "href": null,
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "button",
+            "text": "Chatbot2026RAG ChatbotChat with a podcast/lecture library, every answer comes with a clickable timestamp you can jump straight to.Next.jsFastAPILLMVector DBRAGRead case study→",
+            "type": "button"
+          }
+        ],
+        "#services": [],
+        "#skills": [],
+        "footer": [
+          {
+            "ariaLabel": null,
+            "href": "#about",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "About",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#services",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Services",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#projects",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Projects",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#skills",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Skills",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "https://github.com/haafiidzh",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "GitHub",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "https://www.linkedin.com/in/hafid-kusuma/",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "LinkedIn",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "mailto:kusumahaafiidzh@gmail.com",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Email",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "AI Full-Stack Engineer retainer",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Project-based build",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Architecture audit",
+            "type": null
+          }
+        ],
+        "header": [
+          {
+            "ariaLabel": null,
+            "href": "#hero",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Hafidz.",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#about",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "About",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#services",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Services",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#projects",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Projects",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#skills",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Skills",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Contact",
+            "type": null
+          },
+          {
+            "ariaLabel": null,
+            "href": "#contact",
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "a",
+            "text": "Let's talk",
+            "type": null
+          },
+          {
+            "ariaLabel": "Toggle menu",
+            "href": null,
+            "label": null,
+            "name": null,
+            "placeholder": null,
+            "required": false,
+            "tag": "button",
+            "text": "",
+            "type": "button"
+          }
+        ]
+      },
+      "c5": [
+        "hero",
+        "about",
+        "services",
+        "projects",
+        "skills",
+        "contact"
+      ],
+      "c6": {
+        "#about": "- text: 01 About\n- heading \"Fullstack AI Developer building RAG, chatbots, and automations.\" [level=2]\n- img \"Portrait\"\n- text: Hafidz Semarang, ID\n- paragraph: Hey! I'm a fullstack AI dev who loves shipping end-to-end solutions smart chatbots, RAG systems, web scrapers, and automations that handle the boring stuff so you don't have to. Clean code, practical vibes, no fluff. Whether it's training LLMs, integrating APIs, or building something that actually works in production, I'm all in. Got a project or a wild AI idea? Let's cook something cool.\n- term: Expertise\n- definition: AI Powered SaaS, RAG systems, LLMs, chatbots, automations, web scraping.\n- term: Built with\n- definition: Laravel, Node.js, Python, React, Next.js, TypeScript, N8N.\n- term: Currently\n- definition: Freelancing, building AI solutions and automations.",
+        "#contact": "- text: 06 Contact\n- heading \"Tell me what you're building.\" [level=2]\n- paragraph: A short note is enough. I reply within a day or two with next steps or an honest no.\n- text: Name\n- textbox \"Name\":\n  - /placeholder: Your name\n- text: Email\n- textbox \"Email\":\n  - /placeholder: you@company.com\n- text: Message\n- textbox \"Message\":\n  - /placeholder: What are you building, and where are you stuck?\n- button \"Send message\"\n- paragraph: Prefer a faster path? Reach out directly — anything from a one-line question to a full brief is fine.\n- list:\n  - listitem:\n    - link \"Email kusumahaafiidzh@gmail.com ↗\":\n      - /url: mailto:kusumahaafiidzh@gmail.com\n  - listitem:\n    - link \"LinkedIn /in/hafid-kusuma ↗\":\n      - /url: https://www.linkedin.com/in/hafid-kusuma/\n  - listitem:\n    - link \"GitHub @haafiidzh ↗\":\n      - /url: https://github.com/haafiidzh\n- paragraph: Based in Semarang, Indonesia · GMT+7",
+        "#hero": "- paragraph: Freelance · AI Full-Stack Engineer\n- heading \"Calm systems, sharp execution.\" [level=1]\n- paragraph: i help founders ship production-grade products. architecture, delivery, discipline.\n- link \"View my work\":\n  - /url: \"#projects\"\n- link \"Start a conversation\":\n  - /url: \"#contact\"\n- term: 3+\n- definition: Years shipping\n- term: 30+\n- definition: Products delivered\n- text: Scroll",
+        "#projects": "- text: 03 Projects\n- heading \"Selected work.\" [level=2]\n- paragraph: Open any case study for the full problem → solution → result breakdown.\n- button \"Chat Based Notion Property Automation Automation Workflow 2026 Chat Based Notion Property Automation Automated property data updates and reduced manual effort. NextJS N8N Notion API Integration Read case study →\":\n  - img \"Chat Based Notion Property Automation\"\n  - text: Automation Workflow 2026\n  - heading \"Chat Based Notion Property Automation\" [level=3]\n  - paragraph: Automated property data updates and reduced manual effort.\n  - list:\n    - listitem: NextJS\n    - listitem: N8N\n    - listitem: Notion API Integration\n  - text: Read case study →\n- button \"Invoice Automation Health platform 2026 Invoice Automation Automated invoice data recording and reduced manual effort. N8N Telegram API Integration Spreadsheet API Integration Read case study →\":\n  - img \"Invoice Automation\"\n  - text: Health platform 2026\n  - heading \"Invoice Automation\" [level=3]\n  - paragraph: Automated invoice data recording and reduced manual effort.\n  - list:\n    - listitem: N8N\n    - listitem: Telegram API Integration\n    - listitem: Spreadsheet API Integration\n  - text: Read case study →\n- button \"RAG Chatbot Chatbot 2026 RAG Chatbot Chat with a podcast/lecture library, every answer comes with a clickable timestamp you can jump straight to. Next.js FastAPI LLM Vector DB RAG Read case study →\":\n  - img \"RAG Chatbot\"\n  - text: Chatbot 2026\n  - heading \"RAG Chatbot\" [level=3]\n  - paragraph: Chat with a podcast/lecture library, every answer comes with a clickable timestamp you can jump straight to.\n  - list:\n    - listitem: Next.js\n    - listitem: FastAPI\n    - listitem: LLM\n    - listitem: Vector DB\n    - listitem: RAG\n  - text: Read case study →",
+        "#services": "- text: 02 Services\n- heading \"What I take off your plate.\" [level=2]\n- paragraph: Four ways to work together. Each one is scoped, priced, and time-boxed before anything starts.\n- text: \"01\"\n- heading \"Audit and Code Review\" [level=3]\n- paragraph: Audit and code review for your AI powered SaaS, RAG systems, chatbots, and automations.\n- list:\n  - listitem: Architecture audit\n  - listitem: Code review\n  - listitem: Performance tuning\n  - listitem: Security audit\n- text: \"02\"\n- heading \"Full-Stack Delivery\" [level=3]\n- paragraph: Product built end-to-end by the person who designed the system. Ship-ready code, not prototypes.\n- list:\n  - listitem: Next.js / React product builds\n  - listitem: API and backend systems\n  - listitem: Typed end-to-end\n  - listitem: SaaS\n  - listitem: Chatbots\n  - listitem: E-commerce\n  - listitem: Automations\n- text: \"03\"\n- heading \"Bugfixing and Maintenance\" [level=3]\n- paragraph: Bugfixing and maintenance for your production-grade AI powered SaaS, RAG systems, chatbots, and automations.\n- list:\n  - listitem: Bugfix\n  - listitem: Maintenance\n  - listitem: Optimization\n  - listitem: Performance tuning\n- text: \"04\"\n- heading \"Product Discovery\" [level=3]\n- paragraph: Scope cut down to what is genuinely buildable this quarter, with the trade-offs written down.\n- list:\n  - listitem: Technical feasibility scoping\n  - listitem: MVP definition and scope cuts\n  - listitem: Stakeholder-ready docs",
+        "#skills": "- text: 05 Skills\n- heading \"The stack I reach for.\" [level=2]\n- paragraph: Deliberately narrow. I'd rather go deep on tools that stay boring under load than collect logos.\n- paragraph: Frontend\n- list:\n  - listitem: TypeScript\n  - listitem: React\n  - listitem: Next.js\n  - listitem: Vue\n  - listitem: Nuxt\n  - listitem: Tailwind CSS\n  - listitem: anime.js\n  - listitem: Framer Motion\n  - listitem: Three.js\n- paragraph: Backend\n- list:\n  - listitem: Laravel\n  - listitem: Python\n  - listitem: Node.js\n  - listitem: PostgreSQL\n  - listitem: Redis\n  - listitem: Prisma\n  - listitem: GraphQL\n  - listitem: REST\n- paragraph: Infrastructure\n- list:\n  - listitem: AWS\n  - listitem: Vercel\n  - listitem: Docker\n  - listitem: GitHub Actions\n  - listitem: Azure\n- paragraph: Practice\n- list:\n  - listitem: System design\n  - listitem: Code review\n  - listitem: Consultation",
+        "footer": "- contentinfo:\n  - paragraph: Hafidz.\n  - paragraph: AI full-stack engineer. Building calm, durable software from Semarang.\n  - paragraph: Navigate\n  - list:\n    - listitem:\n      - link \"About\":\n        - /url: \"#about\"\n    - listitem:\n      - link \"Services\":\n        - /url: \"#services\"\n    - listitem:\n      - link \"Projects\":\n        - /url: \"#projects\"\n    - listitem:\n      - link \"Skills\":\n        - /url: \"#skills\"\n  - paragraph: Elsewhere\n  - list:\n    - listitem:\n      - link \"GitHub\":\n        - /url: https://github.com/haafiidzh\n    - listitem:\n      - link \"LinkedIn\":\n        - /url: https://www.linkedin.com/in/hafid-kusuma/\n    - listitem:\n      - link \"Email\":\n        - /url: mailto:kusumahaafiidzh@gmail.com\n  - paragraph: Availability\n  - list:\n    - listitem:\n      - link \"AI Full-Stack Engineer retainer\":\n        - /url: \"#contact\"\n    - listitem:\n      - link \"Project-based build\":\n        - /url: \"#contact\"\n    - listitem:\n      - link \"Architecture audit\":\n        - /url: \"#contact\"\n  - paragraph: © 2026 Hafidz. All rights reserved.",
+        "header": "- banner:\n  - navigation:\n    - link \"Hafidz.\":\n      - /url: \"#hero\"\n    - list:\n      - listitem:\n        - link \"About\":\n          - /url: \"#about\"\n      - listitem:\n        - link \"Services\":\n          - /url: \"#services\"\n      - listitem:\n        - link \"Projects\":\n          - /url: \"#projects\"\n      - listitem:\n        - link \"Skills\":\n          - /url: \"#skills\"\n      - listitem:\n        - link \"Contact\":\n          - /url: \"#contact\"\n    - link \"Let's talk\":\n      - /url: \"#contact\""
+      },
+      "c8": {
+        "#about": [
+          "01",
+          "About",
+          "Fullstack AI Developer building RAG, chatbots, and automations.",
+          "Hafidz",
+          "Semarang, ID",
+          "Hey! I'm a fullstack AI dev who loves shipping end-to-end solutions smart chatbots, RAG systems, web scrapers, and automations that handle the boring stuff so you don't have to.",
+          "Clean code, practical vibes, no fluff. Whether it's training LLMs, integrating APIs, or building something that actually works in production, I'm all in. Got a project or a wild AI idea? Let's cook something cool.",
+          "Expertise",
+          "AI Powered SaaS, RAG systems, LLMs, chatbots, automations, web scraping.",
+          "Built with",
+          "Laravel, Node.js, Python, React, Next.js, TypeScript, N8N.",
+          "Currently",
+          "Freelancing, building AI solutions and automations."
+        ],
+        "#contact": [
+          "06",
+          "Contact",
+          "Tell me what you're building.",
+          "A short note is enough. I reply within a day or two with next steps or an honest no.",
+          "Name",
+          "Email",
+          "Message",
+          "Send message",
+          "Prefer a faster path? Reach out directly — anything from a one-line question to a full brief is fine.",
+          "Email",
+          "kusumahaafiidzh@gmail.com",
+          "↗",
+          "LinkedIn",
+          "/in/hafid-kusuma",
+          "↗",
+          "GitHub",
+          "@haafiidzh",
+          "↗",
+          "Based in Semarang, Indonesia · GMT+7"
+        ],
+        "#hero": [
+          "Freelance · AI Full-Stack Engineer",
+          "Calm systems,",
+          "sharp execution.",
+          "i help founders ship production-grade products. architecture, delivery, discipline.",
+          "View my work",
+          "Start a conversation",
+          "3+",
+          "Years shipping",
+          "30+",
+          "Products delivered",
+          "Scroll"
+        ],
+        "#projects": [
+          "03",
+          "Projects",
+          "Selected work.",
+          "Open any case study for the full problem → solution → result breakdown.",
+          "Automation Workflow",
+          "2026",
+          "Chat Based Notion Property Automation",
+          "Automated property data updates and reduced manual effort.",
+          "NextJS",
+          "N8N",
+          "Notion API Integration",
+          "Read case study",
+          "→",
+          "Health platform",
+          "2026",
+          "Invoice Automation",
+          "Automated invoice data recording and reduced manual effort.",
+          "N8N",
+          "Telegram API Integration",
+          "Spreadsheet API Integration",
+          "Read case study",
+          "→",
+          "Chatbot",
+          "2026",
+          "RAG Chatbot",
+          "Chat with a podcast/lecture library, every answer comes with a clickable timestamp you can jump straight to.",
+          "Next.js",
+          "FastAPI",
+          "LLM",
+          "Vector DB",
+          "RAG",
+          "Read case study",
+          "→"
+        ],
+        "#services": [
+          "02",
+          "Services",
+          "What I take off your plate.",
+          "Four ways to work together. Each one is scoped, priced, and time-boxed before anything starts.",
+          "01",
+          "Audit and Code Review",
+          "Audit and code review for your AI powered SaaS, RAG systems, chatbots, and automations.",
+          "Architecture audit",
+          "Code review",
+          "Performance tuning",
+          "Security audit",
+          "02",
+          "Full-Stack Delivery",
+          "Product built end-to-end by the person who designed the system. Ship-ready code, not prototypes.",
+          "Next.js / React product builds",
+          "API and backend systems",
+          "Typed end-to-end",
+          "SaaS",
+          "Chatbots",
+          "E-commerce",
+          "Automations",
+          "03",
+          "Bugfixing and Maintenance",
+          "Bugfixing and maintenance for your production-grade AI powered SaaS, RAG systems, chatbots, and automations.",
+          "Bugfix",
+          "Maintenance",
+          "Optimization",
+          "Performance tuning",
+          "04",
+          "Product Discovery",
+          "Scope cut down to what is genuinely buildable this quarter, with the trade-offs written down.",
+          "Technical feasibility scoping",
+          "MVP definition and scope cuts",
+          "Stakeholder-ready docs"
+        ],
+        "#skills": [
+          "05",
+          "Skills",
+          "The stack I reach for.",
+          "Deliberately narrow. I'd rather go deep on tools that stay boring under load than collect logos.",
+          "Frontend",
+          "TypeScript",
+          "React",
+          "Next.js",
+          "Vue",
+          "Nuxt",
+          "Tailwind CSS",
+          "anime.js",
+          "Framer Motion",
+          "Three.js",
+          "Backend",
+          "Laravel",
+          "Python",
+          "Node.js",
+          "PostgreSQL",
+          "Redis",
+          "Prisma",
+          "GraphQL",
+          "REST",
+          "Infrastructure",
+          "AWS",
+          "Vercel",
+          "Docker",
+          "GitHub Actions",
+          "Azure",
+          "Practice",
+          "System design",
+          "Code review",
+          "Consultation"
+        ],
+        "footer": [
+          "Hafidz",
+          ".",
+          "AI full-stack engineer. Building calm, durable software from Semarang.",
+          "Navigate",
+          "About",
+          "Services",
+          "Projects",
+          "Skills",
+          "Elsewhere",
+          "GitHub",
+          "LinkedIn",
+          "Email",
+          "Availability",
+          "AI Full-Stack Engineer retainer",
+          "Project-based build",
+          "Architecture audit",
+          "©",
+          "2026",
+          "Hafidz. All rights reserved."
+        ],
+        "header": [
+          "Hafidz",
+          ".",
+          "About",
+          "Services",
+          "Projects",
+          "Skills",
+          "Contact",
+          "Let's talk"
+        ]
+      }
+    }
+  }
+}
