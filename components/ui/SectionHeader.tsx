@@ -5,14 +5,17 @@ export default function SectionHeader({
   eyebrow,
   title,
   lede,
+  className = "mb-16 md:mb-24",
 }: {
   index: string;
   eyebrow: string;
   title: string;
   lede?: string;
+  /** Replaces the default bottom margin (e.g. when the header sits in a sticky column). */
+  className?: string;
 }) {
   return (
-    <Reveal className="mb-16 md:mb-24">
+    <Reveal className={className}>
       <div data-reveal className="flex items-center gap-4">
         <span className="text-xs font-medium text-accent-bright">{index}</span>
         <span className="h-px w-10 bg-[var(--hairline)]" />

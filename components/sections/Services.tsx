@@ -1,5 +1,6 @@
 import Reveal from "@/components/ui/Reveal";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { CTA_PILL_CLASS } from "@/components/ui/ctaPill";
 
 const SERVICES = [
   {
@@ -35,38 +36,51 @@ const SERVICES = [
 export default function Services() {
   return (
     <section id="services" className="px-6 py-28 md:px-10 md:py-40">
-      <div className="mx-auto max-w-7xl">
-        <SectionHeader
-          index="02"
-          eyebrow="Services"
-          title="What I take off your plate."
-          lede="Four ways to work together. Each one is scoped, priced, and time-boxed before anything starts."
-        />
+      <div className="services-layout mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-16">
+        {/* One sticky unit (header + CTA); tier rules live in globals.css. */}
+        <div className="services-intro lg:col-span-5">
+          <SectionHeader
+            index="02"
+            eyebrow="Services"
+            title="What I take off your plate."
+            lede="Four ways to work together. Each one is scoped, priced, and time-boxed before anything starts."
+            className="mb-10"
+          />
 
-        <Reveal staggerMs={110} className="hairline-t">
+          <Reveal className="mb-16 md:mb-24 lg:mb-0">
+            <a href="#contact" data-reveal className={`inline-block ${CTA_PILL_CLASS}`}>
+              Let&apos;s talk
+            </a>
+          </Reveal>
+        </div>
+
+        <Reveal staggerMs={110} className="services-stack lg:col-span-7">
           {SERVICES.map((service) => (
             <div
               key={service.no}
               data-reveal
-              className="group grid grid-cols-1 gap-6 border-b border-[var(--hairline)] py-10 transition-colors duration-500 hover:bg-[var(--surface)]/60 md:grid-cols-[80px_1fr_1fr] md:gap-10 md:px-4"
+              className="services-card group p-6 md:pb-8 md:pr-8 md:pt-6"
             >
-              <span className="text-sm text-accent-bright">{service.no}</span>
-              <h3 className="display-md text-foreground">{service.title}</h3>
-              <div>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {service.description}
-                </p>
-                <ul className="mt-5 flex flex-wrap gap-2">
-                  {service.bullets.map((bullet) => (
-                    <li
-                      key={bullet}
-                      className="rounded-full border border-[var(--hairline)] px-3 py-1.5 text-xs text-muted-foreground transition-colors duration-300 group-hover:border-accent-bright/30 group-hover:text-foreground"
-                    >
-                      {bullet}
-                    </li>
-                  ))}
-                </ul>
+              <div className="flex min-h-[3.75rem] items-center gap-3 md:min-h-0 md:gap-0">
+                {/* md+: pulled out into the stack's gutter via margins (in flow, not absolute); see globals.css. */}
+                <span className="services-badge inline-flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-medium tabular-nums text-foreground">
+                  {service.no}
+                </span>
+                <h3 className="display-md text-foreground">{service.title}</h3>
               </div>
+              <p className="mt-4 max-w-prose text-sm leading-relaxed text-muted-foreground">
+                {service.description}
+              </p>
+              <ul className="mt-5 flex flex-wrap gap-2">
+                {service.bullets.map((bullet) => (
+                  <li
+                    key={bullet}
+                    className="rounded-full border border-[var(--hairline)] px-3 py-1.5 text-xs text-muted-foreground transition-colors duration-300 group-hover:border-accent-bright/30 group-hover:text-foreground"
+                  >
+                    {bullet}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </Reveal>

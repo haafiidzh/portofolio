@@ -217,6 +217,131 @@ body {
   background: color-mix(in srgb, var(--surface-2) 90%, transparent);
 }
 
+/* ---------- Services stacking cards (PRD 07 §4.1, §13.6) ----------
+   Pure CSS sticky, no JS, no negative margins on the cards: layout flow is the
+   same plain list with or without the effect. Card i pins at
+   stack-top + i * stack-step; each later card slides up and covers the earlier
+   one, leaving a peek strip of exactly one step. The step is sized to the title
+   row (top padding + badge/title; on <768 the row has a 2-line min-height so
+   the body starts below the strip) plus air, so a
+   buried card shows its badge + title whole, never clipped mid-text. A card is
+   covered only by one that reaches at least as low (height(i+1) + step >=
+   height(i)); heights differ by < 50px against a step of 80-96px, so no body
+   text pokes out below. Sticky is bounded by .services-stack, so all cards
+   release with the container before Projects. Cards MUST have equal height
+   (--card-h, min-height): sticky cards are pushed up by the container's bottom
+   edge, so a taller card (02) is pushed first and its top slides above the
+   shorter card in front of it, clipping that card's title at release. Measured
+   max: 251px at 1280, 358px at 390; --card-h sits above those. Tiers: D/T (>=768) need
+   h>=600, M (<768) h>=520; below the guard, or with reduced motion, cards stay
+   a static list. */
+.services-layout {
+  --stack-top: calc(var(--nav-h) + 1rem);
+  --stack-step: 6rem;
+  --card-h: 23rem;
+}
+
+.services-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.services-card {
+  /* Opaque on purpose: buried cards must not show through (R12). */
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-top-color: color-mix(in srgb, var(--accent-bright) 24%, transparent);
+  border-radius: 1rem;
+  transition:
+    border-color 0.35s ease,
+    background-color 0.35s ease;
+}
+
+@media (hover: hover) {
+  .services-card:hover {
+    border-color: color-mix(in srgb, var(--accent-bright) 40%, transparent);
+    background: var(--surface-2);
+  }
+}
+
+.services-badge {
+  position: relative;
+  z-index: 1;
+  background: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent-bright) 40%, transparent);
+}
+
+@media (min-width: 768px) {
+  .services-layout {
+    --stack-top: calc(var(--nav-h) + 1.5rem);
+    --stack-step: 5rem;
+    --card-h: 17rem;
+    --card-pad-l: 2.5rem;
+    /* Badge column left of the cards: 40px badge + 12px air. */
+    --badge-gutter: 3.25rem;
+  }
+  .services-stack {
+    gap: 1.5rem;
+    padding-left: var(--badge-gutter);
+  }
+  .services-card {
+    padding-left: var(--card-pad-l);
+  }
+  /* Sticky cards are stacking contexts, so a badge straddling the border would
+     get its inner half painted over by the next card. Sitting fully outside the
+     card box, no later card overlaps it. The right margin cancels the badge's inline size so the title keeps the
+     card's padding edge. */
+  .services-badge {
+    margin-left: calc(-1 * (var(--card-pad-l) + var(--badge-gutter)));
+    margin-right: calc(var(--card-pad-l) + var(--badge-gutter) - 2.5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  /* A stretched grid item has no room to stick. */
+  .services-intro {
+    align-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @media (max-width: 767px) and (min-height: 520px),
+    (min-width: 768px) and (min-height: 600px) {
+    .services-card {
+      position: sticky;
+      /* Equal heights: see the release note in the comment above. */
+      min-height: var(--card-h);
+    }
+    .services-card:nth-child(1) {
+      top: var(--stack-top);
+    }
+    .services-card:nth-child(2) {
+      top: calc(var(--stack-top) + var(--stack-step));
+    }
+    .services-card:nth-child(3) {
+      top: calc(var(--stack-top) + 2 * var(--stack-step));
+    }
+    .services-card:nth-child(4) {
+      top: calc(var(--stack-top) + 3 * var(--stack-step));
+    }
+  }
+}
+
+/* Pinning is not motion, so the left column stays sticky under reduced motion (D5). */
+@media (min-width: 1024px) and (min-height: 600px) {
+  .services-intro {
+    position: sticky;
+    top: var(--stack-top);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-card {
+    transition: none;
+  }
+}
+
 /* ---------- Focus ring ---------- */
 :where(a, button, input, textarea):focus-visible {
   outline: 2px solid var(--accent-bright);
