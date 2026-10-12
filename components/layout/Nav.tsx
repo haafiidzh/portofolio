@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const LINKS = [
@@ -33,10 +34,19 @@ export default function Nav() {
       <nav className="mx-auto flex h-full max-w-7xl items-center justify-between px-6 md:px-10">
         <a
           href="#hero"
-          className="text-sm tracking-tight text-foreground"
+          className="flex items-center gap-2.5 text-sm tracking-tight text-foreground"
         >
-          <span className="font-semibold">Hafidz</span>
-          <span className="text-accent-bright">.</span>
+          <Image
+            src="/images/logo-mark.png"
+            alt=""
+            width={32}
+            height={32}
+            className="h-8 w-8 rounded-full border border-[var(--hairline)] object-cover"
+          />
+          <span>
+            <span className="font-semibold">Hafidz</span>
+            <span className="text-accent-bright">.</span>
+          </span>
         </a>
 
         <ul className="hidden items-center gap-9 md:flex">
