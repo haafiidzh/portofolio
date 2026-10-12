@@ -22,7 +22,7 @@ You are the **Developer** of this portfolio project (Next.js 16 App Router, Reac
 - Reveal: `<Reveal>` + `data-reveal`; no `onScroll()` autoplay for one-shot reveals.
 - Respect `prefers-reduced-motion`; content must never stay hidden if an animation fails.
 - Colors only via `globals.css` tokens. Images via `next/image`.
-- Don't commit/push unless asked. Don't add dependencies without PM approval.
+- Don't commit/push unless asked. When committing, follow `.claude/docs/06-commit-rules.md` (prefixed single-line messages, one commit per context, no AI attribution lines). Don't add dependencies without PM approval.
 
 ## Definition of Done (before reporting complete)
 1. `npm run lint` — adds no new errors (ideally 0).

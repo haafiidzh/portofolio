@@ -9,6 +9,7 @@ Personal portfolio site (Next.js 16 + Tailwind v4 + anime.js v4) for Hafidz — 
 | [03-design-system.md](03-design-system.md) | Color tokens, typography, component patterns | UI/UX |
 | [04-status-and-backlog.md](04-status-and-backlog.md) | Gaps vs brief, findings, P0–P3 backlog | PM |
 | [05-dev-workflow.md](05-dev-workflow.md) | Commands, conventions, three-agent workflow, deploy | Developer |
+| [06-commit-rules.md](06-commit-rules.md) | Commit message format and rules (no AI attribution) | All agents |
 
 Agents: `.claude/agents/pm.md`, `ui-ux.md`, `developer.md`.
 
