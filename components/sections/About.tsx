@@ -23,7 +23,7 @@ export default function About() {
 
           <Reveal staggerMs={110}>
             <p data-reveal className="lede text-foreground">
-              Hey! 👋 I'm a fullstack AI dev who loves shipping end-to-end solutions : smart chatbots, RAG systems, web scrapers, and automations that handle the boring stuff so you don't have to.
+              Hey! I'm a fullstack AI dev who loves shipping end-to-end solutions smart chatbots, RAG systems, web scrapers, and automations that handle the boring stuff so you don't have to.
               <br />
               <br />
               Clean code, practical vibes, no fluff. Whether it's training LLMs, integrating APIs, or building something that actually works in production, I'm all in. Got a project or a wild AI idea? Let's cook something cool.
