@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { PortfolioProject } from "./PortfolioCard";
 
@@ -12,10 +12,24 @@ export default function PortfolioModal({
   onClose: () => void;
 }) {
   const [imageIndex, setImageIndex] = useState(0);
+  const [prevProject, setPrevProject] = useState(project);
 
-  useEffect(() => {
+  if (project !== prevProject) {
+    setPrevProject(project);
     setImageIndex(0);
-  }, [project]);
+  }
+
+  const imageCount = project?.images?.length ?? 0;
+
+  const handlePrevImage = useCallback(() => {
+    if (imageCount === 0) return;
+    setImageIndex((prev) => (prev === 0 ? imageCount - 1 : prev - 1));
+  }, [imageCount]);
+
+  const handleNextImage = useCallback(() => {
+    if (imageCount === 0) return;
+    setImageIndex((prev) => (prev === imageCount - 1 ? 0 : prev + 1));
+  }, [imageCount]);
 
   useEffect(() => {
     if (!project) return;
@@ -26,17 +40,7 @@ export default function PortfolioModal({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [project, onClose, imageIndex]);
-
-  const handlePrevImage = () => {
-    if (!project?.images || project.images.length === 0) return;
-    setImageIndex((prev) => (prev === 0 ? project.images!.length - 1 : prev - 1));
-  };
-
-  const handleNextImage = () => {
-    if (!project?.images || project.images.length === 0) return;
-    setImageIndex((prev) => (prev === project.images!.length - 1 ? 0 : prev + 1));
-  };
+  }, [project, onClose, handlePrevImage, handleNextImage]);
 
   return (
     <AnimatePresence>
