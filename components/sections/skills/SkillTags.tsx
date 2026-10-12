@@ -41,7 +41,7 @@ export default function SkillTags({
   return (
     <div
       ref={row}
-      className="hairline-t grid grid-cols-1 gap-5 py-8 md:grid-cols-[200px_1fr] md:gap-10"
+      className="hairline-t skills-row grid grid-cols-1 gap-5 py-8 md:grid-cols-[200px_1fr] md:gap-10"
     >
       <p className="eyebrow pt-1">{label}</p>
       <ul className="flex flex-wrap gap-2.5">

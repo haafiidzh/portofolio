@@ -203,6 +203,41 @@ body {
   border-top: 1px solid var(--hairline);
 }
 
+/* Skills row accent line: drawn over the row's hairline as scroll passes (PRD 07 §13.2).
+   Without timeline support or under reduced motion it stays fully drawn. */
+.skills-row {
+  position: relative;
+}
+.skills-row::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: color-mix(in srgb, var(--accent-bright) 45%, transparent);
+  transform-origin: left;
+  pointer-events: none;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .skills-row::before {
+      animation: skills-line-draw linear both;
+      animation-timeline: view();
+      /* row top @ 88% -> 58% of the viewport */
+      animation-range: cover 12vh cover 42vh;
+    }
+  }
+}
+@keyframes skills-line-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 .card {
   background: color-mix(in srgb, var(--surface) 80%, transparent);
   border: 1px solid var(--hairline);
