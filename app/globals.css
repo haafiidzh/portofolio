@@ -564,3 +564,257 @@ html.motion-ok .pf-card-wrap:focus-within .pf-card-float {
 #hero[data-hero-live] [data-hero-object] {
   will-change: transform, opacity;
 }
+
+/* ==========================================================================
+   Motto marquee. Static + centered by default (no-JS / reduced motion);
+   the loop only runs under html.motion-ok. Track is data-ambient.
+   Type fills the band: Inter 700 caps are ~0.73em tall, so with line-height .8 and
+   .1em padding top/bottom the band is 1em tall and the caps take ~73% of it.
+   Each group holds the motto twice so one group is wider than any viewport
+   (otherwise an empty gap shows at the loop seam on wide screens).
+   ========================================================================== */
+.motto {
+  background:
+    radial-gradient(55% 140% at 50% -20%, rgb(169 123 234 / 0.22), transparent 70%),
+    linear-gradient(180deg, var(--motto-bg-top), var(--motto-bg) 45%, var(--motto-bg-bottom));
+  color: var(--motto-fg);
+  overflow-x: clip;
+  border-top: 1px solid rgb(169 123 234 / 0.45);
+  border-bottom: 1px solid rgb(169 123 234 / 0.25);
+  box-shadow: 0 0 6rem -2rem rgb(106 28 176 / 0.35);
+}
+.motto-track {
+  display: flex;
+  justify-content: center;
+}
+.motto-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.15em 1.5rem;
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 9vw, 4rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .motto-group {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.8;
+    padding-block: 0.1em;
+  }
+}
+.motto-unit {
+  display: flex;
+  align-items: center;
+}
+.motto-text {
+  margin: 0;
+}
+.motto-line {
+  display: block;
+}
+@media (min-width: 768px) {
+  .motto-line {
+    display: inline;
+  }
+}
+.motto-sep,
+.motto-dup {
+  display: none;
+}
+.motto-sep {
+  color: var(--motto-accent);
+  font-size: 0.6em;
+}
+@keyframes motto-loop {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+html.motion-ok .motto-track {
+  justify-content: flex-start;
+  width: max-content;
+  animation: motto-loop 60s linear infinite;
+  will-change: transform;
+}
+html.motion-ok .motto-group {
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding-inline: 0;
+  padding-block: 0.1em;
+  line-height: 0.8;
+  font-size: clamp(6.9rem, 16vw, 14rem);
+}
+html.motion-ok .motto-line {
+  display: inline;
+}
+html.motion-ok .motto-sep,
+html.motion-ok .motto-dup {
+  display: flex;
+}
+html.motion-ok .motto-sep {
+  padding-inline: 0.4em;
+}
+@media (hover: hover) and (pointer: fine) {
+  html.motion-ok .motto:hover .motto-track,
+  html.motion-ok .motto:focus-within .motto-track {
+    animation-play-state: paused;
+  }
+}
+/* "Lilac pearl jelly" fill: motion mode only, gradient per .motto-text (not per track). */
+html.motion-ok .motto-group {
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  html.motion-ok .motto-text {
+    background-image:
+      linear-gradient(180deg, rgb(255 255 255 / 0) 7%, rgb(255 255 255 / 0.85) 13%, rgb(255 255 255 / 0.45) 34%, rgb(255 255 255 / 0) 42%),
+      linear-gradient(180deg, #d9c4fa 0%, #c09af2 30%, #a374ea 55%, #8f5ae0 82%, #b38cf0 94%, #d6c0fa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0.025em 0 var(--motto-extrude)) drop-shadow(0 0.05em 0.04em rgb(8 0 18 / 0.55));
+  }
+  @media (max-width: 767px) {
+    html.motion-ok .motto-text {
+      filter: drop-shadow(0 0.025em 0 var(--motto-extrude));
+    }
+  }
+}
+@media (forced-colors: active) {
+  .motto {
+    background: Canvas;
+    box-shadow: none;
+    border-color: CanvasText;
+  }
+  html.motion-ok .motto-text {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+    filter: none;
+  }
+}
+
+/* ==========================================================================
+   Watu mascot (Motto band). Static pose by default; animation only under
+   html.motion-ok. Lane is absolute, height 0 (no CLS), non-interactive.
+   ========================================================================== */
+.motto {
+  position: relative;
+}
+.watu-lane {
+  position: absolute;
+  top: -1px;
+  inset-inline: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.watu {
+  position: absolute;
+  bottom: 0;
+  left: 12%;
+  transform: translate3d(var(--x, 0px), 0, 0);
+}
+.watu-face {
+  display: block;
+}
+.watu-jump {
+  transform-origin: 50% 100%;
+  transition: transform 0.4s ease;
+}
+.watu-svg {
+  display: block;
+  transform-origin: 50% 100%;
+  overflow: visible;
+}
+@media (max-width: 767px) {
+  .watu-svg {
+    width: 30px;
+    height: auto;
+  }
+}
+.watu-eyes,
+.watu-gaze,
+.watu-leg {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.watu-leg {
+  transform-origin: 50% 100%;
+}
+html.motion-ok .watu-eyes {
+  animation: watu-blink 5.2s infinite;
+}
+html.motion-ok .watu-gaze {
+  transition: transform 0.5s ease;
+}
+html.motion-ok .watu.is-looking .watu-gaze {
+  animation: watu-look 1.8s ease-in-out;
+}
+html.motion-ok .watu.is-walking .watu-svg {
+  animation: watu-bob 520ms infinite;
+  will-change: transform;
+}
+html.motion-ok .watu.is-walking .watu-leg--front {
+  animation: watu-step 520ms infinite;
+}
+html.motion-ok .watu.is-walking .watu-leg--back {
+  animation: watu-step 520ms -260ms infinite;
+}
+html.motion-ok .watu .watu-jump.is-jumping {
+  animation: watu-jump 640ms forwards;
+}
+html.motion-ok .watu.is-sitting .watu-jump {
+  transform: translateY(2px) scale(1.04, 0.94);
+}
+html.motion-ok .watu.is-sitting .watu-leg {
+  transform: scaleY(0.5);
+}
+html.motion-ok .watu.is-sitting .watu-eyes {
+  animation: none;
+  transform: scaleY(0.5);
+}
+@keyframes watu-blink {
+  0%, 95%, 100% { transform: scaleY(1); }
+  96%, 98% { transform: scaleY(0.1); }
+}
+@keyframes watu-look {
+  0% { transform: translateX(0); }
+  28%, 45% { transform: translateX(-1.5px); }
+  60%, 78% { transform: translateX(1.5px); }
+  100% { transform: translateX(0); }
+}
+@keyframes watu-bob {
+  0%, 50%, 100% { transform: translateY(0) rotate(0); }
+  25% { transform: translateY(-1.5px) rotate(-3deg); }
+  75% { transform: translateY(-1.5px) rotate(3deg); }
+}
+@keyframes watu-step {
+  0%, 50%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-2px); }
+}
+@keyframes watu-jump {
+  0% { transform: translateY(0) scale(1); animation-timing-function: ease-out; }
+  18% { transform: translateY(0) scale(1.12, 0.86); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1); }
+  25% { transform: translateY(-6px) scale(0.92, 1.1); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1); }
+  50% { transform: translateY(var(--apex, -22px)) scale(1); animation-timing-function: cubic-bezier(0.6, 0, 0.8, 0.3); }
+  82% { transform: translateY(0) scale(1.14, 0.84); animation-timing-function: ease-out; }
+  100% { transform: translateY(0) scale(1); }
+}
+@media (forced-colors: active) {
+  .watu-lane {
+    display: none;
+  }
+}
+
+/* Motto band now sits right above the footer: its own bottom border is the edge, skip the footer hairline. */
+main:has(> .motto:last-child) + footer.hairline-t {
+  border-top-color: transparent;
+}

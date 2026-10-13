@@ -4,6 +4,7 @@ import Services from "@/components/sections/Services";
 import Portfolio from "@/components/sections/Portfolio";
 import Experience from "@/components/sections/Experience";
 import Skills from "@/components/sections/Skills";
+import Motto from "@/components/sections/Motto";
 import Contact from "@/components/sections/Contact";
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
       {/* <Experience /> */}
       <Skills />
       <Contact />
+      <Motto />
     </main>
   );
 }
