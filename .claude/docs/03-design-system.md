@@ -25,6 +25,8 @@ Hardcoded hex outside the tokens: `#7a5c8e` and siblings in `MorphBlob`/`useScro
 
 One family: **Inter** (400/500/600/700). `--font-display` is only an alias of `--font-sans`.
 
+The Motto marquee band (`components/sections/Motto.tsx`) uses Inter uppercase (700 static, 800 + .03em tracking in motion; variable font, no extra file) with a "lilac pearl jelly" fill in motion mode only (per-`.motto-text` gradient + background-clip:text, two drop-shadows, no animation besides the track transform; flat #f4f1f8 for reduced-motion/forced-colors; tokens `--motto-bg-top/-bottom/-extrude`) sized so caps (~0.73em) fill ~73% of the band: group `line-height .8` + `padding-block .1em` makes band height = 1em; motion font-size `clamp(6.9rem, 16vw, 14rem)`. Motto tokens: `--motto-bg` (= `--accent-deep` #2e004f, "deep violet"), `--motto-fg` (= `--foreground` #f4f1f8, 15.3:1), `--motto-accent` (= `--accent-bright` #a97bea star separators, 5.5:1). Band vs page is only 1.18:1, so `.motto` has `border-block: 1px solid rgb(169 123 234 / .25)` for the edge.  loop is gated by `html.motion-ok`, track is `data-ambient`.
+
 | Class | Spec |
 |---|---|
 | `.display-xl` | clamp(3rem, 11vw, 9rem), 700, lh .95, ls -.045em — hero H1 |
@@ -50,3 +52,7 @@ One family: **Inter** (400/500/600/700). `--font-display` is only an alias of `-
 - Hero copy is lowercase ("i help founders…") while the rest of the site uses standard sentences.
 - `muted-foreground` (#9b93a8) contrast on 12px text (`text-xs`) needs a WCAG AA check.
 - Modal uses `bg-muted` (token **does not exist**) → image background is undefined.
+
+### Watu (Motto mascot)
+
+Decorative, non-clickable river-pebble mascot (`components/sections/motto/Watu.tsx`, styles in the Motto block of `globals.css`) standing on the Motto band's top border: 44px wide (30px at <=767px), body gradient #d9c4fa -> #b38cf0 -> #8f5ae0, outline #1f0036, kawung mark #6a1cb0, no mouth/cheeks. Lane is `aria-hidden`, `data-ambient`, absolute with height 0 (no CLS), hidden under forced-colors. Animations (transform/opacity only: blink, walk bob, jump, look, sit) run only under `html.motion-ok`; otherwise a static pose at left:12%. State machine uses setTimeout, paused when hidden/offscreen/hovered; pointer reaction only on fine pointers. Needs >= 4.5rem free above the band (Contact section bottom padding is 160px desktop / 112px mobile; the band sits between Contact and the footer, and the footer hairline is hidden next to it).
