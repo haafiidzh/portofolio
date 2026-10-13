@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { getLenis } from "@/components/ui/lenisAccessor";
 import type { PortfolioProject } from "./PortfolioCard";
 
 export default function PortfolioModal({
@@ -33,13 +34,17 @@ export default function PortfolioModal({
 
   useEffect(() => {
     if (!project) return;
+    getLenis()?.stop();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
       if (e.key === "ArrowLeft") handlePrevImage();
       if (e.key === "ArrowRight") handleNextImage();
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      getLenis()?.start();
+    };
   }, [project, onClose, handlePrevImage, handleNextImage]);
 
   return (
@@ -57,6 +62,7 @@ export default function PortfolioModal({
           aria-label={`${project.title} case study`}
         >
           <motion.div
+            data-lenis-prevent
             className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-6 md:p-8"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}

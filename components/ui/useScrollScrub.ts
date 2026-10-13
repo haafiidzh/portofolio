@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type RefObject } from "react";
+import { getLenis, onLenisChange } from "./lenisAccessor";
 import { onScroll, type ScrollObserver } from "animejs";
 
 /** Only these smoothing values are allowed (PRD 07 §13.1 Q3): water / hero / line. */
@@ -37,6 +38,7 @@ type Revertible = { revert: () => unknown };
  *    keeps its CSS (final) state;
  *  - tier/reduced-motion changes at runtime re-evaluate (revert or rebuild);
  *  - unmount -> `revert()` removes the observer and inline styles;
+ *  - while Lenis runs the observer uses `sync: true`; hooks rebuild when it starts/stops;
  *  - no layout reads here; anime.js measures on resize, not per scroll frame.
  * One-shot reveals stay on useRevealOnEnter (see its comment for why).
  */
@@ -84,16 +86,25 @@ export function useScrollScrub<T extends HTMLElement | SVGElement>(
             target: target?.current ?? el,
             enter: enter ?? "bottom top",
             leave: leave ?? "top bottom",
-            sync: s,
+            // Smoothing rule (PRD 08 §7.4): Lenis already smooths scrollY.
+            sync: getLenis() ? true : s,
           })
         );
       }
     };
 
+    const rebuild = () => {
+      active?.revert();
+      active = null;
+      sync();
+    };
+
     sync();
+    const offLenis = onLenisChange(rebuild);
     const all = [reduce, ...mqls];
     for (const m of all) m.addEventListener("change", sync);
     return () => {
+      offLenis();
       for (const m of all) m.removeEventListener("change", sync);
       active?.revert();
       active = null;
