@@ -36,5 +36,3 @@ coverage/
 *.pem
 .vscode/
 .idea/
-
-CLAUDE.md
