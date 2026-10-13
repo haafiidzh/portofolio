@@ -40,6 +40,8 @@ const audit = (page) =>
 /**
  * PRD 07 §4/§10: after scroll settles, no text in the reading zone (middle 60%
  * of the viewport) may have effective opacity < 1 (own x ancestors').
+ * Text inside [data-scene] is skipped: scenes are covered by scripts/scene-audit.mjs
+ * (PRD 08 M4/M5'); non-scene sections and the M9 zones (Hero, header, #contact) stay here.
  */
 const readingZone = (page) =>
   page.evaluate(() => {
@@ -57,6 +59,8 @@ const readingZone = (page) =>
       if (!t.nodeValue.trim()) continue;
       const el = t.parentElement;
       if (!el || el.closest("script, style, noscript, [aria-hidden='true']")) continue;
+      // Scenes are staged on purpose and audited by scripts/scene-audit.mjs (M4/M5').
+      if (el.closest("[data-scene]")) continue;
       // Hero "Scroll" hint: decorative, scrubbed to 0 on purpose (PRD 07 §13.2, F5);
       // it sits at the bottom of the tall hero, so it crosses the zone while invisible.
       if (el.closest("#hero") && el.classList.contains("eyebrow") && t.nodeValue.trim() === "Scroll") continue;
