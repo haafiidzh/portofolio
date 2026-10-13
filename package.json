@@ -11,7 +11,8 @@
     "snapshot": "node scripts/content-snapshot.mjs",
     "snapshot:check": "node scripts/content-snapshot.mjs --check",
     "snapshot:nojs": "node scripts/content-snapshot.mjs --nojs",
-    "audit:scenes": "node scripts/scene-audit.mjs"
+    "audit:scenes": "node scripts/scene-audit.mjs",
+    "audit:resize": "node scripts/scene-audit.mjs --only=resize --viewport=375x812,1280x800"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

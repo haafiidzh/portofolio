@@ -2,6 +2,9 @@
 //   node scripts/scene-audit.mjs [--viewport=1280x800,375x812] [--runs=default,no-smooth]
 //                                [--quick: 1280x800, default run only, for iteration; full mode is the default]
 //                                [--inject=file.js] [--out=dir] [--strict-focus] [--parallel=2]
+//                                [--scene=about,portfolio] [--only=resize]
+// R1 (height resize, Q1): at 375/1280 wide, each complete scene must keep its final state across a
+// viewport-height change of -72 / +88 px with no scroll in between.
 // Env: URL=http://host:port reuses a running production server (else spawns `next start` on :3100).
 // Each viewport runs twice: default, and with window.__DISABLE_SMOOTH_SCROLL__ = true (Lenis off, PRD 08 §7.3).
 // --inject runs a script in the page after load (tooling self-test: temporary data-scene, injected violations).
@@ -19,8 +22,23 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const BASELINE = resolve(HERE, "../snapshots/content-baseline.json");
 const BROWSER_LIB = readFileSync(resolve(HERE, "lib/audit-browser.js"), "utf8");
 
-const arg = (name) => process.argv.find((a) => a.startsWith(`--${name}=`))?.slice(name.length + 3);
+// Accepts both `--name=value` and `--name value`.
+const arg = (name) => {
+  const eq = process.argv.find((a) => a.startsWith(`--${name}=`));
+  if (eq) return eq.slice(name.length + 3);
+  const i = process.argv.indexOf(`--${name}`);
+  return i >= 0 && process.argv[i + 1] && !process.argv[i + 1].startsWith("--") ? process.argv[i + 1] : undefined;
+};
 const QUICK = process.argv.includes("--quick");
+// --scene=a,b: audit only these scenes (M8/M9/static parity still run unless --only=resize).
+const SCENES = arg("scene")?.split(",");
+// --only=resize: skip parity/M4/M5'/M8/M9 and run only the height-resize scenario (R1).
+const ONLY = arg("only");
+// R1 runs at these widths (any height in the viewport list); heights change by these deltas.
+const RESIZE_WIDTHS = [375, 1280];
+const RESIZE_DELTAS = [-72, 88];
+const R1_IDLE_MS = 4000;
+if (ONLY && ONLY !== "resize") { console.error(`Unknown --only=${ONLY} (supported: resize)`); process.exit(2); }
 const ALL_VIEWPORTS = QUICK ? [[1280, 800]] : [[375, 812], [768, 1024], [1280, 800], [1366, 768]];
 const viewports = (arg("viewport")?.split(",").map((v) => v.split("x").map(Number)) ?? ALL_VIEWPORTS)
   .map(([width, height]) => ({ width, height }));
@@ -220,6 +238,85 @@ async function auditScene(page, name, vp, ref, ctx) {
   } else log(`  M5'(c) colour check skipped: scene "${name}" not present in the static render`);
 }
 
+/**
+ * R1 (Q1 regression): a viewport-height change with no scroll must not move a complete scene off its
+ * final state (M5'(b)/(c)). Parks each scene where it is complete and still on screen, records every IU's
+ * state, changes the height by each RESIZE_DELTAS, waits for the page to settle and compares again.
+ * A follow-up 1 px scroll is reported (diagnostic only) to show whether the scene recovers on scroll.
+ */
+async function auditResize(page, names, vp, ref, ctx) {
+  log(`\n  R1 height resize (${RESIZE_DELTAS.map((d) => (d > 0 ? "+" : "") + d).join(" / ")} px, no scroll): IU state must stay final`);
+  const maxGrow = Math.max(0, ...RESIZE_DELTAS);
+  // Earlier scenarios (M8 clicks) leave the pointer over a card and focus inside a scene: hover raise
+  // and focus-within would read as "not final" and skip R1. Park the pointer on the page edge, drop focus.
+  await page.mouse.move(vp.width - 1, vp.height - 1);
+  await page.evaluate(() => document.activeElement?.blur());
+  for (const name of names) {
+    for (const delta of RESIZE_DELTAS) {
+      if ((await page.evaluate(() => innerHeight)) !== vp.height) {
+        await page.setViewportSize(vp);
+        await page.waitForTimeout(800); // scene rebuild (150 ms debounce) + anime.js resize refresh (250 ms)
+      }
+      await page.evaluate(() => window.__audit.settle());
+      const m = await page.evaluate(() => window.__audit.metrics());
+      const { start, end } = await page.evaluate((n) => window.__audit.docRange(n), name);
+      // Complete and on screen: short scene with its top under the nav; tall scene with its bottom at
+      // 75% of the viewport (stays past the end after shrinking). Kept below the post-grow max scroll
+      // so the browser does not clamp (= scroll) on the resize.
+      const y = Math.round(Math.min(m.max - maxGrow - 1, Math.max(0, start - m.nav, end - 0.75 * vp.height)));
+      let pre, preResid;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        await jump(page, y + 40);
+        await jump(page, y);
+        await page.waitForTimeout(600);
+        await page.evaluate(() => window.__audit.settle());
+        pre = await page.evaluate((n) => window.__audit.sampleScene(n), name);
+        preResid = await page.evaluate(([n, r]) => window.__audit.staticViolations(n, r), [name, ref.xforms[name] ?? {}]);
+        if (!preResid.length) break;
+      }
+      // The bug class is a race between the scene rebuild and anime.js's scroll tickers: it only shows
+      // reliably once every ticker has gone idle, so the resize comes after R1_IDLE_MS without input.
+      await page.waitForTimeout(R1_IDLE_MS);
+      const label = `scene "${name}" ${vp.width}x${vp.height} -> ${vp.width}x${vp.height + delta} @scrollY ${y}`;
+      if (preResid.length) {
+        log(`  ${label}: skipped, scene not final before resize (${preResid.slice(0, 2).join(" | ")})`);
+        continue;
+      }
+      await page.setViewportSize({ width: vp.width, height: vp.height + delta });
+      await page.evaluate(() => window.__audit.settle(150, 3000));
+      await page.waitForTimeout(1000);
+      await page.evaluate(() => window.__audit.settle());
+      const post = await page.evaluate((n) => window.__audit.sampleScene(n), name);
+      const postResid = await page.evaluate(([n, r]) => window.__audit.staticViolations(n, r), [name, ref.xforms[name] ?? {}]);
+      const yNow = await page.evaluate(() => scrollY);
+      const changed = pre.ius
+        .map((iu, i) => ({ iu, p: post.ius[i] }))
+        .filter(({ iu, p }) => iu.rendered && p && !near(p.state, iu.state, STATE_TOL));
+      const newResid = postResid.filter((r) => !preResid.includes(r));
+      if (!changed.length && !newResid.length) {
+        log(`  ${label}: pass (${pre.ius.filter((iu) => iu.rendered).length} IUs final)`);
+        continue;
+      }
+      // Diagnostic: does a 1 px scroll bring the final state back?
+      await page.mouse.wheel(0, 2);
+      await page.waitForTimeout(600);
+      await page.evaluate(() => window.__audit.settle());
+      const after = await page.evaluate((n) => window.__audit.sampleScene(n), name);
+      const recovered = changed.every(({ iu }) => near(after.ius[pre.ius.indexOf(iu)].state, iu.state, STATE_TOL));
+      log(`  ${label}: FAIL ${changed.length} IU(s) left final state${yNow !== y ? ` (scrollY moved to ${yNow})` : ""}; after a 1 px scroll: ${recovered ? "recovered" : "still not final"}`);
+      // One violation per scene x resize (not per IU): the IU list is the evidence, the count the size.
+      if (changed.length)
+        fail(ctx, "R1", `${label}: ${changed.length} IU(s) left final state (opacity before -> after): ` +
+          changed.slice(0, 6).map(({ iu, p }) => `"${iu.text}" ${iu.state[0]} -> ${p.state[0]}`).join(", ") +
+          (changed.length > 6 ? `, +${changed.length - 6} more` : "") +
+          `\n      first IU state [opacity, matrix a b c d e f, clip, r g b]: [${changed[0].iu.state.join(",")}] -> [${changed[0].p.state.join(",")}]`);
+      if (newResid.length)
+        fail(ctx, "R1", `${label}: ${newResid.length} element(s) with residual non-static state after resize (M5'(c)): ${newResid.slice(0, 3).join(" | ")}${newResid.length > 3 ? ` | +${newResid.length - 3} more` : ""}`);
+    }
+  }
+  await page.setViewportSize(vp);
+}
+
 /** M8: in-page links by pointer and keyboard. */
 async function auditTabWalk(page, ctx) {
   // Must run before any link click: a click moves the sequential-focus starting point.
@@ -342,18 +439,27 @@ async function auditRun(browser, vp, run, ref) {
   await page.waitForTimeout(2800); // Hero entrance (stagger + 1.1 s) must be over before sampling
   await jump(page, 0);
 
-  const names = await page.evaluate(() => window.__audit.sceneNames());
-  log(`  ${names.length} scenes registered${names.length ? ": " + names.join(", ") : ""}`);
+  const all = await page.evaluate(() => window.__audit.sceneNames());
+  log(`  ${all.length} scenes registered${all.length ? ": " + all.join(", ") : ""}`);
+  const names = SCENES ? all.filter((n) => SCENES.includes(n)) : all;
+  if (SCENES) {
+    log(`  --scene filter: auditing ${names.length ? names.join(", ") : "none"}`);
+    for (const s of SCENES.filter((s) => !all.includes(s))) fail(ctx, "filter", `--scene "${s}" is not a registered scene`);
+  }
   const m = await page.evaluate(() => window.__audit.metrics());
 
-  await checkParity(page, ref, "page top", ctx);
-  await auditTabWalk(page, ctx);
-  await jump(page, 0);
-  await jump(page, m.max);
-  await checkParity(page, ref, "page bottom", ctx);
-  for (const n of names) await auditScene(page, n, vp, ref, ctx);
-  await auditConversion(page, vp, ctx);
-  await auditLinks(page, vp, ctx);
+  if (ONLY !== "resize") {
+    await checkParity(page, ref, "page top", ctx);
+    await auditTabWalk(page, ctx);
+    await jump(page, 0);
+    await jump(page, m.max);
+    await checkParity(page, ref, "page bottom", ctx);
+    for (const n of names) await auditScene(page, n, vp, ref, ctx);
+    await auditConversion(page, vp, ctx);
+    await auditLinks(page, vp, ctx);
+  }
+  if (RESIZE_WIDTHS.includes(vp.width)) await auditResize(page, names, vp, ref, ctx);
+  else if (ONLY === "resize") log(`  R1 skipped: runs at widths ${RESIZE_WIDTHS.join("/")} only`);
   for (const e of errors) fail(ctx, "console", e);
   await bctx.close();
 }
