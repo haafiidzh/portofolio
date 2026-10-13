@@ -133,9 +133,22 @@
     return null;
   };
 
+  /** Crop images (own CSS `scale` != 1, e.g. next/image with scale-200 inside an overflow-hidden frame): the crop is
+   *  design, so they are judged by their parent frame's box and the parent's transforms, not by their own scaled box. */
+  const cropImg = (el) => {
+    if (el.tagName !== "IMG" || !el.parentElement) return false;
+    const sc = getComputedStyle(el).scale;
+    return sc !== "none" && sc !== "1";
+  };
+  /** splitText `accessible: true` copy: a visually-hidden 1px span; screen-reader only, not a visible IU. */
+  const isSrCopy = (el) => el.tagName === "SPAN" && el.style.position === "absolute" && el.style.width === "1px" && el.style.height === "1px";
+
+  /** The block that owns a split-text SR copy is the text IU; its aria-hidden words carry the colour. */
+  const srCopyOf = (el) => [...el.children].find(isSrCopy);
+
   /** Fraction of el's box that survives overflow / clip-path of itself and ancestors; masks count as hidden. */
   const clipState = (el) => {
-    const r0 = el.getBoundingClientRect();
+    const r0 = (cropImg(el) ? el.parentElement : el).getBoundingClientRect();
     let r = box(r0);
     let masked = false;
     for (const n of ancestors(el)) {
@@ -159,6 +172,8 @@
     [...el.childNodes].some((c) => c.nodeType === 3 && c.nodeValue.trim());
   const ownText = (el) => {
     if (el.tagName === "IMG") return `[img] ${el.getAttribute("alt") || el.getAttribute("src") || ""}`;
+    const sr = srCopyOf(el);
+    if (sr) return norm(sr.textContent);
     if (hasDirectText(el)) return norm([...el.childNodes].filter((c) => c.nodeType === 3).map((c) => c.nodeValue).join(" "));
     return `[${el.tagName.toLowerCase()}] ${el.getAttribute("aria-label") || el.getAttribute("placeholder") || el.getAttribute("name") || ""}`;
   };
@@ -167,11 +182,11 @@
   const leafIUs = (root, keepZero = false) => {
     const out = [];
     for (const el of [root, ...root.querySelectorAll("*")]) {
-      if (SKIP_TAGS.has(el.tagName) || el.closest('[aria-hidden="true"]')) continue;
+      if (SKIP_TAGS.has(el.tagName) || el.closest('[aria-hidden="true"]') || isSrCopy(el)) continue;
       if (el instanceof SVGElement && el.tagName !== "svg") continue;
       const isMedia = ["IMG", "TEXTAREA", "SELECT"].includes(el.tagName) ||
         (el.tagName === "INPUT" && el.type !== "hidden");
-      if (!isMedia && !hasDirectText(el)) continue;
+      if (!isMedia && !hasDirectText(el) && !srCopyOf(el)) continue;
       const r = el.getBoundingClientRect();
       if (!keepZero && r.width === 0 && r.height === 0) continue; // display:none in this layout
       out.push(el);
@@ -184,7 +199,7 @@
     const reasons = [];
     const vw = innerWidth, vh = innerHeight;
     const nav = el.closest("header") ? 0 : navBottom(); // the Nav does not occlude itself
-    const r = el.getBoundingClientRect();
+    const r = (cropImg(el) ? el.parentElement : el).getBoundingClientRect();
     const region = { left: 0, top: nav, right: vw, bottom: vh };
     const isText = !["IMG", "INPUT", "TEXTAREA", "SELECT", "BUTTON"].includes(el.tagName) &&
       !el.closest("a, button");
@@ -205,16 +220,18 @@
     const clip = clipState(el);
     if (clip.masked) reasons.push("mask");
     else if (clip.fraction < 0.95) reasons.push(`clip ${Math.round(clip.fraction * 100)}%`);
-    const t = effTransform(el);
+    const t = effTransform(cropImg(el) ? el.parentElement : el);
     if (t.scaleX < 0.95 || t.scaleX > 1.05 || t.scaleY < 0.95 || t.scaleY > 1.05)
       reasons.push(`scale ${t.scaleX.toFixed(2)}`);
     if (Math.abs(t.rot) > 2) reasons.push(`rotate ${t.rot.toFixed(1)}deg`);
-    if (hasDirectText(el) && !["INPUT", "TEXTAREA"].includes(el.tagName)) {
-      const cs = getComputedStyle(el);
-      const bg = backdrop(el);
-      const fg = over(rgba(cs.color), bg);
+    if ((hasDirectText(el) || srCopyOf(el)) && !["INPUT", "TEXTAREA"].includes(el.tagName)) {
       const need = el.closest('[class*="display-"]') ? 3 : 4.5;
-      const c = contrastOf(fg, bg);
+      const words = srCopyOf(el) ? [...el.querySelectorAll("[data-word]")] : [];
+      let c = Infinity;
+      for (const n of words.length ? words : [el]) {
+        const bg = backdrop(n);
+        c = Math.min(c, contrastOf(over(rgba(getComputedStyle(n).color), bg), bg));
+      }
       if (c < need) reasons.push(`contrast ${c.toFixed(2)}<${need}`);
     }
     // Centre hit-test on the visible part.
@@ -264,7 +281,7 @@
           ok: rd.ok,
           reasons: rd.reasons,
           state: state(el),
-          keys: ancestors(el).slice(0, 5).map((n) => norm(n.textContent).slice(0, 200)),
+          keys: el.tagName === "IMG" ? [] : ancestors(el).slice(0, 5).map((n) => norm(n.textContent).slice(0, 200)),
           color: rgba(getComputedStyle(el).color),
         };
       }),
@@ -287,6 +304,7 @@
     const els = new Set();
     for (const iu of leafIUs(root)) for (let n = iu; n && n !== root.parentElement; n = n.parentElement) els.add(n);
     root.querySelectorAll("[style]").forEach((n) => els.add(n));
+    for (const n of [...els]) if (isSrCopy(n)) els.delete(n);
     const out = [];
     const desc = (n) => `<${n.tagName.toLowerCase()}${n.className ? "." + String(n.className).split(" ")[0] : ""}> "${ownText(n).slice(0, 24)}"`;
     const same = (cur, base, k, ident) => cur[k] === (base ? base[k] : ident);
@@ -299,7 +317,7 @@
       if (!same(cur, base, "scale", "none") && cur.scale !== "1") bad.push(`scale ${cur.scale}`);
       if (!same(cur, base, "rotate", "none") && cur.rotate !== "0deg") bad.push(`rotate ${cur.rotate}`);
       if (!same(cur, base, "translate", "none") && !/^0px( 0px)?$/.test(cur.translate)) bad.push(`translate ${cur.translate}`);
-      if (!same(cur, base, "clipPath", "none") && !/^inset\(0(px|%)?( 0(px|%)?)*\)$/.test(cur.clipPath)) bad.push(`clip-path ${cur.clipPath}`);
+      if (!same(cur, base, "clipPath", "none") && !/^inset\(0(px|%)?( 0(px|%)?)*( round [\d.]+(px|%))?\)$/.test(cur.clipPath)) bad.push(`clip-path ${cur.clipPath}`);
       const cs = getComputedStyle(n);
       const mask = cs.maskImage || cs.webkitMaskImage;
       if (mask && mask !== "none") bad.push("mask");
@@ -336,7 +354,7 @@
     const out = { text: {}, h: {}, img: {}, ctrl: {} };
     for (const { el, key } of sections()) {
       out.text[key] = visibleText(el).join("\n");
-      out.h[key] = [...el.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((h) => `${h.tagName}:${norm(h.textContent)}`);
+      out.h[key] = [...el.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((h) => `${h.tagName}:${visibleText(h).join(" ")}`);
       out.img[key] = [...el.querySelectorAll("img")].map((i) => `${i.getAttribute("src")}|${i.getAttribute("alt")}`);
       out.ctrl[key] = [...el.querySelectorAll("a, button, input, textarea, select")].map(
         (c) => `${c.tagName}|${norm(c.textContent)}|${c.getAttribute("href")}|${c.getAttribute("type")}|${c.getAttribute("name")}|${c.getAttribute("aria-label")}`
