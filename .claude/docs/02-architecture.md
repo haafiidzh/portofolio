@@ -66,6 +66,14 @@ All content is **hardcoded** as constants inside section components (`PROJECTS` 
 
 `PortfolioGrid` stores the selected project → `PortfolioModal` (framer-motion `AnimatePresence`; backdrop click / Esc / ← → for the gallery). Uses raw `<img>` (not `next/image`).
 
+## Smooth scroll, motion gate, scene hook (Phase 0b)
+
+- **Motion gate**: inline `<head>` script in `app/layout.tsx` toggles `html.motion-ok` (reduced motion not requested), synced on media change. Nothing in CSS depends on it yet.
+- **Lenis** (`lenis@1.3.26`, exact): `components/layout/SmoothScroll.tsx`, mounted once in `layout.tsx`. Created only for `no-preference` + `(pointer: fine) and (hover: hover)` + `min-width: 1024px`; created/destroyed on media change; dynamic import after `load` + idle (separate chunk). Options: `smoothWheel`, `syncTouch: false`, `anchors: false`, `lerp: 0.1`, `autoRaf: true`. Pointer clicks on in-page anchors use `lenis.scrollTo(target, { duration: 0.9 })` + `pushState`; keyboard activation (`event.detail === 0`) stays native. `window.__DISABLE_SMOOTH_SCROLL__` (test-only) disables it. CSS: `html.lenis { scroll-behavior: auto }` + Lenis rules in `globals.css`.
+- **Accessor**: `components/ui/lenisAccessor.ts` (`getLenis`, `setLenis`, `onLenisChange`). `PortfolioModal` calls `stop()`/`start()` and marks its panel `data-lenis-prevent`.
+- **Smoothing rule**: `useScrollScrub` and `useScrollScene` use `sync: true` while Lenis runs, else the component's `SCRUB_SYNC` value; both rebuild on Lenis start/stop.
+- **`useScrollScene`** (`components/ui/useScrollScene.ts`): scene hook on a track element; same contract as `useScrollScrub`; passes measured `SceneMetrics` (track height, viewport height, stage offsets) to `build`; rebuild on resize (debounced), tier, reduced motion, Lenis change. Not used by any section yet.
+
 ## Assets
 
 | File | Size | Used by |
