@@ -62,6 +62,7 @@
     for (const n of ancestors(el).reverse()) {
       const cs = getComputedStyle(n);
       let local = new DOMMatrix();
+      if (n.hasAttribute("data-ambient")) continue; // ambient float layer: exempt from transform/scale checks
       if (cs.translate && cs.translate !== "none") {
         const [x, y] = cs.translate.split(" ");
         local = local.translate(num(x), num(y));
@@ -312,11 +313,13 @@
       const cur = xformOf(getComputedStyle(n));
       const base = ref[xformKey(n)];
       const bad = [];
+      // data-ambient (continuous float layer): translate/scale/transform exempt, opacity/rotate/clip/mask still checked.
+      const amb = n.hasAttribute("data-ambient");
       if (num(cur.opacity, 1) < 0.999 && !same(cur, base, "opacity", "1")) bad.push(`opacity ${cur.opacity}`);
-      if (!same(cur, base, "transform", "none") && !new DOMMatrix(cur.transform).isIdentity) bad.push(`transform ${cur.transform}`);
-      if (!same(cur, base, "scale", "none") && cur.scale !== "1") bad.push(`scale ${cur.scale}`);
+      if (!amb && !same(cur, base, "transform", "none") && !new DOMMatrix(cur.transform).isIdentity) bad.push(`transform ${cur.transform}`);
+      if (!amb && !same(cur, base, "scale", "none") && cur.scale !== "1") bad.push(`scale ${cur.scale}`);
       if (!same(cur, base, "rotate", "none") && cur.rotate !== "0deg") bad.push(`rotate ${cur.rotate}`);
-      if (!same(cur, base, "translate", "none") && !/^0px( 0px)?$/.test(cur.translate)) bad.push(`translate ${cur.translate}`);
+      if (!amb && !same(cur, base, "translate", "none") && !/^0px( 0px)?$/.test(cur.translate)) bad.push(`translate ${cur.translate}`);
       if (!same(cur, base, "clipPath", "none") && !/^inset\(0(px|%)?( 0(px|%)?)*( round [\d.]+(px|%))?\)$/.test(cur.clipPath)) bad.push(`clip-path ${cur.clipPath}`);
       const cs = getComputedStyle(n);
       const mask = cs.maskImage || cs.webkitMaskImage;
