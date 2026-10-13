@@ -41,6 +41,24 @@ html {
   scroll-padding-top: var(--nav-h);
 }
 
+/* Lenis (desktop only): it owns smoothing, native smooth would fight it. */
+html.lenis {
+  scroll-behavior: auto;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
