@@ -15,6 +15,9 @@ import { SCRUB_SYNC } from "@/components/ui/useScrollScrub";
  * (per-column depth), the thumbnail settles from a slight zoom. Nothing exits.
  */
 
+// Same height guard as About/Skills: static below 600px tall (D/T) / 520px (M).
+const PORTFOLIO_SCENE_MQ =
+  "(min-width: 768px) and (min-height: 600px), (max-width: 767px) and (min-height: 520px)";
 const EASE_TRAVEL = "out(3)";
 // D (3 cols): travel in vh per card; opacity window as a fraction of the travel window.
 const D_TRAVEL = [14, 26, 38];
@@ -93,7 +96,10 @@ export default function PortfolioGrid({
     fallbackSync: SCRUB_SYNC.water,
     enter: "bottom top",
     leave: "top bottom",
-    build: buildPortfolio,
+    build: (el, autoplay, metrics) => {
+      if (!window.matchMedia(PORTFOLIO_SCENE_MQ).matches) return { revert() {} };
+      return buildPortfolio(el, autoplay, metrics);
+    },
   });
 
   return (
