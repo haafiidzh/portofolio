@@ -22,6 +22,10 @@ type RevealProps = {
   staggerMs?: number;
   /** ms before the whole group starts */
   delay?: number;
+  /** Media query; while it matches, a scene owns these elements and no reveal runs. */
+  skipWhen?: string;
+  /** Marks the root as a scene's pinned subject. */
+  scenePin?: boolean;
 };
 
 export default function Reveal({
@@ -30,12 +34,15 @@ export default function Reveal({
   y = 32,
   staggerMs = 90,
   delay = 0,
+  skipWhen,
+  scenePin,
 }: RevealProps) {
   const root = useRef<HTMLDivElement>(null);
 
   useRevealOnEnter({
     ref: root,
     selector: "[data-reveal]",
+    skip: skipWhen ? () => window.matchMedia(skipWhen).matches : undefined,
     prehide: (el) => {
       el.style.opacity = "0";
       el.style.transform = `translateY(${y}px)`;
@@ -52,7 +59,12 @@ export default function Reveal({
   });
 
   return (
-    <div ref={root} data-reveal-root className={className}>
+    <div
+      ref={root}
+      data-reveal-root
+      data-scene-pin={scenePin ? "" : undefined}
+      className={className}
+    >
       {children}
     </div>
   );

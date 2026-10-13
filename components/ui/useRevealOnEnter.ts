@@ -27,12 +27,15 @@ type Animation = { revert: () => void };
 export function useRevealOnEnter({
   ref,
   selector,
+  skip,
   prehide,
   play,
   deps = [],
 }: {
   ref: RefObject<HTMLElement | null>;
   selector: string;
+  /** Return true when another system (a scroll scene) owns these elements. */
+  skip?: () => boolean;
   prehide: (el: HTMLElement) => void;
   play: (targets: HTMLElement[]) => Animation;
   deps?: unknown[];
@@ -55,6 +58,8 @@ export function useRevealOnEnter({
       clearStyles();
       return;
     }
+
+    if (skip?.()) return;
 
     // Pre-hide before the browser paints — no flash of un-animated content.
     for (const t of targets) prehide(t);
