@@ -420,3 +420,57 @@ body {
     transform: none !important;
   }
 }
+
+/* ---------- About scene (PRD 08 §17.C) ----------
+   Pin = the SectionHeader root is sticky; a spacer after it in the track wrapper
+   is the pin distance (padding would sit outside the sticky containing block). Only under motion-ok and tall-enough viewports; static
+   modes (reduced motion, no JS, short viewports, mobile) keep today's layout. */
+@media (min-width: 1024px) and (min-height: 600px) {
+  html.motion-ok .about-track {
+    --about-track: 80svh;
+  }
+  html.motion-ok .about-track::after {
+    content: "";
+    display: block;
+    height: var(--about-track);
+  }
+  html.motion-ok .about-pin {
+    --about-pin-top: calc(var(--nav-h) + 12svh);
+    position: sticky;
+    top: var(--about-pin-top);
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) and (min-height: 600px) {
+  html.motion-ok .about-track {
+    --about-track: 40svh;
+  }
+  html.motion-ok .about-track::after {
+    content: "";
+    display: block;
+    height: var(--about-track);
+  }
+  html.motion-ok .about-pin {
+    --about-pin-top: calc(var(--nav-h) + 8svh);
+    position: sticky;
+    top: var(--about-pin-top);
+  }
+}
+/* Present only while the scene is built (data-scene-live), so static modes are untouched. */
+[data-scene-live] .about-word {
+  display: inline !important;
+}
+.facts-row {
+  position: relative;
+}
+[data-scene-live] .facts-row::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: color-mix(in srgb, var(--accent-bright) 45%, transparent);
+  transform-origin: left;
+  transform: scaleX(var(--line, 1));
+  pointer-events: none;
+}
