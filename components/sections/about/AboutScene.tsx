@@ -140,10 +140,10 @@ function buildAbout(
   const muted = root.getPropertyValue("--muted-foreground").trim();
   // End colours = the static render's computed colours (reduced-motion parity).
   // The baseline bio is muted (.lede outranks text-foreground), so it brightens
-  // from a dimmed muted (45% toward bg) to muted, not to foreground.
+  // from a dimmed muted (70% toward bg) to muted, not to foreground.
   const fg = getComputedStyle(h2).color;
   const bioEnd = getComputedStyle(bio).color;
-  const bioStart = mixRgb(bioEnd, root.getPropertyValue("--background").trim(), 0.45);
+  const bioStart = mixRgb(bioEnd, root.getPropertyValue("--background").trim(), 0.7);
 
   // scrollY -> timeline ms
   const s0 = docTop(el) - vh;
