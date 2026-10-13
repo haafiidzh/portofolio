@@ -230,18 +230,18 @@ async function auditTabWalk(page, ctx) {
   const slow = [];
   for (let i = 0; i < 150; i++) {
     await page.keyboard.press("Tab");
-    const t0 = Date.now();
+    const t0 = performance.now();
     // Scene / header stops: hard 600 ms budget. Stops in non-scene sections (one-shot <Reveal>, native
     // smooth focus-scroll, both owned by PRD 07) get up to 2.5 s and are only reported when slower.
     let st = null;
     do {
       st = await page.evaluate(() => window.__audit.focusState());
       if (!st || st.ok) break;
-      if (Date.now() - t0 >= 600 && (STRICT_FOCUS || st.inScene)) break;
-    } while (Date.now() - t0 < 2500);
+      if (performance.now() - t0 >= 600 && (STRICT_FOCUS || st.inScene)) break;
+    } while (performance.now() - t0 < 2500);
     if (!st) break; // focus left the document
     count++;
-    const ms = Date.now() - t0;
+    const ms = performance.now() - t0;
     // A real user cannot Tab faster than the focus-scroll; pressing mid-scroll lets the previous
     // scroll overwrite the next one's target (tool artefact), so let it finish first.
     await page.evaluate(() => window.__audit.scrollIdle());
@@ -275,11 +275,11 @@ async function auditLinks(page, vp, ctx) {
     if (mobile && (await btn.getAttribute("aria-expanded")) !== "true") await btn.click();
   };
   const waitReadable = async (hash) => {
-    const t0 = Date.now();
+    const t0 = performance.now();
     let res = null;
-    while (Date.now() - t0 <= 1000) {
+    while (performance.now() - t0 <= 1000) {
       res = await page.evaluate((h) => window.__audit.targetHeading(h), hash);
-      if (res.found && res.ok) return { ms: Date.now() - t0 };
+      if (res.found && res.ok) return { ms: performance.now() - t0 };
     }
     return { ms: null, res };
   };
@@ -359,7 +359,7 @@ async function auditRun(browser, vp, run, ref) {
 }
 
 let URL_;
-const started = Date.now();
+const started = performance.now();
 const server = await startServer();
 URL_ = server.url;
 // One browser per worker: contexts of one browser share a GPU/compositor process, and under load
@@ -402,7 +402,7 @@ try {
   server.stop();
 }
 
-const secs = Math.round((Date.now() - started) / 1000);
+const secs = Math.round((performance.now() - started) / 1000);
 log(`\n${violations.length === 0 ? "PASS" : "FAIL"}  scene-audit: ${violations.length} violation(s), ${viewports.length} viewport(s) x ${RUNS.length} run(s), ${secs}s`);
 if (violations.length) {
   const byRule = {};
