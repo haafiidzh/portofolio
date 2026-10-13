@@ -512,3 +512,37 @@ body {
   opacity: 1 !important;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s;
 }
+
+/* ---------- Portfolio ambient float + hover focus ----------
+   .pf-card-float is its own layer: .pf-card-wrap belongs to the scene (R8), the button keeps its hover lift.
+   Float uses `translate`, focus uses `scale`, so they never fight. Motion mode only. Touch: float stays (one
+   compositor keyframe per card, no hover effects). Scene audit skips [data-ambient] (snapshots/README.md). */
+@keyframes pf-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
+html.motion-ok .pf-card-wrap { position: relative; }
+html.motion-ok .pf-card-float {
+  --pf-focus-scale: 1.06;
+  animation: pf-float var(--pf-dur, 7s) ease-in-out var(--pf-delay, 0s) infinite;
+  transition: scale 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease, opacity 0.25s ease;
+}
+html.motion-ok .pf-card-wrap:nth-child(3n + 1) .pf-card-float { --pf-dur: 7s; --pf-delay: -1s; }
+html.motion-ok .pf-card-wrap:nth-child(3n + 2) .pf-card-float { --pf-dur: 8s; --pf-delay: -4.5s; }
+html.motion-ok .pf-card-wrap:nth-child(3n) .pf-card-float { --pf-dur: 6.5s; --pf-delay: -2.5s; }
+html.motion-ok .pf-card-wrap:focus-within { z-index: 10; }
+html.motion-ok .pf-card-wrap:focus-within .pf-card-float {
+  scale: var(--pf-focus-scale);
+  animation-play-state: paused;
+}
+@media (hover: hover) and (pointer: fine) {
+  html.motion-ok .pf-card-wrap:hover { z-index: 10; }
+  html.motion-ok .pf-card-wrap:hover .pf-card-float {
+    scale: var(--pf-focus-scale);
+    animation-play-state: paused;
+  }
+  html.motion-ok .pf-grid:has(.pf-card-wrap:hover) .pf-card-wrap:not(:hover) .pf-card-float {
+    filter: blur(3px);
+    opacity: 0.75;
+  }
+}

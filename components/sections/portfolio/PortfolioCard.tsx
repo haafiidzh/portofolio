@@ -22,7 +22,9 @@ export default function PortfolioCard({
 }) {
   return (
     // Wrapper = the scene's animation target (PortfolioGrid); the hover lift stays on the button.
+    // pf-card-float = ambient float + hover focus layer (globals.css); data-ambient tells the scene audit to skip its transform.
     <div className="pf-card-wrap h-full">
+      <div className="pf-card-float h-full" data-ambient>
       <button
         type="button"
         onClick={() => onOpen(project)}
@@ -63,6 +65,7 @@ export default function PortfolioCard({
           </span>
         </div>
       </button>
+      </div>
     </div>
   );
 }
