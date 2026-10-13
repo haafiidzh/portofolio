@@ -90,9 +90,9 @@ Scale: **P0** blocks the site's purpose (getting clients) · **P1** required bef
 |---|---|---|
 | 0a | Audit tooling (`--nojs`, `scene-audit.mjs`, scoped `scroll-test.mjs`) | **Done** (`950420d`, `8552327`, `001242b`) |
 | 0b | Foundation: motion gate, `useScrollScene`, **Lenis 1.3.26** (desktop pointer-fine, lazy, off for RM/touch/no-JS), smoothing rule, modal integration, LCP element | **Done** (`fa949a8`, `f551bfc`, `5fcb241`; QA fixes `3879ddb`, `3fde07f`) · owner scroll feel OK · QA 2026-10-13: PASS with conditions (see 14d) |
-| 1 | About pilot | **In progress** (built in a worktree, uncommitted; audit tooling fixes + bio start dimmer pending) · owner checkpoint answered Yes |
-| 2 | Skills scene | Brief after Phase 1 checkpoint |
-| 3 | Portfolio option C | Pending · owner checkpoint |
+| 1 | About pilot | **Done** (`f28bb25`; bio start dimmer `199eb94`) · owner checkpoint answered Yes |
+| 2 | Skills scene | **Built** (`d691397`) · QA PASS with conditions (see 14f) · awaiting owner checkpoint |
+| 3 | Portfolio option C | **Built** (`ba0b6fa`) + ambient float / hover focus (`4e176fb`, owner-approved 2026-10-13, scale 1.06) · QA PASS with conditions (see 14f) · awaiting owner checkpoint |
 | 4 | Handoffs | Dropped (PD6) |
 | 5 | Hero exit + relay | Pending |
 | 6 | Contact `h2` fill + tuning + tokens to 03 | Pending · owner final approval |
@@ -101,6 +101,7 @@ Scale: **P0** blocks the site's purpose (getting clients) · **P1** required bef
 
 14d. **Phase 0b QA follow-ups (2026-10-13)** — fixed: QA-0b-1 anchor `scrollTo` numeric target, QA-0b-2 `scrollbar-gutter: stable` while Lenis stopped (real-modal re-check pending), QA-0b-5 `performance.now` in audit. Accepted: Lighthouse 89 / LCP 3561 ms (noise; baseline re-measured on the same machine was worse: 88 / 3647 ms; LCP element is Hero `h1`). **Open P2: `scroll-test.mjs` `services-stack-1366` / `-1857` fail ("badge 2/3 covered")** — pre-existing (also fails at `8552327`); decide whether the test or the Services stack CSS is wrong.
 14e. **Content: proof for "3+ Years" / "30+ Products"** — owner has none (PRD 08 O4); no counters until supplied. Replace or substantiate the copy.
+14f. **Phase 2/3 QA follow-ups (2026-10-13)** — **P1 Q1:** after a height-changing resize (mobile address bar), final Portfolio cards (and About FACTS) fall back to opacity 0 until the next scroll; root in `useScrollScene.ts` rebuild path (seek to current scroll after rebuild; add a height-resize case to `scene-audit`/`scroll-test`); block public release. **P2 Q2:** Portfolio has no height guard (D/T 600, M 520), copy `ABOUT_SCENE_MQ`. **P2 Q3:** About fps probe dispatches a global `resize`, rebuilding every scene; rebuild only About. **P2 F1:** `scroll-test` `desktop-hash-skills` fails (Nav landing shows empty tag rows; scope stuck-check away from `[data-scene]` or start K1 earlier). **P2 F2:** pending bio contrast 1.57:1 (<4.5:1, owner tweak) — acknowledge in 08 §3.1 or lighten. P3: easing `out(3)` on travel <20 vh (Q4); Skills K4 shifted 4 vh (F3); resize mid tag-stagger (F5); reduced-motion toggle mid-page jumps scroll (F6).
 
 ### P3 — can be deferred
 15. 3D icons in Services, hover tilt in Portfolio (per animation budget).
