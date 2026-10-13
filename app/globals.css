@@ -503,3 +503,12 @@ body {
   animation: none;
   transform: scaleX(var(--draw, 1));
 }
+
+/* ---------- Portfolio scene (PRD 08 §17.E, Q15) ----------
+   A Tab-focused card is final within 200 ms wherever the scrub is; the timeline keeps
+   writing inline styles underneath and takes over again when focus leaves. */
+.pf-card-wrap:focus-within {
+  transform: none !important;
+  opacity: 1 !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s;
+}
