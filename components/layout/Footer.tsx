@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const COLUMNS = [
   {
     title: "Navigate",
@@ -33,8 +35,17 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           <div className="col-span-2 md:col-span-1">
-            <p className="text-lg font-semibold tracking-tight">
-              Hafidz<span className="text-accent-bright">.</span>
+            <p className="flex items-center gap-2.5 text-lg font-semibold tracking-tight">
+              <Image
+                src="/images/logo-mark.png"
+                alt=""
+                width={32}
+                height={32}
+                className="h-8 w-8 rounded-full border border-[var(--hairline)] object-cover"
+              />
+              <span>
+                Hafidz<span className="text-accent-bright">.</span>
+              </span>
             </p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
               AI full-stack engineer. Building calm, durable
