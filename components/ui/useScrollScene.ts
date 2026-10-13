@@ -11,6 +11,9 @@ const TIER_QUERY: Record<ScrubTier, string> = {
   desktop: "(min-width: 1024px)",
 };
 
+/** Dispatch on a scene track to rebuild just that scene (no global resize). */
+export const SCENE_REBUILD_EVENT = "scene-rebuild";
+
 type Revertible = { revert: () => unknown };
 
 /** Measured once per build; stage positions are derived from these, never per frame. */
@@ -63,8 +66,12 @@ export function useScrollScene<T extends HTMLElement>(
     const mqls = tierList.map((t) => window.matchMedia(TIER_QUERY[t]));
     let active: Revertible | null = null;
     let resizeTimer = 0;
+    let settleRaf = 0;
+    let builtW = 0;
+    let builtH = 0;
 
     const teardown = () => {
+      cancelAnimationFrame(settleRaf);
       active?.revert();
       active = null;
     };
@@ -92,23 +99,60 @@ export function useScrollScene<T extends HTMLElement>(
       if (active) return;
       const { build, fallbackSync, enter, leave } = latest.current;
       if (!Object.values(SCRUB_SYNC).includes(fallbackSync)) return;
-      active = build(
-        el,
-        onScroll({
-          target: el,
-          enter: enter ?? "top top",
-          leave: leave ?? "bottom bottom",
-          sync: getLenis() ? true : fallbackSync,
-        }),
-        measure()
-      );
+      const observer = onScroll({
+        target: el,
+        enter: enter ?? "top top",
+        leave: leave ?? "bottom bottom",
+        sync: getLenis() ? true : fallbackSync,
+      });
+      const metrics = measure();
+      builtW = window.innerWidth;
+      builtH = metrics.viewportHeight;
+      active = build(el, observer, metrics);
+      // A fresh observer starts at progress 0, initialises its bounds a frame
+      // later and then only eases toward the scroll position (and not at all
+      // until the next scroll event when nothing is moving). After any rebuild
+      // (resize, tier change) jump the timeline to the current position.
+      // The observer binds its target on anime's first tick, so wait for that.
+      // Do the first jump synchronously: binding the target here (what anime
+      // does itself on its first tick) lets the final elements skip the
+      // progress-0 frame that would otherwise paint before the rAF below.
+      const jump = () => {
+        const linked = observer.linked;
+        if (linked) linked.seek(linked.duration * observer.progress);
+      };
+      if (!observer.target) observer.target = el;
+      observer.refresh();
+      jump();
+      let tries = 0;
+      const settle = () => {
+        if (observer.reverted || active === null) return;
+        if (!observer.target) {
+          if (++tries < 20) settleRaf = requestAnimationFrame(settle);
+          return;
+        }
+        observer.refresh();
+        jump();
+      };
+      settleRaf = requestAnimationFrame(settle);
     };
 
     const rebuild = () => {
       teardown();
       sync();
     };
+    // Height-only changes under this (mobile URL bar) keep the scene as built;
+    // measured against the last build so small steps can't accumulate.
+    const MIN_HEIGHT_REBUILD = 120;
     const onResize = () => {
+      if (
+        active &&
+        window.innerWidth === builtW &&
+        Math.abs(window.innerHeight - builtH) < MIN_HEIGHT_REBUILD
+      ) {
+        window.clearTimeout(resizeTimer);
+        return;
+      }
       window.clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(rebuild, 150);
     };
@@ -118,7 +162,10 @@ export function useScrollScene<T extends HTMLElement>(
     const all = [reduce, ...mqls];
     for (const m of all) m.addEventListener("change", rebuild);
     window.addEventListener("resize", onResize);
+    // Per-scene rebuild request (dispatched on the track by its own component).
+    el.addEventListener(SCENE_REBUILD_EVENT, rebuild);
     return () => {
+      el.removeEventListener(SCENE_REBUILD_EVENT, rebuild);
       offLenis();
       window.clearTimeout(resizeTimer);
       window.removeEventListener("resize", onResize);
