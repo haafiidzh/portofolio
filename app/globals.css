@@ -52,6 +52,12 @@ html.lenis body {
 .lenis:not(.lenis-autoToggle).lenis-stopped {
   overflow: clip;
 }
+/* Keep the classic scrollbar's width reserved while the modal stops scrolling (no layout shift). */
+html.lenis.lenis-stopped:not(.lenis-autoToggle) {
+  /* scrollbar-gutter does not apply to overflow: clip */
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
 .lenis [data-lenis-prevent] {
   overscroll-behavior: contain;
 }

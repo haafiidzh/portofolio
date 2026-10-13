@@ -47,9 +47,12 @@ export default function SmoothScroll() {
       const target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
       if (!target) return;
       e.preventDefault();
-      // Lenis already honours the html scroll-padding-top.
+      // Numeric target: an element target reads Lenis' possibly stale animatedScroll when a native
+      // scroll landed in the same frame. Numeric scrollTo applies no offset, so subtract padding here.
+      const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+      const top = target.getBoundingClientRect().top + window.scrollY - pad;
       // Fixed duration (not lerp): long jumps must still land within ~1 s (M8).
-      lenis.scrollTo(target, { duration: 0.9 });
+      lenis.scrollTo(top, { duration: 0.9 });
       history.pushState(null, "", url.hash);
     };
 
