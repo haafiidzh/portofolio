@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { createTimeline, splitText, type ScrollObserver } from "animejs";
-import { useScrollScene, type SceneMetrics } from "@/components/ui/useScrollScene";
+import { SCENE_REBUILD_EVENT, useScrollScene, type SceneMetrics } from "@/components/ui/useScrollScene";
 import { SCRUB_SYNC } from "@/components/ui/useScrollScrub";
 import { ABOUT_SCENE_MQ } from "./sceneQuery";
 
@@ -78,7 +78,7 @@ export default function AboutScene({ children }: { children: ReactNode }) {
         const avg = (t - start) / (frames - 1);
         if (avg > 25 && portraitOk.current) {
           portraitOk.current = false;
-          window.dispatchEvent(new Event("resize")); // hook rebuilds (debounced)
+          ref.current?.dispatchEvent(new Event(SCENE_REBUILD_EVENT)); // rebuild only About
         }
       };
       raf = requestAnimationFrame(tick);
