@@ -10,7 +10,9 @@ Personal portfolio site (Next.js 16 + Tailwind v4 + anime.js v4) for Hafidz — 
 | [04-status-and-backlog.md](04-status-and-backlog.md) | Gaps vs brief, findings, P0–P3 backlog | PM |
 | [05-dev-workflow.md](05-dev-workflow.md) | Commands, conventions, three-agent workflow, deploy | Developer |
 | [06-commit-rules.md](06-commit-rules.md) | Commit message format and rules (no AI attribution) | All agents |
-| [07-prd-scroll-driven-animation.md](07-prd-scroll-driven-animation.md) | DRAFT PRD v0.3: scroll-driven animation under content-freeze, incl. Services Stacking Cards + owner-approved Services CTA (exception E2) | PM (owner approval of §4.2 D1–D5 pending) |
+| [07-prd-scroll-driven-animation.md](07-prd-scroll-driven-animation.md) | PRD v0.3: scroll-driven animation under content-freeze, incl. Services Stacking Cards + Services CTA (E2). Built phases committed; partially superseded by 08 | PM |
+| [08-prd-dramatic-scroll-experience.md](08-prd-dramatic-scroll-experience.md) | PRD **v0.2 — owner decisions recorded, ready for implementation brief**: dramatic, animejs-style scroll scenes under content principle v2, Lenis smooth scroll (desktop), UI/UX spec §17 with PM rulings §16; supersedes parts of 07 (08 §4) | PM (UI/UX §17) |
+| [09-brief-scroll-phase-0-1.md](09-brief-scroll-phase-0-1.md) | Developer brief for PRD 08 Phase 0a (audit tooling), 0b (motion gate, scene hook, Lenis), 1 (About pilot) | PM |
 
 Agents: `.claude/agents/pm.md`, `ui-ux.md`, `developer.md`, `qa.md`.
 

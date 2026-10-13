@@ -1,50 +1,53 @@
 # 04 — Status, Gaps & Prioritized Backlog
 
-Analyzed 2026-10-12. Living document: the **PM agent owns it** (`.claude/agents/pm.md`). Update whenever priorities change.
+Analyzed 2026-10-12, last PM update 2026-10-12 (HEAD `8317e70`, branch `feature/sda`). Living document: the **PM agent owns it** (`.claude/agents/pm.md`). Update whenever priorities change.
 
 ## Position vs original brief
 
 | Brief | Actual | Status |
 |---|---|---|
-| Positioning: Fractional CTO | Freelance **AI Full-Stack Engineer** (RAG, chatbots, automation) | Positioning pivot — brief not updated |
-| Warm/spa mood, `#1C1815` + sage/terracotta | Dark purple `#08060c` + `#4B0082` | Diverged (intentional? **confirm with owner**) |
+| Positioning: Fractional CTO | Freelance **AI Full-Stack Engineer** (RAG, chatbots, automation) | Positioning pivot — brief not updated (**owner decision open**, P0 #3) |
+| Warm/spa mood, `#1C1815` + sage/terracotta | Dark purple `#08060c` + `#4B0082` | Diverged (**owner decision open**, P0 #3) |
+| Motion feel: calm, spa-like | **Dramatic, animejs-like** scroll (pins, staged disclosure, Lenis on desktop) | **Owner decision 2026-10-12** (PRD 08 O7): dramatic wins for motion; colors/atmosphere unchanged |
 | Separate display font | Inter only | Not done |
 | Hero 3D "wow" | Layered 2D SVG; 3D blob written but not mounted | Diverged |
-| Services: cards + 3D icons | Row list + pills, no icons | Diverged |
+| Services: cards + 3D icons | Stacking Cards (sticky), no icons | Diverged (owner keeps Stacking Cards) |
 | Experience timeline (line-draw) | Built, **commented out** in `page.tsx` | Disabled |
 | Portfolio hover tilt | Hover `-translate-y`, no tilt | Partial |
 | **Testimonials** | None | **Missing** |
-| Working contact form | Form sends nothing | **Functionally broken** |
+| Working contact form | Resend API route, honeypot, validation, error state | **Works — owner-verified (manual test, 2026-10-12)** |
 | Lighthouse per section | Perf-only mobile baseline 2026-10-12 (`snapshots/lighthouse-baseline.json`, median 90); no a11y/SEO run, no per-section runs | Partial |
 | Assets: 3–5 testimonials, 3–4 case studies | 3 case studies, 0 testimonials | Short |
 
 ## Technical findings (verified)
 
-`tsc --noEmit`: clean. `eslint`: **8 errors, 5 warnings**.
+HEAD `8317e70`: `tsc --noEmit` clean. `eslint` **0 errors, 4 warnings** (T6, 2× `<img>` = T5, 1 unused eslint-disable in `useRevealOnEnter.ts`).
 
 | # | Finding | Location |
 |---|---|---|
-| T1 | `react/no-unescaped-entities` ×5 (error) — raw `'` in JSX | `About.tsx:26,29` |
-| T2 | `react-hooks/immutability` ×2: `handlePrevImage/NextImage` used in effect before declaration | `PortfolioModal.tsx:24-25` |
-| T3 | `react-hooks/set-state-in-effect` — resets `imageIndex` via effect | `PortfolioModal.tsx:17` |
-| T4 | `exhaustive-deps` on modal keyboard effect (stale closure risk) | `PortfolioModal.tsx:29` |
-| T5 | Raw `<img>` ×2 → LCP/bandwidth | `PortfolioCard.tsx:31`, `PortfolioModal.tsx:85` |
-| T6 | Unused `Experience` import | `app/page.tsx:5` |
+| T1 | ~~`react/no-unescaped-entities` ×5~~ **Resolved** (`2f483a3`) | `About.tsx` |
+| T2 | ~~`react-hooks/immutability` (handlers used before declaration)~~ **Resolved** (`fd225b7`) | `PortfolioModal.tsx` |
+| T3 | ~~`react-hooks/set-state-in-effect`~~ **Resolved** (`fd225b7`, state derived during render) | `PortfolioModal.tsx` |
+| T4 | ~~`exhaustive-deps` on modal keyboard effect~~ **Resolved** (`fd225b7`, memoized handlers) | `PortfolioModal.tsx` |
+| T5 | Raw `<img>` ×2 → LCP/bandwidth (lint warnings) | `PortfolioCard.tsx:56`, `PortfolioModal.tsx:89` |
+| T6 | Unused `Experience` import (lint warning) | `app/page.tsx:5` |
 | T7 | `Profile.JPEG` 2.5 MB, `scale-200` inside `next/image` | `AboutPortrait.tsx` |
 | T8 | Mockup PNGs ~870 KB ×2, unoptimized | `public/images` |
-| T9 | ~~Favicon was a JPEG~~ **Resolved 2026-10-12**: square-cropped from `public/images/logo.jpg` → `app/icon.png` (512), `app/apple-icon.png` (180), `app/favicon.ico` (16/32/48); `metadata.icons` removed so Next auto-detects the files. `IMG_9418.JPEG` is now unused. | `app/` |
+| T9 | ~~Favicon was a JPEG~~ **Resolved 2026-10-12**: `app/icon.png`, `app/apple-icon.png`, `app/favicon.ico` from `public/images/logo.jpg`. `IMG_9418.JPEG` now unused. | `app/` |
 | T10 | Modal class `bg-muted` does not exist in theme | `PortfolioModal.tsx` |
 | T11 | Dead code (see 02-architecture) + unused three/R3F/drei deps | — |
 | T12 | `scroll-test.mjs` at root; `SECTIONS` includes `experience` which isn't rendered; `SHOT_DIR` defaults to `/tmp` | root |
 | T13 | Leftover create-next-app `public/*.svg`; boilerplate `README.md` | — |
+| T14 | Portfolio modal has no page scroll lock (wheel over backdrop scrolls the page behind) | `PortfolioModal.tsx` |
+| T15 | Unused eslint-disable directive (lint warning) | `useRevealOnEnter.ts:125` |
 
 ## Product / content findings
 
 | # | Finding | Risk |
 |---|---|---|
-| P1 | Fake contact form — visitors think the message was sent | **Lost leads, damaged trust** |
+| P1 | ~~Fake contact form~~ **Resolved**: form sends via Resend; owner-verified manually 2026-10-12 | — |
 | P2 | No social proof (testimonials, client logos) | Low conversion |
-| P3 | Unverified claims "3+ years", "30+ products"; only 3 case studies, all "2026" | Credibility |
+| P3 | Claims "3+ Years shipping", "30+ Products delivered" (Hero `dl`): **owner confirmed 2026-10-12 there is no documentation** to back them; only 3 case studies, all "2026" | Credibility |
 | P4 | Invoice case study categorized "Health platform" (mismatch) | Sloppy impression |
 | P5 | RAG case study uses mockups, not real screenshots; no numbers/demo link | Weak proof |
 | P6 | Minimal metadata: no OG image, `robots`, `sitemap`, canonical, JSON-LD | Poor SEO/share preview |
@@ -59,39 +62,68 @@ Analyzed 2026-10-12. Living document: the **PM agent owns it** (`.claude/agents/
 Scale: **P0** blocks the site's purpose (getting clients) · **P1** required before public promotion · **P2** real improvement · **P3** nice-to-have / safe to defer.
 
 ### P0 — do now
-1. **Working contact form** (P1) — *implemented 2026-10-12 (Resend API route, honeypot, error state); pending: owner sets `RESEND_API_KEY`, real end-to-end test, rate limiting, WhatsApp fallback (P7).* Original scope: API route / Formspree / Resend + validation + error state + honeypot anti-spam. Add direct WhatsApp/email buttons as fallback (P7).
-2. **Clean lint** (T1–T4, T6): `npm run lint` = 0 errors. Otherwise a Vercel build may fail if lint is enforced. — *PM check 2026-10-12: working tree = 0 errors / 4 warnings (T1–T3 fixed; T6 + 2× `<img>` + 1 unused disable remain as warnings), but **HEAD still has 8 errors** — the fixes are uncommitted and mixed into the scroll-animation working tree. Not done until committed separately.*
-3. **Owner decision on positioning & visual direction** — blocks all design/copy work. Ask: AI Full-Stack Freelancer (actual) or Fractional CTO (brief)? Stay purple or return to warm?
+1. ~~**Working contact form** (P1)~~ **Done** — implemented 2026-10-12 (`3673554`: Resend API route, honeypot, validation, sending/error states); **owner-verified (manual) 2026-10-12**, not re-tested by agents. Follow-ups split out: production env check → #4a, WhatsApp fallback → #4b, rate limiting → #11a.
+2. ~~**Clean lint**~~ **Done** — HEAD `8317e70`: 0 errors (4 warnings: T5 ×2, T6, T15).
+3. **Owner decision on positioning & visual direction** — blocks copy/palette/typeface work. Ask: AI Full-Stack Freelancer (actual) or Fractional CTO (brief)? Stay purple or return to warm? *Note: motion feel is decided (dramatic, PRD 08 O7); this item is now only positioning + palette/typeface.*
 
 ### P1 — before promoting the site
-4. Image optimization (T5, T7, T8, T9): `next/image`, resize `Profile` ≤ 200 KB, PNG→WebP, proper favicon.
-5. Social proof (P2): at least 3 real testimonials; if none yet, remove the empty space and strengthen case studies with numbers.
-6. Fix case studies (P4, P5): category, concrete metrics, demo/GitHub links, real screenshots.
+4. Image optimization (T5, T7, T8): `next/image`, resize `Profile` ≤ 200 KB, PNG→WebP. Main LCP lever (LCP 3.56 s).
+4a. **Production contact check** — after deploy: `RESEND_API_KEY` set in Vercel env, one live submission received. Owner-side, ~10 min. Not part of PRD 08.
+4b. WhatsApp CTA / fallback (P7) — needs owner's WhatsApp number.
+5. Social proof (P2): at least 3 real testimonials — **needed from owner**; if none yet, strengthen case studies instead.
+6. Fix case studies (P4, P5): category, concrete metrics, demo/GitHub links, real screenshots — **assets needed from owner**.
 7. Metadata & SEO (P6): OG image, `sitemap.ts`, `robots.ts`, canonical, JSON-LD `Person`.
-8. Verify claims (P3): change/remove numbers that can't be proven.
-9. Run Lighthouse mobile + a11y (muted-text contrast); record scores in this doc. — *Partial 2026-10-12: performance baseline recorded (`snapshots/lighthouse-baseline.json`: perf 90 median, LCP 3564 ms, CLS 0, TBT 91 ms, localhost). LCP 3.5 s is above the 2.5 s "good" line → supports item 4. Still to do: accessibility/SEO/best-practices categories, re-run after 4 and 7.*
+8. **Hero stats "3+ Years" / "30+ Products" (P3)** — owner has no documentation (2026-10-12). Options for the owner: (a) provide proof (dated projects, client list, GitHub/portfolio count), (b) replace with verifiable facts (e.g. number of case studies shown, years since first shipped project with a date), (c) remove the `dl`. **Needs owner choice + exact wording.** Content change → own commit + new content baseline (`content-baseline-v3`). Until then PRD 08 forbids any motion/emphasis on these stats.
+9. Run Lighthouse mobile + a11y (muted-text contrast); record scores here. — *Partial: performance baseline recorded (perf 90 median, LCP 3564 ms, CLS 0, TBT 91 ms, localhost). Still to do: accessibility/SEO/best-practices, re-run after 4 and 7.*
 
 ### P2 — improvements
 10. Copy & voice consistency (P8); separate display typeface if the visual direction is approved.
-11. Lightweight analytics (Vercel Analytics / Plausible) (P10).
+11. Lightweight analytics (Vercel Analytics / Plausible) (P10) — recommended before PRD 08 Phase 6 so the scroll work can be evaluated.
+11a. Rate limiting on the contact API route.
 12. Remove or enable dead code (T11) — decide: show Experience or delete it; mount the 3D blob or drop the dependencies.
 13. Testimonials section (once assets exist).
 14. Move `scroll-test.mjs` to `scripts/`, expose as npm script `test:reveal`.
-14a. **Scroll-driven animation (content-freeze)** — owner request 2026-10-12. DRAFT PRD v0.3: [07](07-prd-scroll-driven-animation.md); UI/UX input received (§13, incl. §13.6 Stacking Cards spec). Owner requirement **Services Stacking Cards** (§4.1, Phase 3b; overrides UI/UX F1). **O1 resolved (v0.3)**: one "Let's talk" → `#contact` CTA in the Services left column = content-freeze exception E2 (own commit + `content-baseline-v2`, Phase 3b step 0). PM-vs-UI/UX Stacking Cards disagreements reconciled in §4.2 (D1–D5) — *proposed, pending owner approval* (O2). Phase 0 requires the Lighthouse baseline (#9). Do not start before P0 is closed. — *PM check 2026-10-12: Phase 0 **done** (commit `00b398c`, tag `content-baseline-v1`, `scripts/content-snapshot.mjs`, perf baseline). Uncommitted working tree on `feature/sda` already contains Phase 1 (`useScrollScrub`), Phase 2 (hint fade, Nav indicator), Skills hairline, Portfolio thumbnail parallax (option B, not gate-approved), and 3b step 0 + 3b-i (E2 CTA, stacking cards with steps 96/80 px + equal card height — deviates from §4.2 D2/D3). Needs splitting into separate commits per PRD §9 and a PRD v0.4 reconciliation.*
+14a. **Scroll-driven animation, PRD [07](07-prd-scroll-driven-animation.md) (content-freeze)** — **Closed / superseded by 08.** Built and committed: Phase 0 (`00b398c`, tag `content-baseline-v1`), Phase 1 `useScrollScrub` (`66a99a3`), Phase 2 hint fade (`f3f461b`) + Nav indicator (`f8f914d`), 3b Stacking Cards + E2 CTA (`3498dd6`), Skills hairline (`02d5fa7`), Portfolio thumbnail parallax (`71fdf43`), baseline refresh (`8317e70`), tag **`content-baseline-v2` on `8317e70`** (created with owner approval). Stacking Cards shipped as built (steps 96/80 px, equal card height); owner keeps it as-is, which settles 07 §4.2 D1–D5. Owner verdict: only Stacking Cards is felt → PRD 08.
+14b. **Dramatic scroll experience, PRD [08](08-prd-dramatic-scroll-experience.md) v0.2** — owner decisions O1–O8 recorded; UI/UX spec §17 with PM rulings §16. Brief: [09](09-brief-scroll-phase-0-1.md). Phases (one PR each):
+
+| Phase | Content | Status |
+|---|---|---|
+| 0a | Audit tooling (`--nojs`, `scene-audit.mjs`, scoped `scroll-test.mjs`) | **Ready** (brief 09) |
+| 0b | Foundation: motion gate, `useScrollScene`, **Lenis 1.3.26** (desktop pointer-fine, lazy, off for RM/touch/no-JS), smoothing rule, modal integration, LCP element | Ready after 0a (brief 09) · light owner check |
+| 1 | About pilot | Ready after 0b (brief 09) · **owner checkpoint** |
+| 2 | Skills scene | Brief after Phase 1 checkpoint |
+| 3 | Portfolio option C | Pending · owner checkpoint |
+| 4 | Handoffs | Dropped (PD6) |
+| 5 | Hero exit + relay | Pending |
+| 6 | Contact `h2` fill + tuning + tokens to 03 | Pending · owner final approval |
+
+14c. **Lenis smooth scroll** (owner decision PRD 08 O5) — delivered inside 08 Phase 0b; spec 08 §7.3. Reverses the 07 non-goal. Tracked here so its risks (anchors, find-in-page, modal, bundle) stay visible.
 
 ### P3 — can be deferred
 15. 3D icons in Services, hover tilt in Portfolio (per animation budget).
 16. CMS (Sanity/Notion) for portfolio.
 17. i18n (ID/EN).
 18. Blog / writing section.
+19. Portfolio modal page scroll lock in native (non-Lenis) mode (T14).
+20. PRD 08 proposal P2: Portfolio "B" pinned spotlight for `min-height: 760px` — revisit only if the owner says Portfolio is not felt at the Phase 3 checkpoint.
+
+## Owner checkpoints log (PRD 08)
+
+| Checkpoint | Question | Answer |
+|---|---|---|
+| 0b (light) | Does the scroll (Lenis) feel right? | — |
+| 1 | Does the About scene feel like animejs? | — |
+| 3 | Is Portfolio felt? (decides P3 #20) | — |
+| 6 | Final approval | — |
 
 ## Dependencies between items
 
-- Item 3 (owner decision) precedes 10, 12, 15 and every UI/UX brief.
-- Item 1 has no dependencies → start in parallel.
-- Items 5/6 depend on assets from the owner (testimonials, screenshots, numbers).
+- Item 3 (positioning/palette) precedes 10, 12, 15 and any palette/copy brief. PRD 08 is palette-independent and not blocked by it.
+- Item 8 needs the owner's choice; it is independent of PRD 08 (08 never touches the stats).
+- Items 4b, 5, 6 depend on owner assets (WhatsApp number, testimonials, screenshots, numbers).
 - Item 9 runs **after** 4 and 7.
+- 14b phases are sequential; P1 items (4, 7) may be interleaved between 08 phases by the developer.
 
 ## Definition of Done (every ticket)
 
-`npm run lint` 0 errors · `npx tsc --noEmit` clean · `npm run build` succeeds · manual check at 375px & 1280px · `prefers-reduced-motion` still shows all content · if animation was touched, `node scroll-test.mjs` reports no stuck elements.
+`npm run lint` 0 errors · `npx tsc --noEmit` clean · `npm run build` succeeds · manual check at 375px & 1280px · `prefers-reduced-motion` still shows all content · if animation was touched, `node scroll-test.mjs` reports no stuck elements. PRD 08 tickets additionally follow 08 §18.

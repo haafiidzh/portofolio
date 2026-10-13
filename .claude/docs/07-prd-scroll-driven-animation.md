@@ -4,6 +4,8 @@ Status: **DRAFT v0.3** — 2026-10-12 · Owner request · Author: PM · Next rev
 Backlog: P2 (see [04](04-status-and-backlog.md)). Must not jump ahead of open P0 items (`RESEND_API_KEY` + end-to-end test, clean lint).
 Language: **English** (translated from Indonesian in v0.2). All future edits to this doc must be in English.
 
+> **Partially superseded by [08](08-prd-dramatic-scroll-experience.md) (2026-10-12, 08 v0.2)**: §2 non-goal "scroll-jacking / smooth-scroll libraries" (pin via CSS sticky now allowed; **Lenis smooth scroll adopted by owner decision 08 O5**, spec 08 §7.3), §3 content-freeze for motion mode (static modes still frozen; R3 split-text rule replaced), §4 "one scrub per section" + reading-zone rule (kept only for conversion zones and non-scene sections), §4 rows Hero/About/Portfolio/Skills/Contact/Nav, §7 mobile tiers, §9 Phase 3 (About parallax, cancelled). **Still in force**: §4.1–4.3 Services Stacking Cards + E2, §5, §6, §8. **Status facts**: §9 Phase 3b step 0 tag `content-baseline-v2` exists on `8317e70` (created with owner approval); all 07 phases that were built are committed (`66a99a3`, `f3f461b`, `f8f914d`, `3498dd6`, `02d5fa7`, `71fdf43`); the P0 items in the header line above are closed (lint 0 errors at HEAD; contact form owner-verified). Full mapping: 08 §4.
+
 Changelog
 - v0.1 — PM draft + UI/UX input (§13).
 - v0.2 — Translated to English. **Owner requirement added: "Stacking Cards" for Services (§4.1).** This overrides the UI/UX removal of sticky in Services (Q2, finding F1).

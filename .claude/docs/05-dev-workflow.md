@@ -18,6 +18,8 @@ URL=http://localhost:3000 SHOT_DIR=/tmp node scroll-test.mjs
 
 The script runs several scroll scenarios (slow scroll, jump to bottom, etc.), counts `[data-reveal]`, `[data-tag]`, `[data-hero]` elements still below 0.99 opacity after entering the viewport, and saves full-page screenshots.
 
+Scene audit (needs `npm run build`; spawns `next start` itself, or set `URL`): `npm run audit:scenes -- --quick` (1280x800, one run, for iteration) or `npm run audit:scenes` (full: 4 viewports x Lenis on/off, run once before handing off). See `snapshots/README.md`.
+
 ## Code conventions
 
 - 1 section = 1 component in `components/sections/`; sub-components in a same-named lowercase folder.
