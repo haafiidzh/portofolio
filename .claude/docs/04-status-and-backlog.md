@@ -88,9 +88,9 @@ Scale: **P0** blocks the site's purpose (getting clients) · **P1** required bef
 
 | Phase | Content | Status |
 |---|---|---|
-| 0a | Audit tooling (`--nojs`, `scene-audit.mjs`, scoped `scroll-test.mjs`) | **Ready** (brief 09) |
-| 0b | Foundation: motion gate, `useScrollScene`, **Lenis 1.3.26** (desktop pointer-fine, lazy, off for RM/touch/no-JS), smoothing rule, modal integration, LCP element | Ready after 0a (brief 09) · light owner check |
-| 1 | About pilot | Ready after 0b (brief 09) · **owner checkpoint** |
+| 0a | Audit tooling (`--nojs`, `scene-audit.mjs`, scoped `scroll-test.mjs`) | **Done** (`950420d`, `8552327`, `001242b`) |
+| 0b | Foundation: motion gate, `useScrollScene`, **Lenis 1.3.26** (desktop pointer-fine, lazy, off for RM/touch/no-JS), smoothing rule, modal integration, LCP element | **Done** (`fa949a8`, `f551bfc`, `5fcb241`; QA fixes `3879ddb`, `3fde07f`) · owner scroll feel OK · QA 2026-10-13: PASS with conditions (see 14d) |
+| 1 | About pilot | **In progress** (built in a worktree, uncommitted; audit tooling fixes + bio start dimmer pending) · owner checkpoint answered Yes |
 | 2 | Skills scene | Brief after Phase 1 checkpoint |
 | 3 | Portfolio option C | Pending · owner checkpoint |
 | 4 | Handoffs | Dropped (PD6) |
@@ -98,6 +98,9 @@ Scale: **P0** blocks the site's purpose (getting clients) · **P1** required bef
 | 6 | Contact `h2` fill + tuning + tokens to 03 | Pending · owner final approval |
 
 14c. **Lenis smooth scroll** (owner decision PRD 08 O5) — delivered inside 08 Phase 0b; spec 08 §7.3. Reverses the 07 non-goal. Tracked here so its risks (anchors, find-in-page, modal, bundle) stay visible.
+
+14d. **Phase 0b QA follow-ups (2026-10-13)** — fixed: QA-0b-1 anchor `scrollTo` numeric target, QA-0b-2 `scrollbar-gutter: stable` while Lenis stopped (real-modal re-check pending), QA-0b-5 `performance.now` in audit. Accepted: Lighthouse 89 / LCP 3561 ms (noise; baseline re-measured on the same machine was worse: 88 / 3647 ms; LCP element is Hero `h1`). **Open P2: `scroll-test.mjs` `services-stack-1366` / `-1857` fail ("badge 2/3 covered")** — pre-existing (also fails at `8552327`); decide whether the test or the Services stack CSS is wrong.
+14e. **Content: proof for "3+ Years" / "30+ Products"** — owner has none (PRD 08 O4); no counters until supplied. Replace or substantiate the copy.
 
 ### P3 — can be deferred
 15. 3D icons in Services, hover tilt in Portfolio (per animation budget).
@@ -111,8 +114,8 @@ Scale: **P0** blocks the site's purpose (getting clients) · **P1** required bef
 
 | Checkpoint | Question | Answer |
 |---|---|---|
-| 0b (light) | Does the scroll (Lenis) feel right? | — |
-| 1 | Does the About scene feel like animejs? | — |
+| 0b (light) | Does the scroll (Lenis) feel right? | Yes — owner, 2026-10-13 ("sudah oke") |
+| 1 | Does the About scene feel like animejs? | Yes — owner, 2026-10-13 ("sudah oke"); tweak: bio start should be dimmer; iris end at ~39% and no `round` accepted |
 | 3 | Is Portfolio felt? (decides P3 #20) | — |
 | 6 | Final approval | — |
 
