@@ -1,4 +1,5 @@
 import SectionHeader from "@/components/ui/SectionHeader";
+import SkillsScene from "./skills/SkillsScene";
 import SkillTags from "./skills/SkillTags";
 
 const GROUPS = [
@@ -22,7 +23,7 @@ const GROUPS = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="px-6 py-28 md:px-10 md:py-40">
+    <SkillsScene>
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           index="05"
@@ -31,12 +32,15 @@ export default function Skills() {
           lede="Deliberately narrow. I'd rather go deep on tools that stay boring under load than collect logos."
         />
 
-        <div className="flex flex-col">
-          {GROUPS.map((group) => (
-            <SkillTags key={group.label} label={group.label} items={group.items} />
-          ))}
+        {/* Track wrapper: gets the pin distance as a trailing spacer in scene mode (globals.css). */}
+        <div className="skills-track">
+          <div data-scene-pin className="skills-pin flex flex-col">
+            {GROUPS.map((group) => (
+              <SkillTags key={group.label} label={group.label} items={group.items} />
+            ))}
+          </div>
         </div>
       </div>
-    </section>
+    </SkillsScene>
   );
 }

@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { animate, stagger } from "animejs";
 import { useRevealOnEnter } from "@/components/ui/useRevealOnEnter";
+import { SKILLS_SCENE_MQ } from "./sceneQuery";
 
 /**
  * Skill row with a viewport-triggered stagger.
@@ -22,6 +23,8 @@ export default function SkillTags({
   useRevealOnEnter({
     ref: row,
     selector: "[data-tag]",
+    // Inside the Skills scene the scene timeline owns the tags (never both).
+    skip: () => window.matchMedia(SKILLS_SCENE_MQ).matches,
     prehide: (el) => {
       el.style.opacity = "0";
       el.style.transform = "translateY(18px) scale(0.94)";

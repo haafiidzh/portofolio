@@ -19,6 +19,7 @@
   --accent-foreground: #ffffff;
 
   --nav-h: 4.5rem;
+  --scene-pin-top: calc(var(--nav-h) + 1.5rem);
 }
 
 @theme inline {
@@ -473,4 +474,32 @@ body {
   transform-origin: left;
   transform: scaleX(var(--line, 1));
   pointer-events: none;
+}
+
+/* ---------- Skills scene (PRD 08 §17.F) ----------
+   Pin = the rows block is sticky; a spacer after it in the track wrapper is the pin
+   distance. Only under motion-ok and tall-enough viewports; the scene sets
+   data-pin-off when the rows do not fit. Static modes keep today's layout. */
+@media (min-width: 1024px) and (min-height: 640px) {
+  html.motion-ok #skills:not([data-pin-off]) .skills-track {
+    --skills-track: 60svh;
+  }
+  html.motion-ok #skills:not([data-pin-off]) .skills-track::after {
+    content: "";
+    display: block;
+    height: var(--skills-track);
+  }
+  html.motion-ok #skills:not([data-pin-off]) .skills-pin {
+    position: sticky;
+    top: var(--scene-pin-top);
+  }
+}
+/* Tags scatter sideways while assembling. */
+#skills[data-scene-live] {
+  overflow-x: clip;
+}
+/* Hairline is driven by the scene timeline (--draw) instead of view(). */
+#skills[data-scene-live] .skills-row::before {
+  animation: none;
+  transform: scaleX(var(--draw, 1));
 }
