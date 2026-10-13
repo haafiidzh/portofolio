@@ -18,6 +18,14 @@
   --accent-bright: #a97bea; /* tint — text, links, strokes on dark */
   --accent-foreground: #ffffff;
 
+  /* Motto band: deep violet band, light text, bright-accent separators. */
+  --motto-bg: var(--accent-deep); /* deep violet */
+  --motto-fg: var(--foreground);
+  --motto-accent: var(--accent-bright);
+  --motto-bg-top: #34005a;
+  --motto-bg-bottom: #1f0036;
+  --motto-extrude: #4a1590;
+
   --nav-h: 4.5rem;
   --scene-pin-top: calc(var(--nav-h) + 1.5rem);
 }
@@ -545,4 +553,14 @@ html.motion-ok .pf-card-wrap:focus-within .pf-card-float {
     filter: blur(3px);
     opacity: 0.75;
   }
+}
+
+/* ---------- Hero exit scene (PRD 08 §17.B) ----------
+   Only while the scene is built. The object drifts/scales beyond its column, so
+   clip horizontally (never `hidden`) and promote it just for the scene. */
+#hero[data-hero-live] {
+  overflow-x: clip;
+}
+#hero[data-hero-live] [data-hero-object] {
+  will-change: transform, opacity;
 }

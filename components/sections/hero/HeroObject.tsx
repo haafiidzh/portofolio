@@ -1,42 +1,26 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { animate, onScroll, stagger, svg } from "animejs";
+import { animate, stagger, svg } from "animejs";
 
 /**
- * The hero's abstract object. Two animation systems run on it:
+ * The hero's abstract object (decorative, aria-hidden).
  *
  * A. ENTRANCE (time-based, once): the outline strokes draw themselves in via
  *    `svg.createDrawable()` — the same line-draw technique anime.js uses.
+ * B. AMBIENT: the orbiting dots breathe (opacity loop).
  *
- * B. SCROLL-DRIVEN (the important one): each layer gets its own `animate()`
- *    whose `autoplay` is an `onScroll()` observer with `sync`.
- *      - `target`  = the hero <section>, so progress is measured against it
- *      - `enter: "top top"` / `leave: "bottom top"` = the window in which
- *        progress runs 0 → 1 (from hero pinned at top until it fully exits)
- *      - `sync: 0.35` = smoothed binding. `true` would be a rigid 1:1 lock;
- *        a number adds inertia so the shape eases toward the scroll position.
- *    Because playback is bound to scroll, rotation/scale/opacity reverse
- *    exactly when the user scrolls back up.
- *
- * Tuning: give each layer a different rotate value to change the depth
- * illusion, or raise `sync` toward 1 for a tighter, snappier feel.
+ * The scroll-driven exit (layer rotation + whole-object drift/scale/dissolve)
+ * lives in Hero.tsx as ONE timeline (PRD 08 §17.B); this component only
+ * exposes the `data-hero-object` / `data-hero-layer` hooks for it.
  */
-export default function HeroObject({
-  sectionRef,
-}: {
-  sectionRef: React.RefObject<HTMLElement | null>;
-}) {
+export default function HeroObject() {
   const root = useRef<SVGSVGElement>(null);
-  const ringOuter = useRef<SVGGElement>(null);
-  const ringMid = useRef<SVGGElement>(null);
-  const core = useRef<SVGGElement>(null);
   const dots = useRef<SVGGElement>(null);
 
   useEffect(() => {
-    const section = sectionRef.current;
     const svgEl = root.current;
-    if (!section || !svgEl) return;
+    if (!svgEl) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
       .matches;
@@ -62,48 +46,9 @@ export default function HeroObject({
       return () => animations.forEach((a) => a.revert());
     }
 
-    // --- B. scroll-bound layers ------------------------------------------
-    const scrollBinding = () =>
-      onScroll({
-        target: section,
-        enter: "top top",
-        leave: "bottom top",
-        sync: 0.35,
-      });
-
-    const layers: [React.RefObject<SVGGElement | null>, number, number][] = [
-      // [ref, rotation in deg, scale at end]
-      [ringOuter, 140, 1.25],
-      [ringMid, -110, 0.86],
-      [core, 200, 0.72],
-      [dots, -220, 1.1],
-    ];
-
-    for (const [ref, rotate, scaleTo] of layers) {
-      if (!ref.current) continue;
-      animations.push(
-        animate(ref.current, {
-          rotate: [0, rotate],
-          scale: [1, scaleTo],
-          ease: "linear",
-          autoplay: scrollBinding(),
-        })
-      );
-    }
-
-    // Whole object drifts up and fades as the hero leaves.
-    animations.push(
-      animate(svgEl, {
-        translateY: [0, -70],
-        opacity: [1, 0.35],
-        ease: "linear",
-        autoplay: scrollBinding(),
-      })
-    );
-
-    // Slow ambient breathing so the object is never fully static. Uses
-    // `opacity` only — no property overlap with the scroll-bound tweens above,
-    // which would otherwise fight each other for the same value.
+    // --- B. ambient breathing --------------------------------------------
+    // Slow breathing so the object is never fully static. Uses `opacity` only —
+    // no property overlap with the scroll timeline (which owns transforms).
     if (dots.current) {
       animations.push(
         animate(dots.current.querySelectorAll("circle"), {
@@ -118,13 +63,14 @@ export default function HeroObject({
     }
 
     return () => animations.forEach((a) => a.revert());
-  }, [sectionRef]);
+  }, []);
 
   return (
     <svg
       ref={root}
+      data-hero-object
       viewBox="0 0 400 400"
-      className="h-auto w-full max-w-[min(80vw,420px)] overflow-visible"
+      className="pointer-events-none h-auto w-full max-w-[min(80vw,420px)] overflow-visible"
       aria-hidden
     >
       <defs>
@@ -136,7 +82,7 @@ export default function HeroObject({
       </defs>
 
       {/* outer ring + ticks */}
-      <g ref={ringOuter} style={{ transformOrigin: "200px 200px" }}>
+      <g data-hero-layer="ringOuter" style={{ transformOrigin: "200px 200px" }}>
         <circle
           data-draw
           cx="200"
@@ -171,7 +117,7 @@ export default function HeroObject({
       </g>
 
       {/* mid hexagon */}
-      <g ref={ringMid} style={{ transformOrigin: "200px 200px" }}>
+      <g data-hero-layer="ringMid" style={{ transformOrigin: "200px 200px" }}>
         <path
           data-draw
           d="M200 74 L309 137 L309 263 L200 326 L91 263 L91 137 Z"
@@ -191,7 +137,7 @@ export default function HeroObject({
       </g>
 
       {/* core */}
-      <g ref={core} style={{ transformOrigin: "200px 200px" }}>
+      <g data-hero-layer="core" style={{ transformOrigin: "200px 200px" }}>
         <circle cx="200" cy="200" r="92" fill="url(#hero-core)" />
         <path
           data-draw
@@ -204,7 +150,11 @@ export default function HeroObject({
       </g>
 
       {/* orbiting dots */}
-      <g ref={dots} style={{ transformOrigin: "200px 200px" }}>
+      <g
+        ref={dots}
+        data-hero-layer="dots"
+        style={{ transformOrigin: "200px 200px" }}
+      >
         {[0, 72, 144, 216, 288].map((deg, i) => {
           const angle = (deg * Math.PI) / 180;
           return (
