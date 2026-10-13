@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Agent git worktrees hold full copies of the project.
+    ".claude/worktrees/**",
   ]),
 ]);
 
