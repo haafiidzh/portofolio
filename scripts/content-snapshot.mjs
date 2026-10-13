@@ -1,18 +1,21 @@
 // Content-freeze snapshot (PRD 07 §3, invariants C1-C8).
 //   node scripts/content-snapshot.mjs            write snapshots/content-baseline.json
 //   node scripts/content-snapshot.mjs --check    diff current render vs committed snapshot (exit 1 on any diff)
+//   node scripts/content-snapshot.mjs --nojs     S3: JavaScript-disabled render vs baseline (C1-C6, C8) + scrollHeight within +-5% of reduced-motion
 // Env: URL=http://host:port to use an already-running production server.
 // Otherwise it spawns `next start` on port 3100 (needs a prior `npm run build`).
 import { chromium } from "playwright";
-import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { startServer } from "./lib/server.mjs";
+import { collect, collectAria } from "./lib/collect.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = resolve(ROOT, "snapshots/content-baseline.json");
 const CHECK = process.argv.includes("--check");
+const NOJS = process.argv.includes("--nojs");
 const VIEWPORTS = { 375: { width: 375, height: 812 }, 1280: { width: 1280, height: 800 } };
 
 // C7 sources: constants must stay untouched, so hash their literal source.
@@ -54,95 +57,33 @@ function constantHashes() {
   return out;
 }
 
-async function startServer() {
-  if (process.env.URL) return { url: process.env.URL, stop() {} };
-  const port = 3100;
-  if (!existsSync(resolve(ROOT, ".next/BUILD_ID"))) throw new Error("No production build: run `npm run build` first (or set URL).");
-  const proc = spawn("npx", ["next", "start", "-p", String(port)], { cwd: ROOT, stdio: "ignore" });
-  const url = `http://localhost:${port}`;
-  for (let i = 0; i < 60; i++) {
-    try { if ((await fetch(url)).ok) return { url, stop: () => proc.kill() }; } catch {}
-    await new Promise((r) => setTimeout(r, 500));
-  }
-  proc.kill();
-  throw new Error("Server did not start");
-}
-
-/** Runs in the page. Everything returned must be deterministic. */
-function collect() {
-  const norm = (s) => (s || "").replace(/\s+/g, " ").trim();
-  const roots = [
-    ...document.querySelectorAll("header, main > section[id], footer"),
-  ].map((el) => ({ el, key: el.id ? `#${el.id}` : el.tagName.toLowerCase() }));
-  const textNodes = (root) => {
-    const out = [];
-    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    for (let n = w.nextNode(); n; n = w.nextNode()) {
-      const t = norm(n.textContent);
-      if (t && !["SCRIPT", "STYLE", "NOSCRIPT"].includes(n.parentElement.tagName)) out.push(t);
-    }
-    return out;
-  };
-  const ctrl = (el) => ({
-    tag: el.tagName.toLowerCase(),
-    text: norm(el.textContent),
-    href: el.getAttribute("href"),
-    type: el.getAttribute("type"),
-    name: el.getAttribute("name"),
-    ariaLabel: el.getAttribute("aria-label"),
-    placeholder: el.getAttribute("placeholder"),
-    required: el.hasAttribute("required"),
-    label: el.labels?.[0] ? norm(el.labels[0].textContent) : null,
-  });
-  const c1 = {}, c2 = {}, c3 = {}, c4 = {}, c8 = {};
-  for (const { el, key } of roots) {
-    c1[key] = norm(el.innerText);
-    c2[key] = [...el.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((h) => ({
-      level: +h.tagName[1], text: norm(h.textContent),
-    }));
-    c3[key] = [...el.querySelectorAll("img")].map((i) => ({
-      src: i.getAttribute("src"), alt: i.getAttribute("alt"),
-    }));
-    c4[key] = [...el.querySelectorAll("a, button, input, textarea, select")].map(ctrl);
-    c8[key] = textNodes(el);
-  }
-  return {
-    c1, c2, c3, c4,
-    c5: [...document.querySelectorAll("main > section")].map((s) => s.id || null),
-    c8,
-    keys: roots.map((r) => r.key),
-  };
-}
-
-async function snapshotViewport(browser, url, vp) {
-  const ctx = await browser.newContext({ viewport: vp, reducedMotion: "reduce" });
+/** nojs: render with JavaScript disabled (S3) instead of the reduced-motion live render. */
+async function snapshotViewport(browser, url, vp, { nojs = false } = {}) {
+  const ctx = await browser.newContext(
+    nojs ? { viewport: vp, javaScriptEnabled: false } : { viewport: vp, reducedMotion: "reduce" }
+  );
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: "networkidle" });
-  // Scroll through so lazy/observer-driven content settles, then return to top.
-  const h = await page.evaluate(() => document.documentElement.scrollHeight);
-  for (let y = 0; y <= h; y += vp.height / 2) {
-    await page.evaluate((v) => window.scrollTo(0, v), y);
-    await page.waitForTimeout(60);
+  if (!nojs) {
+    // Scroll through so lazy/observer-driven content settles, then return to top.
+    const h = await page.evaluate(() => document.documentElement.scrollHeight);
+    for (let y = 0; y <= h; y += vp.height / 2) {
+      await page.evaluate((v) => window.scrollTo(0, v), y);
+      await page.waitForTimeout(60);
+    }
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(800);
   }
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForLoadState("networkidle");
-  await page.waitForTimeout(800);
 
   const data = await page.evaluate(collect);
-  const c6 = {};
-  const sel = ["header", "main > section[id]", "footer"];
-  for (const s of sel) {
-    const loc = page.locator(s);
-    for (let i = 0; i < (await loc.count()); i++) {
-      const id = await loc.nth(i).getAttribute("id");
-      const key = id ? `#${id}` : s;
-      c6[key] = await loc.nth(i).ariaSnapshot();
-    }
-  }
+  const scrollHeight = await page.evaluate(() => document.documentElement.scrollHeight);
+  const c6 = await collectAria(page);
   await ctx.close();
   const rest = { ...data };
   delete rest.keys;
-  return { ...rest, c6 };
+  // scrollHeight is returned beside the snapshot so the baseline JSON shape never changes.
+  return { snap: { ...rest, c6 }, scrollHeight };
 }
 
 function sortKeys(v) {
@@ -160,33 +101,62 @@ function flatten(v, path = "", out = {}) {
   return out;
 }
 
+/** Diff two JSON-able objects; returns the sorted list of differing flat paths with both values. */
+function diffObjects(base, cur) {
+  const a = flatten(base);
+  const b = flatten(cur);
+  const diffs = [];
+  for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) {
+    if (a[k] !== b[k]) diffs.push({ k, a: a[k], b: b[k] });
+  }
+  return diffs.sort((x, y) => (x.k < y.k ? -1 : 1));
+}
+
+function printDiffs(diffs, label) {
+  console.log(`FAIL  ${diffs.length} difference(s) ${label}:`);
+  for (const { k, a, b } of diffs) {
+    console.log(`\n  ${k}\n    - ${JSON.stringify(a)}\n    + ${JSON.stringify(b)}`);
+  }
+}
+
 const server = await startServer();
 const browser = await chromium.launch();
 let exit = 0;
 try {
-  const result = { c7: constantHashes(), viewports: {} };
-  for (const [w, vp] of Object.entries(VIEWPORTS)) result.viewports[w] = await snapshotViewport(browser, server.url, vp);
-  const json = JSON.stringify(sortKeys(result), null, 2) + "\n";
-
-  if (!CHECK) {
-    mkdirSync(dirname(OUT), { recursive: true });
-    writeFileSync(OUT, json);
-    console.log(`Wrote ${OUT}`);
-  } else {
-    if (!existsSync(OUT)) throw new Error(`No baseline at ${OUT}; run without --check first.`);
-    const a = flatten(JSON.parse(readFileSync(OUT, "utf8")));
-    const b = flatten(JSON.parse(json));
-    const diffs = [];
-    for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) {
-      if (a[k] !== b[k]) diffs.push(k);
+  if (NOJS) {
+    // S3: no-JS render keeps C1-C6/C8 identical to the committed baseline, and its
+    // scrollHeight stays within +-5% of a live reduced-motion render.
+    if (!existsSync(OUT)) throw new Error(`No baseline at ${OUT}; run without flags first.`);
+    const baseline = JSON.parse(readFileSync(OUT, "utf8"));
+    for (const [w, vp] of Object.entries(VIEWPORTS)) {
+      const nojs = await snapshotViewport(browser, server.url, vp, { nojs: true });
+      const live = await snapshotViewport(browser, server.url, vp);
+      const diffs = diffObjects(baseline.viewports[w], sortKeys(nojs.snap));
+      const delta = (nojs.scrollHeight - live.scrollHeight) / live.scrollHeight;
+      const heightOk = Math.abs(delta) <= 0.05;
+      console.log(
+        `${diffs.length === 0 && heightOk ? "PASS" : "FAIL"}  no-JS @${w}px  scrollHeight no-JS ${nojs.scrollHeight} vs reduced-motion ${live.scrollHeight} (${(delta * 100).toFixed(2)}%, limit +-5%)`
+      );
+      if (diffs.length) printDiffs(diffs, `vs baseline @${w}px`);
+      if (diffs.length || !heightOk) exit = 1;
     }
-    if (diffs.length) {
-      console.log(`FAIL  ${diffs.length} difference(s) vs baseline:`);
-      for (const k of diffs.sort()) {
-        console.log(`\n  ${k}\n    - ${JSON.stringify(a[k])}\n    + ${JSON.stringify(b[k])}`);
-      }
-      exit = 1;
-    } else console.log("PASS  content snapshot identical to baseline");
+  } else {
+    const result = { c7: constantHashes(), viewports: {} };
+    for (const [w, vp] of Object.entries(VIEWPORTS)) result.viewports[w] = (await snapshotViewport(browser, server.url, vp)).snap;
+    const json = JSON.stringify(sortKeys(result), null, 2) + "\n";
+
+    if (!CHECK) {
+      mkdirSync(dirname(OUT), { recursive: true });
+      writeFileSync(OUT, json);
+      console.log(`Wrote ${OUT}`);
+    } else {
+      if (!existsSync(OUT)) throw new Error(`No baseline at ${OUT}; run without --check first.`);
+      const diffs = diffObjects(JSON.parse(readFileSync(OUT, "utf8")), JSON.parse(json));
+      if (diffs.length) {
+        printDiffs(diffs, "vs baseline");
+        exit = 1;
+      } else console.log("PASS  content snapshot identical to baseline");
+    }
   }
 } catch (e) {
   console.error(e);
